@@ -1,0 +1,27 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.spectech.ambacambackend.configuration.app.Ambacam2018Settings",
+      "name": "ambacam2018",
+      "type": "com.spectech.ambacambackend.configuration.app.Ambacam2018Settings"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.spectech.ambacambackend.configuration.app.Ambacam2018Settings",
+      "name": "ambacam2018.admin-email",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.spectech.ambacambackend.configuration.app.Ambacam2018Settings",
+      "name": "ambacam2018.app-email",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.spectech.ambacambackend.configuration.app.Ambacam2018Settings",
+      "name": "ambacam2018.info-email",
+      "type": "java.lang.String"
+    }
+  ]
+}
