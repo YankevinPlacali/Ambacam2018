@@ -1,0 +1,4742 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the Rest endpoint description for the project Ambacam2018, which proposes solutions in order to improve the services in the Cameroonian ambassy of Germany. For more information about the class diagramm follow this link: https://1drv.ms/b/s!Ar0_OtmcJrn3hCDQWTx1JY0Y-O-n",
+    "version": "1.0.0",
+    "title": "Ambacam 2018",
+    "contact": {
+      "email": "hervalnganya@yahoo.fr"
+    }
+  },
+  "host": "service.ambacam.com",
+  "basePath": "/tracking",
+  "tags": [
+    {
+      "name": "Requerant",
+      "description": "Interfaces related to operations on the models Requerant and Recepisse"
+    },
+    {
+      "name": "Operateur",
+      "description": "Interfaces related to operations on the model Operateur"
+    },
+    {
+      "name": "Requete",
+      "description": "Interfaces related to operations on the model Requete"
+    },
+    {
+      "name": "RequeteGroupe",
+      "description": "Interfaces related to operations on the model RequeteGroupe"
+    },
+    {
+      "name": "Passport",
+      "description": "Interfaces related to operations on the model Passport"
+    },
+    {
+      "name": "Role",
+      "description": "Interfaces related to operations on the model Role"
+    },
+    {
+      "name": "Autorite",
+      "description": "Interfaces related to operations on the model Autorite"
+    },
+    {
+      "name": "Pays",
+      "description": "Interfaces related to operations on the model Pays"
+    },
+    {
+      "name": "StatusRequete",
+      "description": "Interfaces related to operations on the model StatusRequete"
+    },
+    {
+      "name": "TypeRequete",
+      "description": "Interfaces related to operations on the model TypeRequete"
+    },
+    {
+      "name": "MotifSuppression",
+      "description": "Interfaces related to operations on the model MotifSuppression"
+    },
+    {
+      "name": "Log",
+      "description": "Interfaces related to operations on the model Log"
+    },
+    {
+      "name": "Action",
+      "description": "Interfaces related to operations on the model Action"
+    },
+    {
+      "name": "Authentication",
+      "description": "Interfaces related to authentication"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/requerants": {
+      "get": {
+        "tags": [
+          "Requerant"
+        ],
+        "summary": "Find all requerants",
+        "description": "Find all requerants",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results (>= 10)",
+            "required": false,
+            "default": 10,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RequerantRead"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "requerant_auth": [
+              "read:requerant"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Requerant"
+        ],
+        "summary": "Create a requerant",
+        "description": "Create a requerant",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informations of a requerant",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RequerantCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/RequerantRead"
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "requerant_auth": [
+              "read:requerant"
+            ]
+          }
+        ]
+      }
+    },
+    "/requerants/{requerantId}": {
+      "get": {
+        "tags": [
+          "Requerant"
+        ],
+        "summary": "Find a requerant",
+        "description": "Find all requerants",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/RequerantRead"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requerant_auth": [
+              "read:requerant"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Requerant"
+        ],
+        "summary": "Update a requerant",
+        "parameters": [
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update informations of a requerant",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RequerantUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requerant_auth": [
+              "write:requerant"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Requerant"
+        ],
+        "summary": "Delete a requerant",
+        "description": "Delete a requerant",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requerant_auth": [
+              "delete:requerant"
+            ]
+          }
+        ]
+      }
+    },
+    "/requerants/search": {
+      "post": {
+        "tags": [
+          "Requerant"
+        ],
+        "summary": "Find requerants by parameters",
+        "description": "Find all requerants by parameters",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "criteria",
+            "description": "Search criteria",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RequerantSearch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Requerant"
+              }
+            },
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "requerant_auth": [
+              "read:requerant"
+            ]
+          }
+        ]
+      }
+    },
+    "/operateurs": {
+      "get": {
+        "tags": [
+          "Operateur"
+        ],
+        "summary": "List all operateurs",
+        "description": "List all operateurs",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results (>= 10)",
+            "required": false,
+            "default": 10,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OperateurRead"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "operateur_auth": [
+              "read:operateur"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Operateur"
+        ],
+        "summary": "Create an operateur",
+        "description": "Create an operateur",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Operateur information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Operateur"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OperateurRead"
+              }
+            },
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "requerant_auth": [
+              "read:requerant"
+            ]
+          }
+        ]
+      }
+    },
+    "/operateurs/{operateurId}": {
+      "get": {
+        "tags": [
+          "Operateur"
+        ],
+        "summary": "Get an operateur",
+        "description": "Get an operateur",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/OperateurRead"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "operateur_auth": [
+              "read:operateur"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Operateur"
+        ],
+        "summary": "Update an operateur",
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update informations of an operateur",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/OperateurCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "operateur_auth": [
+              "write:operateur"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Operateur"
+        ],
+        "summary": "Delete an operateur",
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "operateur_auth": [
+              "delete:operateur"
+            ]
+          }
+        ]
+      }
+    },
+    "/operateurs/search": {
+      "post": {
+        "tags": [
+          "Operateur"
+        ],
+        "summary": "Find operateurs by parameters",
+        "description": "Find all operateurs by parameters",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "criteria",
+            "description": "Search criteria",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/OperateurSearch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Requerant"
+              }
+            },
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "operateur_auth": [
+              "read:operateur"
+            ]
+          }
+        ]
+      }
+    },
+    "/requerants/{requerantId}/requetes": {
+      "get": {
+        "tags": [
+          "Requerant"
+        ],
+        "summary": "List all requetes",
+        "description": "List all requetes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results (>= 10)",
+            "required": false,
+            "default": 10,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Requete"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "requete_auth": [
+              "read:requete"
+            ]
+          }
+        ]
+      }
+    },
+    "/requerants/{requerantId}/requetes/{requeteId}": {
+      "get": {
+        "tags": [
+          "Requerant"
+        ],
+        "summary": "Get an requete",
+        "description": "Get an requete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Requete"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requete_auth": [
+              "read:requete"
+            ]
+          }
+        ]
+      }
+    },
+    "/requetes": {
+      "get": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "List all requetes",
+        "description": "List all requetes",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Requete"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "requete_auth": [
+              "read:requete"
+            ]
+          }
+        ]
+      }
+    },
+    "/operateurs/{operateurId}/requerants/{requerantId}/requetes": {
+      "get": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "List all requetes",
+        "description": "List all requetes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results (>= 10)",
+            "required": false,
+            "default": 10,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Requete"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "requete_auth": [
+              "read:requete"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "Create an requete",
+        "description": "Create an requete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Operateur information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RequeteCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Requete"
+            },
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requete_auth": [
+              "read:requete"
+            ]
+          }
+        ]
+      }
+    },
+    "/operateurs/{operateurId}/requerants/{requerantId}/requetes/{requeteId}": {
+      "get": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "Get an requete",
+        "description": "Get an requete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Requete"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requete_auth": [
+              "read:requete"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "Update an requete",
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update informations of an requete",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RequeteCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requete_auth": [
+              "write:requete"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "Delete an requete",
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requete_auth": [
+              "delete:requete"
+            ]
+          }
+        ]
+      }
+    },
+    "/operateurs/{operateurId}/requerants/{requerantId}/requetes/{requeteId}/status": {
+      "put": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "Update status of a requete",
+        "description": "Update status of a requete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Operateur information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RequeteStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requete_auth": [
+              "write:requete"
+            ]
+          }
+        ]
+      }
+    },
+    "/requerants/{requerantId}/requetes/{requeteId}/recepisses": {
+      "get": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "Find all recepisses of a requete",
+        "description": "Find all recepisses of a requete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RecepisseRead"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "recepisse_auth": [
+              "read:recepisse"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "Create a recepisse for a requete",
+        "description": "Create a recepisse for a requete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informations of a recepisse",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RecepisseCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/RecepisseRead"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "recepisse_auth": [
+              "write:recepisse"
+            ]
+          }
+        ]
+      }
+    },
+    "/requerants/{requerantId}/requetes/{requeteId}/recepisses/{recepisseId}": {
+      "get": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "Get a requete recepisse",
+        "description": "Get a requete recepisse",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "recepisseId",
+            "in": "path",
+            "description": "Recepisse id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/RecepisseRead"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "recepisse_auth": [
+              "read:recepisse"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "Update a recepisse",
+        "parameters": [
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "recepisseId",
+            "in": "path",
+            "description": "Recepisse id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update informations of a recepisse",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RecepisseUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "recepisse_auth": [
+              "write:recepisse"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "Delete a recepisse",
+        "description": "Delete a recepisse",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "recepisseId",
+            "in": "path",
+            "description": "Recepisse id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "recepisse_auth": [
+              "delete:recepisse"
+            ]
+          }
+        ]
+      }
+    },
+    "/operateurs/{operateurId}/requete-groupes/{requeteGroupeId}/requetes/status": {
+      "put": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "Update status of some Requetes in a RequeteGroupe",
+        "description": "The requetes to update  must have the same type",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteGroupeId",
+            "in": "path",
+            "description": "RequeteGroupe id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Operateur information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AssignStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requete_auth": [
+              "read:requete"
+            ]
+          }
+        ]
+      }
+    },
+    "/operateurs/{operateurId}/requete-groupes": {
+      "get": {
+        "tags": [
+          "RequeteGroupe"
+        ],
+        "summary": "Find all recepisses of a requete",
+        "description": "Find all recepisses of a requete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RequeteGroupeRead"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requeteGroupe_auth": [
+              "read:requeteGroupe"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "RequeteGroupe"
+        ],
+        "summary": "Create a RequeteGroupe",
+        "description": "Create a RequeteGroupe",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Operateur information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RequeteGroupeCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/RequeteGroupeRead"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requeteGroupe_auth": [
+              "write:requeteGroupe"
+            ]
+          }
+        ]
+      }
+    },
+    "/operateurs/{operateurId}/requete-groupes/{requeteGroupeId}": {
+      "get": {
+        "tags": [
+          "RequeteGroupe"
+        ],
+        "summary": "Get a requete groupe",
+        "description": "Get a requete groupe",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteGroupeId",
+            "in": "path",
+            "description": "Requete Groupe id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/RequeteGroupeRead"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requeteGroupe_auth": [
+              "read:requeteGroupe"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "RequeteGroupe"
+        ],
+        "summary": "Update a RequeteGroupe",
+        "description": "Update a RequeteGroupe",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteGroupeId",
+            "in": "path",
+            "description": "Requete Groupe id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Operateur information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RequeteGroupeUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requeteGroupe_auth": [
+              "write:requeteGroupe"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "RequeteGroupe"
+        ],
+        "summary": "Delete a RequeteGroupe",
+        "description": "Update a RequeteGroupe",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteGroupeId",
+            "in": "path",
+            "description": "Requete Groupe id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requeteGroupe_auth": [
+              "delete:requeteGroupe"
+            ]
+          }
+        ]
+      }
+    },
+    "/operateurs/{operateurId}/requete-groupes/{requeteGroupeId}/status": {
+      "put": {
+        "tags": [
+          "RequeteGroupe"
+        ],
+        "summary": "Update status of a RequeteGroupe",
+        "description": "Update status of a RequeteGroupe. All Requete of this group must have the same type",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteGroupeId",
+            "in": "path",
+            "description": "RequeteGroupe id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Operateur information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RequeteStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requete_auth": [
+              "read:requete"
+            ]
+          }
+        ]
+      }
+    },
+    "/operateurs/{operateurId}/requerants/{requerantId}/requetes/{requeteId}/passports": {
+      "get": {
+        "tags": [
+          "Passport"
+        ],
+        "summary": "List all passports",
+        "description": "List all passports",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results (>= 10)",
+            "required": false,
+            "default": 10,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PassportRead"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "passport_auth": [
+              "read:passport"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Passport"
+        ],
+        "summary": "Create an passport",
+        "description": "Create an passport",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Operateur information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PassportCreate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Passport"
+            },
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "passport_auth": [
+              "read:passport"
+            ]
+          }
+        ]
+      }
+    },
+    "/operateurs/{operateurId}/requerants/{requerantId}/requetes/{requeteId}/passports/{passportId}": {
+      "get": {
+        "tags": [
+          "Passport"
+        ],
+        "summary": "Get a passport",
+        "description": "Get a passport",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "passportId",
+            "in": "path",
+            "description": "Passport id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/PassportRead"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "passport_auth": [
+              "read:passport"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Passport"
+        ],
+        "summary": "Update a passport",
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "passportId",
+            "in": "path",
+            "description": "Passport id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update informations of a passport",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PassportUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "passport_auth": [
+              "write:passport"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Passport"
+        ],
+        "summary": "Delete a passport",
+        "description": "Delete a passport",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "passportId",
+            "in": "path",
+            "description": "Passport id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "passport_auth": [
+              "delete:passport"
+            ]
+          }
+        ]
+      }
+    },
+    "/role": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "List all roles",
+        "description": "List all roles",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Role"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "role_auth": [
+              "read:role"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Create a role",
+        "description": "Create a role",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informations of a role",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "role_auth": [
+              "write:role"
+            ]
+          }
+        ]
+      }
+    },
+    "/roles/{roleId}": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Get a role",
+        "description": "Get a roles",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "description": "Role id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "role_auth": [
+              "read:role"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Update a role",
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "description": "Role id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update informations of a role",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "role_auth": [
+              "write:role"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Delete a role",
+        "description": "Delete a role",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "description": "Role id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "role_auth": [
+              "delete:role"
+            ]
+          }
+        ]
+      }
+    },
+    "/autorite": {
+      "get": {
+        "tags": [
+          "Autorite"
+        ],
+        "summary": "List all autorites",
+        "description": "List all autorites",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Autorite"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "autorite_auth": [
+              "read:autorite"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Autorite"
+        ],
+        "summary": "Create a autorite",
+        "description": "Create a autorite",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informations of a autorite",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Autorite"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Autorite"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "autorite_auth": [
+              "write:autorite"
+            ]
+          }
+        ]
+      }
+    },
+    "/autorites/{autoriteId}": {
+      "get": {
+        "tags": [
+          "Autorite"
+        ],
+        "summary": "Get a autorite",
+        "description": "Get a autorites",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "autoriteId",
+            "in": "path",
+            "description": "Autorite id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Autorite"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "autorite_auth": [
+              "read:autorite"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Autorite"
+        ],
+        "summary": "Update a autorite",
+        "parameters": [
+          {
+            "name": "autoriteId",
+            "in": "path",
+            "description": "Autorite id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update informations of a autorite",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Autorite"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "autorite_auth": [
+              "write:autorite"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Autorite"
+        ],
+        "summary": "Delete a autorite",
+        "description": "Delete a autorite",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "autoriteId",
+            "in": "path",
+            "description": "Autorite id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "autorite_auth": [
+              "delete:autorite"
+            ]
+          }
+        ]
+      }
+    },
+    "/pays": {
+      "get": {
+        "tags": [
+          "Pays"
+        ],
+        "summary": "List all pays",
+        "description": "List all pays",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Pays"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "pays_auth": [
+              "read:pays"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Pays"
+        ],
+        "summary": "Create a pays",
+        "description": "Create a pays",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informations of a pays",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pays"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Pays"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "pays_auth": [
+              "write:pays"
+            ]
+          }
+        ]
+      }
+    },
+    "/pays/{paysId}": {
+      "get": {
+        "tags": [
+          "Pays"
+        ],
+        "summary": "Get a pays",
+        "description": "Get a pays",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "paysId",
+            "in": "path",
+            "description": "Pays id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Pays"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "pays_auth": [
+              "read:pays"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Pays"
+        ],
+        "summary": "Update a pays",
+        "parameters": [
+          {
+            "name": "paysId",
+            "in": "path",
+            "description": "Pays id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update informations of a pays",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pays"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "pays_auth": [
+              "write:pays"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Pays"
+        ],
+        "summary": "Delete a pays",
+        "description": "Delete a pays",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "paysId",
+            "in": "path",
+            "description": "Pays id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "pays_auth": [
+              "delete:pays"
+            ]
+          }
+        ]
+      }
+    },
+    "/action": {
+      "get": {
+        "tags": [
+          "Action"
+        ],
+        "summary": "List all actions",
+        "description": "List all actions",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Action"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "action_auth": [
+              "read:action"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Action"
+        ],
+        "summary": "Create a action",
+        "description": "Create a action",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informations of a action",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Action"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Action"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "action_auth": [
+              "write:action"
+            ]
+          }
+        ]
+      }
+    },
+    "/actions/{actionId}": {
+      "get": {
+        "tags": [
+          "Action"
+        ],
+        "summary": "Get a action",
+        "description": "Get a actions",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "actionId",
+            "in": "path",
+            "description": "Action id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Action"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "action_auth": [
+              "read:action"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Action"
+        ],
+        "summary": "Update a action",
+        "parameters": [
+          {
+            "name": "actionId",
+            "in": "path",
+            "description": "Action id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update informations of a action",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Action"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "action_auth": [
+              "write:action"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Action"
+        ],
+        "summary": "Delete a action",
+        "description": "Delete a action",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "actionId",
+            "in": "path",
+            "description": "Action id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "action_auth": [
+              "delete:action"
+            ]
+          }
+        ]
+      }
+    },
+    "/motif-suppressions": {
+      "get": {
+        "tags": [
+          "MotifSuppression"
+        ],
+        "summary": "List all motifSuppressions",
+        "description": "List all motifSuppressions",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/MotifSuppression"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "motifSuppression_auth": [
+              "read:motifSuppression"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "MotifSuppression"
+        ],
+        "summary": "Create a motifSuppression",
+        "description": "Create a motifSuppression",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informations of a motifSuppression",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MotifSuppression"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/MotifSuppression"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "motifSuppression_auth": [
+              "write:motifSuppression"
+            ]
+          }
+        ]
+      }
+    },
+    "/motif-suppressions/{motifSuppressionId}": {
+      "get": {
+        "tags": [
+          "MotifSuppression"
+        ],
+        "summary": "Get a motifSuppression",
+        "description": "Get a motifSuppressions",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "motifSuppressionId",
+            "in": "path",
+            "description": "MotifSuppression id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/MotifSuppression"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "motifSuppression_auth": [
+              "read:motifSuppression"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "MotifSuppression"
+        ],
+        "summary": "Update a motifSuppression",
+        "parameters": [
+          {
+            "name": "motifSuppressionId",
+            "in": "path",
+            "description": "MotifSuppression id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update informations of a motifSuppression",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MotifSuppression"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "motifSuppression_auth": [
+              "write:motifSuppression"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "MotifSuppression"
+        ],
+        "summary": "Delete a motifSuppression",
+        "description": "Delete a motifSuppression",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "motifSuppressionId",
+            "in": "path",
+            "description": "MotifSuppression id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "motifSuppression_auth": [
+              "delete:motifSuppression"
+            ]
+          }
+        ]
+      }
+    },
+    "/type-requetes": {
+      "get": {
+        "tags": [
+          "TypeRequete"
+        ],
+        "summary": "List all TypeRequetes",
+        "description": "List all TypeRequetes",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TypeRequete"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "typeRequete_auth": [
+              "read:typeRequete"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "TypeRequete"
+        ],
+        "summary": "Create a typeRequete",
+        "description": "Create a typeRequete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informations of a typeRequete",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TypeRequete"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/TypeRequete"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "typeRequete_auth": [
+              "write:typeRequete"
+            ]
+          }
+        ]
+      }
+    },
+    "/type-requetes/{typeRequeteId}": {
+      "get": {
+        "tags": [
+          "TypeRequete"
+        ],
+        "summary": "Get a typeRequete",
+        "description": "Get a typeRequetes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "typeRequeteId",
+            "in": "path",
+            "description": "TypeRequete id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/TypeRequete"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "typeRequete_auth": [
+              "read:typeRequete"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "TypeRequete"
+        ],
+        "summary": "Update a typeRequete",
+        "parameters": [
+          {
+            "name": "typeRequeteId",
+            "in": "path",
+            "description": "TypeRequete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update informations of a typeRequete",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TypeRequete"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "typeRequete_auth": [
+              "write:typeRequete"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "TypeRequete"
+        ],
+        "summary": "Delete a typeRequete",
+        "description": "Delete a typeRequete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "typeRequeteId",
+            "in": "path",
+            "description": "TypeRequete id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "typeRequete_auth": [
+              "delete:typeRequete"
+            ]
+          }
+        ]
+      }
+    },
+    "/status-requetes": {
+      "get": {
+        "tags": [
+          "StatusRequete"
+        ],
+        "summary": "List all statusRequetes",
+        "description": "List all statusRequetes",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/StatusRequete"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "statusRequete_auth": [
+              "read:statusRequete"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "StatusRequete"
+        ],
+        "summary": "Create a statusRequete",
+        "description": "Create a statusRequete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Informations of a statusRequete",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/StatusRequete"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/StatusRequete"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "statusRequete_auth": [
+              "write:statusRequete"
+            ]
+          }
+        ]
+      }
+    },
+    "/status-requetes/{statusRequeteId}": {
+      "get": {
+        "tags": [
+          "StatusRequete"
+        ],
+        "summary": "Get a statusRequete",
+        "description": "Get a statusRequetes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "statusRequeteId",
+            "in": "path",
+            "description": "StatusRequete id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/StatusRequete"
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "statusRequete_auth": [
+              "read:statusRequete"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "StatusRequete"
+        ],
+        "summary": "Update a statusRequete",
+        "parameters": [
+          {
+            "name": "statusRequeteId",
+            "in": "path",
+            "description": "StatusRequete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update informations of a statusRequete",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/StatusRequete"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "statusRequete_auth": [
+              "write:statusRequete"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "StatusRequete"
+        ],
+        "summary": "Delete a statusRequete",
+        "description": "Delete a statusRequete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "statusRequeteId",
+            "in": "path",
+            "description": "StatusRequete id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "statusRequete_auth": [
+              "delete:statusRequete"
+            ]
+          }
+        ]
+      }
+    },
+    "/log/search": {
+      "post": {
+        "tags": [
+          "Log"
+        ],
+        "summary": "Find logs by parameters",
+        "description": "Find all logs by parameters",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "number of results (>= 10)",
+            "required": true,
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number (>= 0)",
+            "required": true,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "in": "body",
+            "name": "criteria",
+            "description": "Search criteria",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LogSearch"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Log"
+              }
+            },
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "operateur_auth": [
+              "read:operateur"
+            ]
+          }
+        ]
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Sign into the system",
+        "description": "Sign into the system",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "credentials",
+            "description": "Operator credentials",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Credentials"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "operateur_auth": [
+              "write:operateur"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Sign out from the system",
+        "description": "Sign out from the system",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid parameter"
+          },
+          "403": {
+            "description": "Not authorized"
+          }
+        },
+        "security": [
+          {
+            "operateur_auth": [
+              "write:operateur"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "Requerant": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string",
+          "format": "string"
+        },
+        "prenom": {
+          "type": "string",
+          "format": "string"
+        },
+        "dateNaissance": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creePar": {
+          "$ref": "#/definitions/Operateur"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Role"
+          }
+        },
+        "creeLe": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sexe": {
+          "type": "string",
+          "format": "string"
+        },
+        "profession": {
+          "type": "string",
+          "format": "string"
+        },
+        "lieuNaissance": {
+          "type": "string",
+          "format": "string"
+        },
+        "nationalite": {
+          "$ref": "#/definitions/Pays"
+        }
+      }
+    },
+    "RequerantCreate": {
+      "type": "object",
+      "required": [
+        "nom",
+        "dateNaissance",
+        "lieuNaissance",
+        "creatorId",
+        "sexe",
+        "paysId"
+      ],
+      "properties": {
+        "nom": {
+          "type": "string",
+          "format": "string"
+        },
+        "prenom": {
+          "type": "string",
+          "format": "string"
+        },
+        "dateNaissance": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creatorId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sexe": {
+          "type": "string",
+          "format": "string"
+        },
+        "profession": {
+          "type": "string",
+          "format": "string",
+          "default": "chaumeur"
+        },
+        "lieuNaissance": {
+          "type": "string",
+          "format": "string"
+        },
+        "paysId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "RequerantRead": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string",
+          "format": "string"
+        },
+        "prenom": {
+          "type": "string",
+          "format": "string"
+        },
+        "dateNaissance": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creeLe": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sexe": {
+          "type": "string",
+          "format": "string"
+        },
+        "profession": {
+          "type": "string",
+          "format": "string"
+        },
+        "lieuNaissance": {
+          "type": "string",
+          "format": "string"
+        },
+        "nationalite": {
+          "type": "string",
+          "format": "string"
+        }
+      }
+    },
+    "RequerantUpdate": {
+      "type": "object",
+      "required": [
+        "nom",
+        "dateNaissance",
+        "lieuNaissance",
+        "sexe",
+        "paysId"
+      ],
+      "properties": {
+        "nom": {
+          "type": "string",
+          "format": "string"
+        },
+        "prenom": {
+          "type": "string",
+          "format": "string"
+        },
+        "dateNaissance": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sexe": {
+          "type": "string",
+          "format": "string"
+        },
+        "profession": {
+          "type": "string",
+          "format": "string",
+          "default": "chaumeur"
+        },
+        "lieuNaissance": {
+          "type": "string",
+          "format": "string"
+        },
+        "nationalite": {
+          "type": "integer"
+        }
+      }
+    },
+    "RequerantSearch": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "format": "string"
+        },
+        "dateNaissance": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creatorId": {
+          "type": "integer"
+        },
+        "creeLeBefore": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creeLeAfter": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "OperateurSearch": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "format": "string"
+        },
+        "creatorId": {
+          "type": "integer"
+        },
+        "creeLeBefore": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creeLeAfter": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Operateur": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string"
+        },
+        "prenom": {
+          "type": "string"
+        },
+        "sexe": {
+          "type": "string"
+        },
+        "nationalite": {
+          "$ref": "#/definitions/Pays"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "creePar": {
+          "$ref": "#/definitions/Operateur"
+        },
+        "creeLe": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Role"
+          }
+        }
+      }
+    },
+    "OperateurCreate": {
+      "type": "object",
+      "required": [
+        "nom",
+        "username",
+        "password",
+        "creatorId",
+        "sexe",
+        "paysId"
+      ],
+      "properties": {
+        "nom": {
+          "type": "string"
+        },
+        "prenom": {
+          "type": "string"
+        },
+        "sexe": {
+          "type": "string"
+        },
+        "paysId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "creatorId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "OperateurRead": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string"
+        },
+        "prenom": {
+          "type": "string"
+        },
+        "sexe": {
+          "type": "string"
+        },
+        "nationalite": {
+          "$ref": "#/definitions/Pays"
+        },
+        "creePar": {
+          "$ref": "#/definitions/Operateur"
+        },
+        "creeLe": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Role"
+          }
+        }
+      }
+    },
+    "Pays": {
+      "type": "object",
+      "required": [
+        "nom"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string",
+          "description": "This property should be unique"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Role": {
+      "type": "object",
+      "required": [
+        "nom"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string",
+          "description": "This property should be unique"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "StatusRequete": {
+      "type": "object",
+      "required": [
+        "nom"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string",
+          "description": "This property should be unique"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "TypeRequete": {
+      "type": "object",
+      "required": [
+        "nom"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string",
+          "description": "This property should be unique"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "MotifSuppression": {
+      "type": "object",
+      "required": [
+        "nom"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string",
+          "description": "This property should be unique"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string"
+        },
+        "sujet": {
+          "type": "string"
+        },
+        "contenu": {
+          "type": "string"
+        }
+      }
+    },
+    "Autorite": {
+      "type": "object",
+      "required": [
+        "nom",
+        "poste"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string"
+        },
+        "prenom": {
+          "type": "string"
+        },
+        "poste": {
+          "type": "string"
+        }
+      }
+    },
+    "Log": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "description": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "action": {
+          "$ref": "#/definitions/Action"
+        },
+        "motif": {
+          "$ref": "#/definitions/MotifSuppression"
+        }
+      }
+    },
+    "Action": {
+      "type": "object",
+      "required": [
+        "nom"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string",
+          "description": "This property should be unique"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Recepisse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "numero": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "requerant": {
+          "$ref": "#/definitions/Requerant"
+        }
+      }
+    },
+    "RecepisseCreate": {
+      "type": "object",
+      "required": [
+        "numero"
+      ],
+      "properties": {
+        "numero": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "RecepisseRead": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "numero": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "RecepisseUpdate": {
+      "type": "object",
+      "required": [
+        "numero"
+      ],
+      "properties": {
+        "numero": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "LogSearch": {
+      "type": "object",
+      "properties": {
+        "keyword": {
+          "type": "string",
+          "format": "string"
+        },
+        "actionId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "dateBefore": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dateAfter": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Requete": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "$ref": "#/definitions/TypeRequete",
+          "description": "updatable=false, nullable=false"
+        },
+        "status": {
+          "$ref": "#/definitions/StatusRequete",
+          "description": "updatable=false, nullable=false"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Actual date time"
+        },
+        "requerant": {
+          "$ref": "#/definitions/Requerant",
+          "description": "updatable=false, nullable=false"
+        },
+        "operateur": {
+          "$ref": "#/definitions/Operateur",
+          "description": "updatable=false, nullable=false"
+        }
+      }
+    },
+    "RequeteCreate": {
+      "type": "object",
+      "required": [
+        "typeId",
+        "statusId"
+      ],
+      "properties": {
+        "typeId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "RequeteUpdate": {
+      "type": "object",
+      "required": [
+        "typeId"
+      ],
+      "properties": {
+        "typeId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "RequeteStatus": {
+      "type": "object",
+      "required": [
+        "statusId"
+      ],
+      "properties": {
+        "statusId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "AssignStatus": {
+      "type": "object",
+      "required": [
+        "requeteIds",
+        "statusId"
+      ],
+      "properties": {
+        "requeteIds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "statusId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "Passport": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "numero": {
+          "type": "string"
+        },
+        "dateDelivrance": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dateExpiration": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lieuDelivrance": {
+          "type": "string"
+        },
+        "delivrePar": {
+          "$ref": "#/definitions/Autorite"
+        },
+        "urlPhoto": {
+          "type": "string"
+        },
+        "requete": {
+          "$ref": "#/definitions/Requete"
+        }
+      }
+    },
+    "PassportCreate": {
+      "type": "object",
+      "required": [
+        "numero",
+        "dateDelivrance",
+        "lieuDelivrance",
+        "autoriteId"
+      ],
+      "properties": {
+        "numero": {
+          "type": "string"
+        },
+        "dateDelivrance": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lieuDelivrance": {
+          "type": "string"
+        },
+        "autoriteId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "PassportRead": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "numero": {
+          "type": "string"
+        },
+        "dateDelivrance": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dateExpiration": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lieuDelivrance": {
+          "type": "string"
+        },
+        "delivrePar": {
+          "$ref": "#/definitions/Autorite"
+        },
+        "urlPhoto": {
+          "type": "string"
+        }
+      }
+    },
+    "PassportUpdate": {
+      "type": "object",
+      "required": [
+        "numero",
+        "dateDelivrance",
+        "lieuDelivrance",
+        "autoriteId"
+      ],
+      "properties": {
+        "numero": {
+          "type": "string"
+        },
+        "dateDelivrance": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lieuDelivrance": {
+          "type": "string"
+        },
+        "autoriteId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "urlPhoto": {
+          "type": "string"
+        }
+      }
+    },
+    "RequeteGroupe": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nom": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "creeLe": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creePar": {
+          "$ref": "#/definitions/Operateur"
+        }
+      }
+    },
+    "RequeteGroupeRead": {
+      "type": "object",
+      "properties": {
+        "nom": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "creeLe": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creePar": {
+          "$ref": "#/definitions/Operateur"
+        }
+      }
+    },
+    "RequeteGroupeCreate": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "RequeteGroupeUpdate": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Credentials": {
+      "type": "object",
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "requerant_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:requerant": "modify a requent",
+        "delete:requerant": "delete a requent",
+        "read:requerant": "read some requerants"
+      }
+    },
+    "operateur_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:operateur": "modify a operateur",
+        "delete:operateur": "delete a operateur",
+        "read:operateur": "read some operateurs"
+      }
+    },
+    "role_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:role": "modify a role",
+        "delete:role": "delete a role",
+        "read:role": "read some roles"
+      }
+    },
+    "autorite_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:autorite": "modify a autorite",
+        "delete:autorite": "delete a autorite",
+        "read:autorite": "read some autorites"
+      }
+    },
+    "action_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:action": "modify a action",
+        "delete:action": "delete a action",
+        "read:action": "read some actions"
+      }
+    },
+    "recepisse_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:recepisse": "modify a action",
+        "delete:recepisse": "delete a action",
+        "read:recepisse": "read some recepisses"
+      }
+    },
+    "typeRequete_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:typeRequete": "modify a action",
+        "delete:typeRequete": "delete a action",
+        "read:typeRequete": "read some typeRequetes"
+      }
+    },
+    "statusRequete_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:statusRequete": "modify a action",
+        "delete:statusRequete": "delete a action",
+        "read:statusRequete": "read some statusRequetes"
+      }
+    },
+    "log_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:log": "modify a log",
+        "delete:log": "delete a log",
+        "read:log": "read some logs"
+      }
+    },
+    "motifSuppression_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:motifSuppression": "modify a motifSuppression",
+        "delete:motifSuppression": "delete a motifSuppression",
+        "read:motifSuppression": "read some motifSuppressions"
+      }
+    },
+    "pays_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pays": "modify a pays",
+        "delete:pays": "delete a pays",
+        "read:pays": "read some pays"
+      }
+    },
+    "requete_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:requete": "modify a requete",
+        "delete:requete": "delete a requete",
+        "read:requete": "read some requetes"
+      }
+    },
+    "passport_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:passport": "modify a passport",
+        "delete:passport": "delete a passport",
+        "read:passport": "read some passports"
+      }
+    },
+    "recipisse_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:recepisse": "modify a recepisse",
+        "delete:recepisse": "delete a recepisse"
+      }
+    },
+    "requeteGroupe_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:requeteGroupe": "modify a requeteGroupe",
+        "delete:requeteGroupe": "delete a requeteGroupe",
+        "read:requeteGroupe": "read some requeteGroupe"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
