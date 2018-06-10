@@ -1,4 +1,4 @@
-package com.spectech.ambacambackend;
+package com.ambacam;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,13 +17,8 @@ import org.springframework.test.context.web.ServletTestExecutionListener;
 		TransactionalTestExecutionListener.class, WithSecurityContextTestExecutionListener.class })
 public class AmbacamBackendApplicationTests extends AbstractJUnit4SpringContextTests {
 
-	protected static Integer FIRST_MESSAGE_ID = 1;
-	protected static Integer SECOND_MESSAGE_ID = 2;
-	protected static Integer THIRD_MESSAGE_ID = 3;
-	protected static String EDITTED_CONTENT = "EDITED";
-
 	@Configuration
-	@ComponentScan("com.spectech.ambacambackend.*")
+	@ComponentScan("com.ambacam.*")
 	public static class SpringConfig {
 
 	}
