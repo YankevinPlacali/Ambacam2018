@@ -15,7 +15,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.2.RELEASE</version>
+		<version>1.5.13.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -25,7 +25,7 @@
 		<java.version>1.8</java.version>
 		<unit-tests.skip>false</unit-tests.skip>
 		<integration-tests.skip>true</integration-tests.skip>
-	</properties>
+ </properties>
 
 	<dependencies>
 		<!-- Security dependencies -->
@@ -35,6 +35,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		
+        <dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-jpa</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
@@ -59,15 +65,26 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+		    <groupId>io.rest-assured</groupId>
+		    <artifactId>rest-assured</artifactId>
+		    <version>3.0.0</version>
+		    <scope>test</scope>
+		</dependency>		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+	    <dependency>
+		    <groupId>javax.ws.rs</groupId>
+		    <artifactId>javax.ws.rs-api</artifactId>
+		    <version>2.1</version>
+		</dependency> 
 	</dependencies>
 
 	<build>
@@ -75,30 +92,32 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+			</plugin>	
 			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+	       	    <artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<skipTests>${unit-tests.skip}</skipTests>
-					<excludes>
-						<exclude>**/*IT.java</exclude>
-					</excludes>
+				    <skipTests>${skip.unit.tests}</skipTests>
+				    <includes>
+				        <include>**/*Test.java</include>
+				    </includes>
 				</configuration>
-			</plugin>
+		    </plugin>
 			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+				    <skipTests>${skip.integration.tests}</skipTests>
+					<includes>
+						<include>**/*IT.java</include>
+					</includes>
+				</configuration>
 				<executions>
 					<execution>
 						<id>integration-test</id>
 						<goals>
 							<goal>integration-test</goal>
 						</goals>
-						<configuration>
-							<skipTests>${integration-tests.skip}</skipTests>
-							<includes>
-								<include>**/*IT.class</include>
-							</includes>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
