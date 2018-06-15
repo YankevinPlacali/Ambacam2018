@@ -15,7 +15,7 @@ import com.ambacam.repository.RoleRepository;
 @Transactional(rollbackFor = Exception.class)
 public class RoleService {
 	@Autowired
-	RoleRepository roleRepository;
+	private RoleRepository roleRepository;
 
 	/**
 	 * Create a role

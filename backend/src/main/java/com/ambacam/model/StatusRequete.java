@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class Role implements Serializable {
+public class StatusRequete implements Serializable {
 
 	private static final long serialVersionUID = -8019398584857375323L;
 
@@ -28,10 +28,10 @@ public class Role implements Serializable {
 	@Column(columnDefinition = "varchar")
 	private String description;
 
-	public Role() {
+	public StatusRequete() {
 	}
 
-	public Role(String nom) {
+	public StatusRequete(String nom) {
 		this.nom = nom;
 	}
 
@@ -43,7 +43,7 @@ public class Role implements Serializable {
 		this.id = id;
 	}
 
-	public Role id(Long id) {
+	public StatusRequete id(Long id) {
 		this.id = id;
 		return this;
 	}
@@ -56,7 +56,7 @@ public class Role implements Serializable {
 		this.nom = nom;
 	}
 
-	public Role nom(String nom) {
+	public StatusRequete nom(String nom) {
 		this.nom = nom;
 		return this;
 	}
@@ -69,7 +69,7 @@ public class Role implements Serializable {
 		this.description = description;
 	}
 
-	public Role description(String description) {
+	public StatusRequete description(String description) {
 		this.description = description;
 		return this;
 	}
