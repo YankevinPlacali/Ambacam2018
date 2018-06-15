@@ -4,10 +4,10 @@ import javax.inject.Named;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ambacam.model.Role;
+import com.ambacam.model.StatusRequete;
 
 @Named
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface StatusRequeteRepository extends JpaRepository<StatusRequete, Long> {
 
 	int countByNom(String nom);
 

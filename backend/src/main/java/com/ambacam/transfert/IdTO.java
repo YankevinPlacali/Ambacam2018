@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 public class IdTO<T> {
 
-	@NotNull(message = "le id ne doit pas etre null")
+	@NotNull(message = "The id must not be null")
 	private T id;
 
 	public IdTO(T id) {

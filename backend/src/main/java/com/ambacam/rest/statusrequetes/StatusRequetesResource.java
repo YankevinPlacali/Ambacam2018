@@ -1,4 +1,4 @@
-package com.ambacam.rest.roles;
+package com.ambacam.rest.statusrequetes;
 
 import java.util.List;
 
@@ -16,36 +16,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ambacam.model.Role;
+import com.ambacam.model.StatusRequete;
 import com.ambacam.rest.ApiConstants;
-import com.ambacam.service.RoleService;
+import com.ambacam.service.StatusRequeteService;
 
 @RestController
-@RequestMapping(ApiConstants.ROLE_COLLECTION)
+@RequestMapping(ApiConstants.STATUS_REQUETE_COLLECTION)
 @Validated
-public class RolesResource {
+public class StatusRequetesResource {
 
-	private static final Logger log = LoggerFactory.getLogger(RolesResource.class);
+	private static final Logger log = LoggerFactory.getLogger(StatusRequetesResource.class);
 
 	@Autowired
-	private RoleService roleService;
+	private StatusRequeteService statusRequeteService;
 
 	@RequestMapping(method = RequestMethod.POST)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Role create(@RequestBody @Valid Role role) {
-		log.info("Create a role");
+	public StatusRequete create(@RequestBody @Valid StatusRequete statusRequete) {
+		log.info("Create a statusRequete");
 		// create
-		Role created = roleService.create(role);
+		StatusRequete created = statusRequeteService.create(statusRequete);
 		return created;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Role> list() {
-		log.info("List all roles");
+	public List<StatusRequete> list() {
+		log.info("List all statusRequetes");
 
-		return roleService.list();
+		return statusRequeteService.list();
 
 	}
 }
