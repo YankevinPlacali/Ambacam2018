@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.ambacam.model.MotifSuppression;
 import com.ambacam.model.Role;
 import com.ambacam.model.StatusRequete;
 
@@ -41,5 +42,12 @@ public class ItBase {
 		StatusRequete statusRequete = new StatusRequete().nom("nom-" + random.nextLong())
 				.description("description-" + random.nextLong());
 		return statusRequete;
+	}
+
+	protected MotifSuppression buildMotifSuppression() {
+
+		MotifSuppression motifSuppression = new MotifSuppression().nom("nom-" + random.nextLong())
+				.description("description-" + random.nextLong());
+		return motifSuppression;
 	}
 }
