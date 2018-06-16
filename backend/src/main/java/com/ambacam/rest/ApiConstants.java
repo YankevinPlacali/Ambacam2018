@@ -9,4 +9,9 @@ public class ApiConstants {
 	public static final String STATUS_REQUETE_COLLECTION = "/status-requetes";
 
 	public static final String STATUS_REQUETE_ITEM = STATUS_REQUETE_COLLECTION + "/{statusRequeteId}";
+
+	public static final String MOTIF_SUPPRESSION_COLLECTION = "/motif-suppressions";
+
+	public static final String MOTIF_SUPPRESSION_ITEM = MOTIF_SUPPRESSION_COLLECTION + "/{motifSuppressionId}";
+
 }
