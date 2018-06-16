@@ -10,12 +10,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
+<<<<<<< 45045f509d6e609530717571a184e31d2addf7a8
 import com.ambacam.model.MotifSuppression;
-import java.util.Random;
 import com.ambacam.model.Role;
 import com.ambacam.model.StatusRequete;
 
 import io.restassured.RestAssured;
+=======
+import java.util.Random;
+>>>>>>>  #24 implementer-les-endpoints-de-l-objet-action
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -45,6 +48,14 @@ public class ItBase {
         StatusRequete statusRequete = new StatusRequete().nom("nom-" + random.nextLong())
                 .description("description-" + random.nextLong());
         return statusRequete;
+    }
+
+    protected Action buildAction() {
+
+<<<<<<< 45045f509d6e609530717571a184e31d2addf7a8
+		StatusRequete statusRequete = new StatusRequete().nom("nom-" + random.nextLong())
+				.description("description-" + random.nextLong());
+		return statusRequete;
 	}
 
 	protected MotifSuppression buildMotifSuppression() {
@@ -52,11 +63,10 @@ public class ItBase {
 		MotifSuppression motifSuppression = new MotifSuppression().nom("nom-" + random.nextLong())
 				.description("description-" + random.nextLong());
 		return motifSuppression;
-    }
-
-    protected Action buildAction() {
-
+	}
+=======
         Action action = new Action().nom("nom-" + random.nextLong()).description("description-" + random.nextLong());
         return action;
     }
+>>>>>>>  #24 implementer-les-endpoints-de-l-objet-action
 }

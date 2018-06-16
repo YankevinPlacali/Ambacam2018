@@ -10,12 +10,14 @@ public class ApiConstants {
 
 	public static final String STATUS_REQUETE_ITEM = STATUS_REQUETE_COLLECTION + "/{statusRequeteId}";
 
+<<<<<<< 45045f509d6e609530717571a184e31d2addf7a8
 	public static final String MOTIF_SUPPRESSION_COLLECTION = "/motif-suppressions";
 
 	public static final String MOTIF_SUPPRESSION_ITEM = MOTIF_SUPPRESSION_COLLECTION + "/{motifSuppressionId}";
-	
-	public static final String ACTION_COLLECTION = "/acsions";
-	
-	public static final String ACTION_ITEM = ACTION_COLLECTION + "/{actionId}";
 
+=======
+	public static final String ACTION_COLLECTION = "/actions";
+
+	public static final String ACTION_ITEM = ACTION_COLLECTION + "/{actionId}";
+>>>>>>>  #24 implementer-les-endpoints-de-l-objet-action
 }
