@@ -2147,7 +2147,7 @@
         ]
       }
     },
-    "/roles": {
+    "/role": {
       "get": {
         "tags": [
           "Role"
@@ -2355,7 +2355,7 @@
         ]
       }
     },
-    "/autorites": {
+    "/autorite": {
       "get": {
         "tags": [
           "Autorite"
@@ -2771,7 +2771,7 @@
         ]
       }
     },
-    "/actions": {
+    "/action": {
       "get": {
         "tags": [
           "Action"

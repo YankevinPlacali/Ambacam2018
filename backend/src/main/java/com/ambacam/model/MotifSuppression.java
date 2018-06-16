@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 public class MotifSuppression implements Serializable {
 
-	private static final long serialVersionUID = 1572424281139018465L;
+	private static final long serialVersionUID = -8019398584857375323L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +22,7 @@ public class MotifSuppression implements Serializable {
 
 	@NotEmpty(message = "The name must not be empty")
 	@NotNull(message = "The name must not be null")
-	@Column(columnDefinition = "VARCHAR", nullable = false)
+	@Column(columnDefinition = "varchar", nullable = false)
 	private String nom;
 
 	@Column(columnDefinition = "varchar")
@@ -73,5 +73,4 @@ public class MotifSuppression implements Serializable {
 		this.description = description;
 		return this;
 	}
-
 }

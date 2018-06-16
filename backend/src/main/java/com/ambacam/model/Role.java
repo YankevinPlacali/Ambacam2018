@@ -22,7 +22,7 @@ public class Role implements Serializable {
 
 	@NotEmpty(message = "The name must not be empty")
 	@NotNull(message = "The name must not be null")
-	@Column(columnDefinition = "VARCHAR", nullable = false)
+	@Column(columnDefinition = "varchar", nullable = false)
 	private String nom;
 
 	@Column(columnDefinition = "varchar")
