@@ -19,3 +19,4 @@ bin/
 # Maven
 log/
 target/
+/.apt_generated/

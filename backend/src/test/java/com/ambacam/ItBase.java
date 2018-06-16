@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ambacam.model.Action;
+import com.ambacam.model.Autorite;
 import com.ambacam.model.Log;
 import com.ambacam.model.LogActeur;
 import com.ambacam.model.MotifSuppression;
@@ -74,5 +75,12 @@ public class ItBase {
 		item.setProperties(properties);
 
 		return item;
+	}
+
+	protected Autorite buildAutorite() {
+
+		Autorite autorite = new Autorite().nom("nom-" + random.nextLong()).prenom("prenom-" + random.nextLong())
+				.poste("poste-" + random.nextLong());
+		return autorite;
 	}
 }

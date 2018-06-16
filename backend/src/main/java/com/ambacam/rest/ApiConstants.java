@@ -20,4 +20,7 @@ public class ApiConstants {
 
 	public static final String LOG_COLLECTION = "/logs/search";
 
+	public static final String AUTORITE_COLLECTION = "/autorites";
+
+	public static final String AUTORITE_ITEM = AUTORITE_COLLECTION + "/{autoriteId}";
 }
