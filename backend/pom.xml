@@ -9,7 +9,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>ambacam-backend</name>
+	<nom>ambacam-backend</nom>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>

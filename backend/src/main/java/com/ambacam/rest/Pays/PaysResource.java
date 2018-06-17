@@ -1,8 +1,8 @@
 package com.ambacam.rest.Pays;
 
-import com.ambacam.model.Country;
+import com.ambacam.model.Pays;
 import com.ambacam.rest.ApiConstants;
-import com.ambacam.service.CountryService;
+import com.ambacam.service.PaysService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,33 +14,33 @@ import javax.ws.rs.core.MediaType;
 
 @RestController
 @RequestMapping(ApiConstants.PAYS_ITEM)
-public class CountryResource {
+public class PaysResource {
 
-    private static final Logger log = LoggerFactory.getLogger(CountryResource.class);
+    private static final Logger log = LoggerFactory.getLogger(PaysResource.class);
 
     @Autowired
-    private CountryService countryService;
+    private PaysService paysService;
 
 
     @RequestMapping(method = RequestMethod.GET)
     @Produces(MediaType.APPLICATION_JSON)
-    public Country get(@PathVariable("countryId") Long countryId){
-        log.info("Get a country [id={}]", countryId);
+    public Pays get(@PathVariable("paysId") Long paysId){
+        log.info("Get a pays [id={}]", paysId);
 
-       return countryService.get(countryId);
+       return paysService.get(paysId);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public void delete(@PathVariable("countryId") Long countryId) {
-        log.info("Delete a country [id={}]", countryId);
+    public void delete(@PathVariable("paysId") Long paysId) {
+        log.info("Delete a pays [id={}]", paysId);
 
-        countryService.delete(countryId);
+        paysService.delete(paysId);
     }
 
-    public void update(@PathVariable("countryId") Long countryId, @RequestBody @Valid Country upsate){
-        log.info("Update a country [id={}]", countryId);
+    public void update(@PathVariable("paysId") Long paysId, @RequestBody @Valid Pays update){
+        log.info("Update a pays [id={}]", paysId);
 
-        countryService.update(countryId, upsate);
+        paysService.update(paysId, update);
     }
 
 }

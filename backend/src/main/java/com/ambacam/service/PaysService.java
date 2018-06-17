@@ -2,8 +2,8 @@ package com.ambacam.service;
 
 import com.ambacam.exception.ResourceBadRequestException;
 import com.ambacam.exception.ResourceNotFoundException;
-import com.ambacam.model.Country;
-import com.ambacam.repository.CountryRepository;
+import com.ambacam.model.Pays;
+import com.ambacam.repository.PaysRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,113 +12,113 @@ import java.util.List;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class CountryService {
+public class PaysService {
 
     @Autowired
-    CountryRepository countryRepository;
+    PaysRepository paysRepository;
 
     /**
-     * Create a country
+     * Create a pays
      *
-     * @param country
+     * @param pays
      *
-     * @return Country
-     * @throws ResourceBadRequestException if a country with the name already exist
+     * @return Pays
+     * @throws ResourceBadRequestException if a pays with the nom already exist
      */
-    public Country create(Country country){
+    public Pays create(Pays pays){
 
-        checkConsistency(country);
+        checkConsistency(pays);
 
-        country.setId(null);
+        pays.setId(null);
 
-        return countryRepository.save(country);
+        return paysRepository.save(pays);
     }
 
     /**
-     * Get a country
+     * Get a pays
      *
      * @param id
      *
-     * @return Country
+     * @return Pays
      *
-     * @throws ResourceNotFoundException if the country does not exist
+     * @throws ResourceNotFoundException if the pays does not exist
      */
-    public Country get(long id) {
-        return findCountry(id);
+    public Pays get(long id) {
+        return findPays(id);
     }
 
     /**
-     * List all roles
+     * List all pays
      *
      * @return
      */
-    public List<Country> list(){
+    public List<Pays> list(){
 
-        return  countryRepository.findAll();
+        return  paysRepository.findAll();
     }
 
 
     /**
-     * Update a country
+     * Update a pays
      *
      * @param id
      *
      * @param update
      *
-     * @return Country
+     * @return Pays
      *
-     * @throws ResourceNotFoundException if the country is not found
-     * @throws ResourceBadRequestException if a country with the name already exist
+     * @throws ResourceNotFoundException if the pays is not found
+     * @throws ResourceBadRequestException if a pays with the nom already exist
      */
-    public Country update(Long id, Country update){
+    public Pays update(Long id, Pays update){
 
-        Country country = findCountry(id);
+        Pays pays = findPays(id);
 
-        if (!country.getName().equals(update.getName())){
+        if (!pays.getNom().equals(update.getNom())){
             checkConsistency(update);
         }
 
         update.setId(id);
-        return  countryRepository.save(update);
+        return  paysRepository.save(update);
     }
 
 
     /**
-     * Delete a country
+     * Delete a pays
      *
      * @param id
      *
      * @return
      *
-     * @throws ResourceNotFoundException if the country is not found
+     * @throws ResourceNotFoundException if the pays is not found
      */
     public void delete(Long id) {
-        //find country
-        findCountry(id);
-        countryRepository.delete(id);
+        //find pays
+        findPays(id);
+        paysRepository.delete(id);
     }
 
 
-    private Country findCountry(Long id) {
+    private Pays findPays(Long id) {
 
-        //find country
-        Country country = countryRepository.findOne(id);
-        if (country == null){
+        //find pays
+        Pays pays = paysRepository.findOne(id);
+        if (pays == null){
             throw new ResourceNotFoundException(
-                    "The country " + id.toString() + " does not exist"
+                    "The pays " + id.toString() + " does not exist"
             );
         }
-        return country;
+        return pays;
     }
 
 
 
-    private void checkConsistency(Country country) {
+    private void checkConsistency(Pays pays) {
 
-        if (countryRepository.countByName(country.getName()) > 0){
+        if (paysRepository.countByNom(pays.getNom()) > 0){
 
             throw new ResourceBadRequestException(
-                    String.format("A country with a name '%s' exist already", country.getName())
+                    String.format("A pays with a nom '%s' exist already", pays.getNom())
             );
         }
     }

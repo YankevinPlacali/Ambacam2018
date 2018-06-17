@@ -20,8 +20,8 @@ public class StatusRequete implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@NotEmpty(message = "The name must not be empty")
-	@NotNull(message = "The name must not be null")
+	@NotEmpty(message = "The nom must not be empty")
+	@NotNull(message = "The nom must not be null")
 	@Column(columnDefinition = "VARCHAR", nullable = false)
 	private String nom;
 

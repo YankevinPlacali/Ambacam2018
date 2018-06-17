@@ -23,7 +23,7 @@ public class RoleService {
 	 * @param role
 	 * 
 	 * @return
-	 * @throws ResourceBadRequestException if a role with the name already exist
+	 * @throws ResourceBadRequestException if a role with the nom already exist
 	 */
 	public Role create(Role role) {
 
@@ -67,7 +67,7 @@ public class RoleService {
 	 * @return
 	 * 
 	 * @throws ResourceNotFoundException if the role is not found
-	 * @throws ResourceBadRequestException if a role with the name already exist
+	 * @throws ResourceBadRequestException if a role with the nom already exist
 	 */
 	public Role update(Long id, Role update) {
 
@@ -111,7 +111,7 @@ public class RoleService {
 
 		if (roleRepository.countByNom(role.getNom()) > 0) {
 			throw new ResourceBadRequestException(
-					String.format("A role with a name '%s' exist already", role.getNom()));
+					String.format("A role with a nom '%s' exist already", role.getNom()));
 		}
 	}
 

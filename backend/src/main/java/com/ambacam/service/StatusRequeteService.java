@@ -23,7 +23,7 @@ public class StatusRequeteService {
 	 * @param statusRequete
 	 * 
 	 * @return
-	 * @throws ResourceBadRequestException if a statusRequete with the name already exist
+	 * @throws ResourceBadRequestException if a statusRequete with the nom already exist
 	 */
 	public StatusRequete create(StatusRequete statusRequete) {
 
@@ -67,7 +67,7 @@ public class StatusRequeteService {
 	 * @return
 	 * 
 	 * @throws ResourceNotFoundException if the statusRequete is not found
-	 * @throws ResourceBadRequestException if a statusRequete with the name already exist
+	 * @throws ResourceBadRequestException if a statusRequete with the nom already exist
 	 */
 	public StatusRequete update(Long id, StatusRequete update) {
 
@@ -111,7 +111,7 @@ public class StatusRequeteService {
 
 		if (statusRequeteRepository.countByNom(statusRequete.getNom()) > 0) {
 			throw new ResourceBadRequestException(
-					String.format("A statusRequete with a name '%s' exist already", statusRequete.getNom()));
+					String.format("A statusRequete with a nom '%s' exist already", statusRequete.getNom()));
 		}
 	}
 

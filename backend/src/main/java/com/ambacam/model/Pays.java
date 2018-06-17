@@ -8,23 +8,23 @@ import java.io.Serializable;
 
 
 @Entity
-public class Country implements Serializable {
+public class Pays implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty(message = "The name must not be empty")
-    @NotNull(message = "The name must not be null")
+    @NotEmpty(message = "The nom must not be empty")
+    @NotNull(message = "The nom must not be null")
     @Column(columnDefinition = "VARCHAR", nullable = false)
-    private String name;
+    private String nom;
 
-    public Country() {
+    public Pays() {
     }
 
-    public Country(String name) {
+    public Pays(String nom) {
         super();
-        this.name = name;
+        this.nom = nom;
     }
 
     public Long getId() {
@@ -35,21 +35,21 @@ public class Country implements Serializable {
         this.id = id;
     }
 
-    public Country id(Long id){
+    public Pays id(Long id){
         this.id = id;
         return this;
     }
 
-    public String getName() {
-        return name;
+    public String getNom() {
+        return nom;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public Country name(String name){
-        this.name = name;
+    public Pays nom(String nom){
+        this.nom = nom;
         return this;
     }
 }

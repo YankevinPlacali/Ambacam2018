@@ -1,14 +1,13 @@
 package com.ambacam.repository;
 
 
-import com.ambacam.model.Country;
+import com.ambacam.model.Pays;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import javax.inject.Named;
 
 @Named
-public interface CountryRepository extends JpaRepository<Country, Long>, JpaSpecificationExecutor<Country> {
+public interface PaysRepository extends JpaRepository<Pays, Long> {
 
-    int countByName(String name);
+    int countByNom(String nom);
 }

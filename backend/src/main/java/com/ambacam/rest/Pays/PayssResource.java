@@ -1,9 +1,9 @@
 package com.ambacam.rest.Pays;
 
 
-import com.ambacam.model.Country;
+import com.ambacam.model.Pays;
 import com.ambacam.rest.ApiConstants;
-import com.ambacam.service.CountryService;
+import com.ambacam.service.PaysService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,34 +22,34 @@ import java.util.List;
 @RestController
 @RequestMapping(ApiConstants.PAYS_COLLECTION)
 @Validated
-public class CountriesResource {
+public class PayssResource {
 
-    private static final Logger log = LoggerFactory.getLogger(CountriesResource.class);
-
-    @Autowired
-    private CountryService countryService;
+    private static final Logger log = LoggerFactory.getLogger(PayssResource.class);
 
     @Autowired
-    CountryResource countryResource;
+    private PaysService paysService;
+
+    @Autowired
+    PaysResource paysResource;
 
 
     @RequestMapping(method = RequestMethod.POST)
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Country create(@RequestBody @Valid Country entity){
+    public Pays create(@RequestBody @Valid Pays entity){
 
         log.info("Create a country");
-        log.debug(String.format("{}", entity.getName()));
+        log.debug(String.format("{}", entity.getNom()));
 
-        Country created = countryService.create(entity);
+        Pays created = paysService.create(entity);
         return created;
     }
 
 
-    public List<Country> list(){
+    public List<Pays> list(){
 
         log.info("List all Countries");
 
-        return countryService.list();
+        return paysService.list();
     }
 }
