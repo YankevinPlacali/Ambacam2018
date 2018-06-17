@@ -50,7 +50,7 @@ public class PaysService {
     /**
      * List all pays
      *
-     * @return
+     * @return The list of all Pays
      */
     public List<Pays> list(){
 
@@ -61,11 +61,11 @@ public class PaysService {
     /**
      * Update a pays
      *
-     * @param id
+     * @param id The id of the Pays
      *
-     * @param update
+     * @param update The Pays to be updated
      *
-     * @return Pays
+     * @return Pays The updated Pays
      *
      * @throws ResourceNotFoundException if the pays is not found
      * @throws ResourceBadRequestException if a pays with the nom already exist
@@ -86,9 +86,7 @@ public class PaysService {
     /**
      * Delete a pays
      *
-     * @param id
-     *
-     * @return
+     * @param id The id of the Pays to be deleted
      *
      * @throws ResourceNotFoundException if the pays is not found
      */
