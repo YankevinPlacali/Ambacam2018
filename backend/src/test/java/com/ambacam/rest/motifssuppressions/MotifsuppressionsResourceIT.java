@@ -50,8 +50,9 @@ public class MotifsuppressionsResourceIT extends ItBase {
 	@Test
 	public void create() {
 		MotifSuppression create = buildMotifSuppression();
-		int id = given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION)
-				.then().log().body().statusCode(200).extract().body().path("id");
+		int id = given().contentType(ContentType.JSON).body(create).log().body()
+				.post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION).then().log().body().statusCode(200).extract().body()
+				.path("id");
 
 		// check that the motifSuppression has been saved
 		MotifSuppression actual = repository.findOne(Integer.toUnsignedLong(id));
@@ -64,36 +65,38 @@ public class MotifsuppressionsResourceIT extends ItBase {
 	public void createNomNull() {
 		MotifSuppression create = buildMotifSuppression();
 		create.setNom(null);
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION).then().log()
-				.body().statusCode(400);
+		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
 	public void createNomVide() {
 		MotifSuppression create = buildMotifSuppression();
 		create.setNom("");
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION).then().log()
-				.body().statusCode(400);
+		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
 	public void createMemeNom() {
 		MotifSuppression create = buildMotifSuppression();
 		create.setNom(motifSuppression1.getNom());
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION).then().log()
-				.body().statusCode(400);
+		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
 	public void list() {
-		given().get(ApiConstants.MOTIF_SUPPRESSION_COLLECTION).then().log().body().statusCode(200).body("size()", is(equalTo(2)))
-				.body("id", containsInAnyOrder(motifSuppression1.getId().intValue(), motifSuppression2.getId().intValue()));
+		given().get(ApiConstants.MOTIF_SUPPRESSION_COLLECTION).then().log().body().statusCode(200)
+				.body("size()", is(equalTo(2))).body("id",
+						containsInAnyOrder(motifSuppression1.getId().intValue(), motifSuppression2.getId().intValue()));
 	}
 
 	@Test
 	public void get() {
 		given().get(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression2.getId()).then().log().body().statusCode(200)
-				.body("id", is(equalTo(motifSuppression2.getId().intValue()))).body("nom", is(equalTo(motifSuppression2.getNom())))
+				.body("id", is(equalTo(motifSuppression2.getId().intValue())))
+				.body("nom", is(equalTo(motifSuppression2.getNom())))
 				.body("description", is(equalTo(motifSuppression2.getDescription())));
 	}
 
@@ -120,8 +123,9 @@ public class MotifsuppressionsResourceIT extends ItBase {
 	@Test
 	public void update() {
 		MotifSuppression update = buildMotifSuppression();
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression2.getId()).then().log()
-				.body().statusCode(200);
+		given().contentType(ContentType.JSON).body(update)
+				.put(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression2.getId()).then().log().body()
+				.statusCode(200);
 
 		// check that the motifSuppression has been saved
 		MotifSuppression actual = repository.findOne(motifSuppression2.getId());
@@ -134,16 +138,17 @@ public class MotifsuppressionsResourceIT extends ItBase {
 	@Test
 	public void updateNotFound() {
 		MotifSuppression update = buildMotifSuppression();
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.MOTIF_SUPPRESSION_ITEM, random.nextLong()).then().log()
-				.body().statusCode(404);
+		given().contentType(ContentType.JSON).body(update).put(ApiConstants.MOTIF_SUPPRESSION_ITEM, random.nextLong())
+				.then().log().body().statusCode(404);
 	}
 
 	@Test
 	public void updateMemeNom() {
 		MotifSuppression update = buildMotifSuppression();
 		update.setNom(motifSuppression1.getNom());
-		given().contentType(ContentType.JSON).body(update).log().body().put(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression1.getId())
-				.then().log().body().statusCode(200);
+		given().contentType(ContentType.JSON).body(update).log().body()
+				.put(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression1.getId()).then().log().body()
+				.statusCode(200);
 
 		// check that the motifSuppression has been saved
 		MotifSuppression actual = repository.findOne(motifSuppression1.getId());
@@ -156,8 +161,8 @@ public class MotifsuppressionsResourceIT extends ItBase {
 		MotifSuppression update = buildMotifSuppression();
 		update.setNom(motifSuppression2.getNom());
 		given().contentType(ContentType.JSON).body(update).log().body()
-				.put(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression1.getId())
-				.then().log().body().statusCode(400);
+				.put(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression1.getId()).then().log().body()
+				.statusCode(400);
 	}
 
 }
