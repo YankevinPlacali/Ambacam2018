@@ -13,9 +13,9 @@ public class ApiConstants {
 	public static final String MOTIF_SUPPRESSION_COLLECTION = "/motif-suppressions";
 
 	public static final String MOTIF_SUPPRESSION_ITEM = MOTIF_SUPPRESSION_COLLECTION + "/{motifSuppressionId}";
-	
+
 	public static final String ACTION_COLLECTION = "/acsions";
-	
+
 	public static final String ACTION_ITEM = ACTION_COLLECTION + "/{actionId}";
 
 }
