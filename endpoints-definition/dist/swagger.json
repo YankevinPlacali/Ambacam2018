@@ -310,6 +310,22 @@
         ],
         "parameters": [
           {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results (>= 10)",
+            "required": false,
+            "default": 10,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "default": 0,
+            "type": "integer"
+          },
+          {
             "in": "body",
             "name": "criteria",
             "description": "Search criteria",
@@ -322,10 +338,7 @@
         "responses": {
           "200": {
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Requerant"
-              }
+              "$ref": "#/definitions/RequerantSearchTO"
             },
             "description": "successful operation"
           },
@@ -579,6 +592,22 @@
         ],
         "parameters": [
           {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results (>= 10)",
+            "required": false,
+            "default": 10,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "default": 0,
+            "type": "integer"
+          },
+          {
             "in": "body",
             "name": "criteria",
             "description": "Search criteria",
@@ -591,10 +620,7 @@
         "responses": {
           "200": {
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Requerant"
-              }
+              "$ref": "#/definitions/OperateurSearchTO"
             },
             "description": "successful operation"
           },
@@ -2121,7 +2147,7 @@
         ]
       }
     },
-    "/roles": {
+    "/role": {
       "get": {
         "tags": [
           "Role"
@@ -2329,7 +2355,7 @@
         ]
       }
     },
-    "/autorites": {
+    "/autorite": {
       "get": {
         "tags": [
           "Autorite"
@@ -2745,7 +2771,7 @@
         ]
       }
     },
-    "/actions": {
+    "/action": {
       "get": {
         "tags": [
           "Action"
@@ -3577,7 +3603,7 @@
         ]
       }
     },
-    "/logs/search": {
+    "/log/search": {
       "post": {
         "tags": [
           "Log"
@@ -3592,7 +3618,6 @@
             "name": "limit",
             "in": "query",
             "description": "number of results (>= 10)",
-            "required": true,
             "type": "integer",
             "default": 10
           },
@@ -3600,7 +3625,6 @@
             "name": "page",
             "in": "query",
             "description": "page number (>= 0)",
-            "required": true,
             "type": "integer",
             "default": 0
           },
@@ -3617,10 +3641,7 @@
         "responses": {
           "200": {
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Log"
-              }
+              "$ref": "#/definitions/LogSearchTO"
             },
             "description": "successful operation"
           },
@@ -3911,6 +3932,23 @@
         }
       }
     },
+    "RequerantSearchTO": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "totalPages": {
+          "type": "integer"
+        },
+        "requerants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Requerant"
+          }
+        }
+      }
+    },
     "OperateurSearch": {
       "type": "object",
       "properties": {
@@ -3967,6 +4005,23 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Role"
+          }
+        }
+      }
+    },
+    "OperateurSearchTO": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "totalPages": {
+          "type": "integer"
+        },
+        "operateurs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Operateur"
           }
         }
       }
@@ -4176,28 +4231,6 @@
         }
       }
     },
-    "Log": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "description": {
-          "type": "string"
-        },
-        "date": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "action": {
-          "$ref": "#/definitions/Action"
-        },
-        "motif": {
-          "$ref": "#/definitions/MotifSuppression"
-        }
-      }
-    },
     "Action": {
       "type": "object",
       "required": [
@@ -4270,6 +4303,22 @@
         }
       }
     },
+    "Log": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "description": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
     "LogSearch": {
       "type": "object",
       "properties": {
@@ -4288,6 +4337,23 @@
         "dateAfter": {
           "type": "string",
           "format": "date-time"
+        }
+      }
+    },
+    "LogSearchTO": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "totalPages": {
+          "type": "integer"
+        },
+        "logs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Log"
+          }
         }
       }
     },
