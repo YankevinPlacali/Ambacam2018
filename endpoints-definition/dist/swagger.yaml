@@ -1376,7 +1376,7 @@ paths:
       security:
         - passport_auth:
             - 'delete:passport'
-  /role:
+  /roles:
     get:
       tags:
         - Role
@@ -1505,7 +1505,7 @@ paths:
       security:
         - role_auth:
             - 'delete:role'
-  /autorite:
+  /autorites:
     get:
       tags:
         - Autorite
@@ -1763,7 +1763,7 @@ paths:
       security:
         - pays_auth:
             - 'delete:pays'
-  /action:
+  /actions:
     get:
       tags:
         - Action
@@ -2341,6 +2341,7 @@ paths:
       security:
         - operateur_auth:
             - 'write:operateur'
+  /logout:
     delete:
       tags:
         - Authentication
