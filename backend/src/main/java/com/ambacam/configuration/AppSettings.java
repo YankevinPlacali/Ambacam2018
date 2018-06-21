@@ -9,12 +9,32 @@ public class AppSettings {
 
 	private String projectName;
 
+	private int logSearchDefaultPageSize;
+
+	private int logSearchDefaultPageNumber;
+
 	public String getProjectName() {
 		return projectName;
 	}
 
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
+	}
+
+	public int getLogSearchDefaultPageSize() {
+		return logSearchDefaultPageSize;
+	}
+
+	public void setLogSearchDefaultPageSize(int logSearchDefaultPageSize) {
+		this.logSearchDefaultPageSize = logSearchDefaultPageSize;
+	}
+
+	public int getLogSearchDefaultPageNumber() {
+		return logSearchDefaultPageNumber;
+	}
+
+	public void setLogSearchDefaultPageNumber(int logSearchDefaultPageNumber) {
+		this.logSearchDefaultPageNumber = logSearchDefaultPageNumber;
 	}
 
 }

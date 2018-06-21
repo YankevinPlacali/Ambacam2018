@@ -1,15 +1,20 @@
 package com.ambacam.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Action implements Serializable {
 
-	private static final long serialVersionUID = -2019398584857375323L;
+	private static final long serialVersionUID = -8019398584857375323L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,11 +48,6 @@ public class Action implements Serializable {
 		return this;
 	}
 
-	public Action description(String description) {
-		this.description = description;
-		return this;
-	}
-
 	public String getNom() {
 		return nom;
 	}
@@ -67,5 +67,10 @@ public class Action implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Action description(String description) {
+		this.description = description;
+		return this;
 	}
 }
