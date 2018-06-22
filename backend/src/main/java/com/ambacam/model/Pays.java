@@ -13,7 +13,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Pays implements Serializable {
-	private static final long serialVersionUID = 3083113031299106496L;
+
+	private static final long serialVersionUID = 6566873467819322836L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,12 +28,24 @@ public class Pays implements Serializable {
 	@Column(columnDefinition = "varchar")
 	private String description;
 
+	public Pays() {
+	}
+
+	public Pays(String nom) {
+		this.nom = nom;
+	}
+
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Pays id(Long id) {
+		this.id = id;
+		return this;
 	}
 
 	public String getNom() {
@@ -60,5 +73,4 @@ public class Pays implements Serializable {
 		this.description = description;
 		return this;
 	}
-
 }
