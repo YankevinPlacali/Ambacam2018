@@ -1,18 +1,24 @@
 package com.ambacam.rest.actions;
 
-import com.ambacam.ItBase;
-import com.ambacam.model.Action;
-import com.ambacam.repository.ActionRepository;
-import com.ambacam.rest.ApiConstants;
-import io.restassured.http.ContentType;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import com.ambacam.ItBase;
+import com.ambacam.model.Action;
+import com.ambacam.repository.ActionRepository;
+import com.ambacam.rest.ApiConstants;
+
+import io.restassured.http.ContentType;
 
 public class ActionsResourceIT extends ItBase {
 
@@ -51,6 +57,7 @@ public class ActionsResourceIT extends ItBase {
 		Action actual = repository.findOne(Integer.toUnsignedLong(id));
 		assertThat(actual, is(notNullValue()));
 		assertThat(actual.getNom(), is(equalTo(create.getNom())));
+		assertThat(actual.getDescription(), is(equalTo(create.getDescription())));
 	}
 
 	@Test
@@ -86,7 +93,9 @@ public class ActionsResourceIT extends ItBase {
 	@Test
 	public void get() {
 		given().get(ApiConstants.ACTION_ITEM, action2.getId()).then().log().body().statusCode(200)
-				.body("id", is(equalTo(action2.getId().intValue()))).body("nom", is(equalTo(action2.getNom())));
+				.body("id", is(equalTo(action2.getId().intValue()))).body("nom", is(equalTo(action2.getNom())))
+				.body("description", is(equalTo(action2.getDescription())));
+		;
 	}
 
 	@Test
@@ -119,6 +128,7 @@ public class ActionsResourceIT extends ItBase {
 		Action actual = repository.findOne(action2.getId());
 		assertThat(actual.getId(), is(equalTo(action2.getId())));
 		assertThat(actual.getNom(), is((equalTo(update.getNom()))));
+		assertThat(actual.getDescription(), is(equalTo(update.getDescription())));
 
 	}
 

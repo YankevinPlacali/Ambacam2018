@@ -2,9 +2,9 @@ package com.ambacam.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ambacam.model.Action;
+import com.ambacam.model.Autorite;
 
-public interface ActionRepository extends JpaRepository<Action, Long> {
+public interface AutoriteRepository extends JpaRepository<Autorite, Long> {
 
 	int countByNom(String nom);
 

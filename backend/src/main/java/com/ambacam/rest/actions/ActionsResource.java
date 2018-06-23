@@ -1,8 +1,12 @@
 package com.ambacam.rest.actions;
 
-import com.ambacam.model.Action;
-import com.ambacam.rest.ApiConstants;
-import com.ambacam.service.ActionService;
+import java.util.List;
+
+import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import java.util.List;
+import com.ambacam.model.Action;
+import com.ambacam.rest.ApiConstants;
+import com.ambacam.service.ActionService;
 
 @RestController
 @RequestMapping(ApiConstants.ACTION_COLLECTION)

@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 public class Action implements Serializable {
 
-	private static final long serialVersionUID = -8019398584857375323L;
+	private static final long serialVersionUID = -2019398584857375323L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
