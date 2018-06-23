@@ -3,30 +3,11 @@ package com.ambacam.transfert.logs;
 import java.util.List;
 
 import com.ambacam.model.Log;
+import com.ambacam.transfert.SearchResultTO;
 
-public class LogSearchTO {
-
-	private int page;
-
-	private int totalPages;
+public class LogSearchTO extends SearchResultTO {
 
 	private List<Log> logs;
-
-	public int getPage() {
-		return page;
-	}
-
-	public void setPage(int page) {
-		this.page = page;
-	}
-
-	public int getTotalPages() {
-		return totalPages;
-	}
-
-	public void setTotalPages(int totalPage) {
-		this.totalPages = totalPage;
-	}
 
 	public List<Log> getLogs() {
 		return logs;

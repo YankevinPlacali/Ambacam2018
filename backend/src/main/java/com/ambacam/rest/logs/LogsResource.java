@@ -1,6 +1,7 @@
 package com.ambacam.rest.logs;
 
 import javax.validation.Valid;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -30,6 +31,7 @@ public class LogsResource {
 	private LogService logService;
 
 	@RequestMapping(method = RequestMethod.POST)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public LogSearchTO list(@QueryParam("limit") Integer limit, @QueryParam("page") Integer page,
 			@RequestBody @Valid LogCriteria criteria) {

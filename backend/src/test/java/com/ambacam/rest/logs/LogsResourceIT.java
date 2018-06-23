@@ -178,7 +178,7 @@ public class LogsResourceIT extends ItBase {
 				.body("totalPages", is(equalTo(2))).body("logs.size()", is(equalTo(2)))
 				.body("logs.id", contains(log3.getId().intValue(), log4.getId().intValue()));
 
-		verify(appSettings, times(1)).getLogSearchDefaultPageSize();
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
 
 	@Test
@@ -201,7 +201,7 @@ public class LogsResourceIT extends ItBase {
 				.body("totalPages", is(equalTo(2))).body("logs.size()", is(equalTo(1)))
 				.body("logs.id", contains(log4.getId().intValue()));
 
-		verify(appSettings, times(1)).getLogSearchDefaultPageSize();
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
 
 	@Test
@@ -225,7 +225,7 @@ public class LogsResourceIT extends ItBase {
 				.body("logs.id", contains(log1.getId().intValue(), log2.getId().intValue(), log3.getId().intValue(),
 						log4.getId().intValue()));
 
-		verify(appSettings, times(1)).getLogSearchDefaultPageSize();
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
 
 	@Test
@@ -247,7 +247,7 @@ public class LogsResourceIT extends ItBase {
 				.post(ApiConstants.LOG_COLLECTION).then().log().body().statusCode(200).body("page", is(equalTo(10)))
 				.body("totalPages", is(equalTo(2))).body("logs.size()", is(equalTo(0)));
 
-		verify(appSettings, times(1)).getLogSearchDefaultPageSize();
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
 
 	@Test
@@ -260,7 +260,7 @@ public class LogsResourceIT extends ItBase {
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("logs.size()", is(equalTo(1))).body("logs.id", contains(log1.getId().intValue()));
 
-		verify(appSettings, times(1)).getLogSearchDefaultPageSize();
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
 
 	@Test
@@ -273,7 +273,7 @@ public class LogsResourceIT extends ItBase {
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("logs.size()", is(equalTo(1))).body("logs.id", contains(log1.getId().intValue()));
 
-		verify(appSettings, times(1)).getLogSearchDefaultPageSize();
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
 
 	@Test
@@ -286,7 +286,7 @@ public class LogsResourceIT extends ItBase {
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("logs.size()", is(equalTo(1))).body("logs.id", contains(log1.getId().intValue()));
 
-		verify(appSettings, times(1)).getLogSearchDefaultPageSize();
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
 
 	@Test
@@ -311,7 +311,7 @@ public class LogsResourceIT extends ItBase {
 				.body("logs.size()", is(equalTo(2)))
 				.body("logs.id", contains(log1.getId().intValue(), log2.getId().intValue()));
 
-		verify(appSettings, times(1)).getLogSearchDefaultPageSize();
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
 
 	@Test
@@ -336,7 +336,7 @@ public class LogsResourceIT extends ItBase {
 				.body("logs.size()", is(equalTo(2)))
 				.body("logs.id", contains(log3.getId().intValue(), log4.getId().intValue()));
 
-		verify(appSettings, times(1)).getLogSearchDefaultPageSize();
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
 
 	@Test
@@ -362,7 +362,7 @@ public class LogsResourceIT extends ItBase {
 				.body("logs.size()", is(equalTo(2)))
 				.body("logs.id", contains(log2.getId().intValue(), log3.getId().intValue()));
 
-		verify(appSettings, times(1)).getLogSearchDefaultPageSize();
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
 
 	@Test
@@ -388,13 +388,13 @@ public class LogsResourceIT extends ItBase {
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("logs.size()", is(equalTo(1))).body("logs.id", contains(log2.getId().intValue()));
 
-		verify(appSettings, times(1)).getLogSearchDefaultPageSize();
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
 
 	private void simulateNominalBehaviors() {
 
 		// Simulate the page size to simplify the tests
-		when(appSettings.getLogSearchDefaultPageSize()).thenReturn(2);
+		when(appSettings.getSearchDefaultPageSize()).thenReturn(2);
 		logService.setAppSettings(appSettings);
 	}
 }
