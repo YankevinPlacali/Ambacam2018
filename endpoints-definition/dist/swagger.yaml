@@ -330,7 +330,7 @@ paths:
           description: Update informations of an operateur
           required: true
           schema:
-            $ref: '#/definitions/OperateurCreate'
+            $ref: '#/definitions/OperateurUpdate'
       responses:
         '200':
           description: successful operation
@@ -2279,7 +2279,7 @@ paths:
       security:
         - statusRequete_auth:
             - 'delete:statusRequete'
-  /log/search:
+  /logs/search:
     post:
       tags:
         - Log
@@ -2594,6 +2594,22 @@ definitions:
       password:
         type: string
       creatorId:
+        type: integer
+        format: int64
+  OperateurUpdate:
+    type: object
+    required:
+      - nom
+      - sexe
+      - paysId
+    properties:
+      nom:
+        type: string
+      prenom:
+        type: string
+      sexe:
+        type: string
+      paysId:
         type: integer
         format: int64
   OperateurRead:

@@ -520,7 +520,7 @@
             "description": "Update informations of an operateur",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/OperateurCreate"
+              "$ref": "#/definitions/OperateurUpdate"
             }
           }
         ],
@@ -2147,7 +2147,7 @@
         ]
       }
     },
-    "/role": {
+    "/roles": {
       "get": {
         "tags": [
           "Role"
@@ -2355,7 +2355,7 @@
         ]
       }
     },
-    "/autorite": {
+    "/autorites": {
       "get": {
         "tags": [
           "Autorite"
@@ -2771,7 +2771,7 @@
         ]
       }
     },
-    "/action": {
+    "/actions": {
       "get": {
         "tags": [
           "Action"
@@ -3603,7 +3603,7 @@
         ]
       }
     },
-    "/log/search": {
+    "/logs/search": {
       "post": {
         "tags": [
           "Log"
@@ -4059,6 +4059,29 @@
           "type": "string"
         },
         "creatorId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "OperateurUpdate": {
+      "type": "object",
+      "required": [
+        "nom",
+        "sexe",
+        "paysId"
+      ],
+      "properties": {
+        "nom": {
+          "type": "string"
+        },
+        "prenom": {
+          "type": "string"
+        },
+        "sexe": {
+          "type": "string"
+        },
+        "paysId": {
           "type": "integer",
           "format": "int64"
         }
