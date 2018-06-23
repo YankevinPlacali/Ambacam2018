@@ -72,9 +72,9 @@ public class RoleService {
 	public Role update(Long id, Role update) {
 
 		// find role
-		Role role = findRole(id);
+		Role found = findRole(id);
 
-		if (!role.getNom().equals(update.getNom())) {
+		if (!found.getNom().equals(update.getNom())) {
 			checkConsistency(update);
 		}
 
@@ -99,12 +99,12 @@ public class RoleService {
 
 	private Role findRole(Long id) {
 		// find role
-		Role role = roleRepository.findOne(id);
-		if (role == null) {
+		Role found = roleRepository.findOne(id);
+		if (found == null) {
 			throw new ResourceNotFoundException("The role " + id.toString() + " does not exist");
 		}
 
-		return role;
+		return found;
 	}
 
 	private void checkConsistency(Role role) {
