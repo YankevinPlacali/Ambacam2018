@@ -74,9 +74,9 @@ public class MotifSuppressionService {
 	public MotifSuppression update(Long id, MotifSuppression update) {
 
 		// find motifSuppression
-		MotifSuppression motifSuppression = findMotifSuppression(id);
+		MotifSuppression found = findMotifSuppression(id);
 
-		if (!motifSuppression.getNom().equals(update.getNom())) {
+		if (!found.getNom().equals(update.getNom())) {
 			checkConsistency(update);
 		}
 
@@ -101,12 +101,12 @@ public class MotifSuppressionService {
 
 	private MotifSuppression findMotifSuppression(Long id) {
 		// find motifSuppression
-		MotifSuppression motifSuppression = motifSuppressionRepository.findOne(id);
-		if (motifSuppression == null) {
+		MotifSuppression found = motifSuppressionRepository.findOne(id);
+		if (found == null) {
 			throw new ResourceNotFoundException("The motifSuppression " + id.toString() + " does not exist");
 		}
 
-		return motifSuppression;
+		return found;
 	}
 
 	private void checkConsistency(MotifSuppression motifSuppression) {

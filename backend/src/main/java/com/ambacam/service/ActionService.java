@@ -62,24 +62,24 @@ public class ActionService {
 	 * 
 	 * @param id The id of the action to update
 	 * 
-	 * @param action The new action modifications
+	 * @param update The new action modifications
 	 * 
 	 * @return The action updated
 	 * 
 	 * @throws ResourceNotFoundException if the action is not found
 	 * @throws ResourceBadRequestException if an action with the name already exist
 	 */
-	public Action update(Long id, Action action) {
+	public Action update(Long id, Action update) {
 
 		// find action
 		Action found = findAction(id);
 
-		if (!found.getNom().equals(action.getNom())) {
-			checkConsistency(action);
+		if (!found.getNom().equals(update.getNom())) {
+			checkConsistency(update);
 		}
 
-		action.setId(id);
-		return actionRepository.save(action);
+		update.setId(id);
+		return actionRepository.save(update);
 	}
 
 	/**
@@ -97,12 +97,12 @@ public class ActionService {
 
 	private Action findAction(Long id) {
 		// find action
-		Action action = actionRepository.findOne(id);
-		if (action == null) {
+		Action found = actionRepository.findOne(id);
+		if (found == null) {
 			throw new ResourceNotFoundException("The action " + id.toString() + " does not exist");
 		}
 
-		return action;
+		return found;
 	}
 
 	private void checkConsistency(Action action) {

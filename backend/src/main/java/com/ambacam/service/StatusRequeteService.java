@@ -72,9 +72,9 @@ public class StatusRequeteService {
 	public StatusRequete update(Long id, StatusRequete update) {
 
 		// find statusRequete
-		StatusRequete statusRequete = findStatusRequete(id);
+		StatusRequete found = findStatusRequete(id);
 
-		if (!statusRequete.getNom().equals(update.getNom())) {
+		if (!found.getNom().equals(update.getNom())) {
 			checkConsistency(update);
 		}
 
@@ -99,12 +99,12 @@ public class StatusRequeteService {
 
 	private StatusRequete findStatusRequete(Long id) {
 		// find statusRequete
-		StatusRequete statusRequete = statusRequeteRepository.findOne(id);
-		if (statusRequete == null) {
+		StatusRequete found = statusRequeteRepository.findOne(id);
+		if (found == null) {
 			throw new ResourceNotFoundException("The statusRequete " + id.toString() + " does not exist");
 		}
 
-		return statusRequete;
+		return found;
 	}
 
 	private void checkConsistency(StatusRequete statusRequete) {

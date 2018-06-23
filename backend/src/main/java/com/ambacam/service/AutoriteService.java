@@ -60,20 +60,20 @@ public class AutoriteService {
 	 * 
 	 * @param id The id of the autorite to update
 	 * 
-	 * @param autorite The new autorite modifications
+	 * @param update The new autorite modifications
 	 * 
 	 * @return The autorite updated
 	 * 
 	 * @throws ResourceNotFoundException if the autorite is not found
 	 * @throws ResourceBadRequestException if an autorite with the name already exist
 	 */
-	public Autorite update(Long id, Autorite autorite) {
+	public Autorite update(Long id, Autorite update) {
 
 		// find autorite
 		findAutorite(id);
 
-		autorite.setId(id);
-		return autoriteRepository.save(autorite);
+		update.setId(id);
+		return autoriteRepository.save(update);
 	}
 
 	/**
@@ -91,12 +91,12 @@ public class AutoriteService {
 
 	private Autorite findAutorite(Long id) {
 		// find autorite
-		Autorite autorite = autoriteRepository.findOne(id);
-		if (autorite == null) {
+		Autorite found = autoriteRepository.findOne(id);
+		if (found == null) {
 			throw new ResourceNotFoundException("The autorite " + id.toString() + " does not exist");
 		}
 
-		return autorite;
+		return found;
 	}
 
 }
