@@ -2517,7 +2517,7 @@ definitions:
       requerants:
         type: array
         items:
-          $ref: '#/definitions/Requerant'
+          $ref: '#/definitions/RequerantRead'
   OperateurSearch:
     type: object
     properties:
@@ -2569,7 +2569,7 @@ definitions:
       operateurs:
         type: array
         items:
-          $ref: '#/definitions/Operateur'
+          $ref: '#/definitions/OperateurRead'
   OperateurCreate:
     type: object
     required:
