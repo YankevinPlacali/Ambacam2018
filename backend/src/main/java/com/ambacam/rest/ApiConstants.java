@@ -23,4 +23,11 @@ public class ApiConstants {
 	public static final String AUTORITE_COLLECTION = "/autorites";
 
 	public static final String AUTORITE_ITEM = AUTORITE_COLLECTION + "/{autoriteId}";
+
+	public static final String OPERATEUR_COLLECTION = "/operateurs";
+
+	public static final String OPERATEUR_SEARCH_COLLECTION = OPERATEUR_COLLECTION + "/search";
+
+	public static final String OPERATEUR_ITEM = OPERATEUR_COLLECTION + "/{operateurId}";
+
 }

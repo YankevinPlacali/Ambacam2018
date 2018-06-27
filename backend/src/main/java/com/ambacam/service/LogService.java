@@ -53,12 +53,12 @@ public class LogService {
 		// build specs
 		LogSpecs specs = new LogSpecs(criteria);
 
-		if (searchLimit == null || searchLimit < appSettings.getLogSearchDefaultPageSize()) {
-			searchLimit = appSettings.getLogSearchDefaultPageSize();
+		if (searchLimit == null || searchLimit < appSettings.getSearchDefaultPageSize()) {
+			searchLimit = appSettings.getSearchDefaultPageSize();
 		}
 
-		if (searchPage == null || searchPage < appSettings.getLogSearchDefaultPageNumber()) {
-			searchPage = appSettings.getLogSearchDefaultPageNumber();
+		if (searchPage == null || searchPage < appSettings.getSearchDefaultPageNumber()) {
+			searchPage = appSettings.getSearchDefaultPageNumber();
 		}
 
 		Page<Log> pageLog = logRepository.findAll(specs,
