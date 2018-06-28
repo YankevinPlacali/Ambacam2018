@@ -38,4 +38,10 @@ public class ApiConstants {
 
 	public static final String TYPE_REQUETE_ITEM = TYPE_REQUETE_COLLECTION + "/{typeRequeteId}";
 
+	public static final String REQUERANT_COLLECTION = "/requerants";
+
+	public static final String REQUERANT_SEARCH_COLLECTION = REQUERANT_COLLECTION + "/search";
+
+	public static final String REQUERANT_ITEM = REQUERANT_COLLECTION + "/{requerantId}";
+
 }

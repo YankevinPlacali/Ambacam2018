@@ -1,15 +1,19 @@
 package com.ambacam.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Role implements Serializable {
@@ -27,6 +31,10 @@ public class Role implements Serializable {
 
 	@Column(columnDefinition = "varchar")
 	private String description;
+
+	@ManyToMany(mappedBy = "roles")
+	@JsonIgnore
+	private List<Requerant> requerants;
 
 	public Role() {
 	}
@@ -72,5 +80,13 @@ public class Role implements Serializable {
 	public Role description(String description) {
 		this.description = description;
 		return this;
+	}
+
+	public List<Requerant> getRequerants() {
+		return requerants;
+	}
+
+	public void setRequerants(List<Requerant> requerants) {
+		this.requerants = requerants;
 	}
 }

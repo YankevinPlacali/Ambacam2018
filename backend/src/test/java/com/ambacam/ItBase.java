@@ -2,6 +2,7 @@ package com.ambacam;
 
 import static io.restassured.RestAssured.given;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -21,6 +22,7 @@ import com.ambacam.model.LogActeur;
 import com.ambacam.model.MotifSuppression;
 import com.ambacam.model.Operateur;
 import com.ambacam.model.Pays;
+import com.ambacam.model.Requerant;
 import com.ambacam.model.Role;
 import com.ambacam.model.StatusRequete;
 import com.ambacam.model.TypeRequete;
@@ -133,6 +135,13 @@ public class ItBase {
 
 		Pays pays = new Pays().nom("nom-" + random.nextLong()).description("description-" + random.nextLong());
 		return pays;
+	}
+
+	protected Requerant buildRequerant() {
+		return new Requerant().nom("nom-" + UUID.randomUUID()).prenom("prenom-" + UUID.randomUUID())
+				.dateNaissance(new Date()).sexe("sexe-" + UUID.randomUUID())
+				.profession("profession-" + UUID.randomUUID()).lieuNaissance("lieuNaissance-" + UUID.randomUUID());
+
 	}
 
 }
