@@ -126,4 +126,5 @@ public class ItBase {
 		Pays pays = new Pays().nom("nom-" + random.nextLong()).description("description-" + random.nextLong());
 		return pays;
 	}
+
 }

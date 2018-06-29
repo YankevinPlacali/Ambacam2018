@@ -30,4 +30,8 @@ public class ApiConstants {
 
 	public static final String OPERATEUR_ITEM = OPERATEUR_COLLECTION + "/{operateurId}";
 
+	public static final String PAYS_COLLECTION = "/pays";
+
+	public static final String PAYS_ITEM = PAYS_COLLECTION + "/{paysId}";
+
 }
