@@ -1006,7 +1006,9 @@ paths:
       tags:
         - RequeteGroupe
       summary: Create a RequeteGroupe
-      description: Create a RequeteGroupe
+      description: Create a RequeteGroupe;
+                  the field name is automatically generated Group-YYYY-MM-DD-HH-MM-SS-RandomUUID;
+                  this field is not updatable
       produces:
         - application/json
       parameters:
