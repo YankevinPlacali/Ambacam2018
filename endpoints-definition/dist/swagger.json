@@ -82,24 +82,6 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Number of results (>= 10)",
-            "required": false,
-            "default": 10,
-            "type": "integer"
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page number",
-            "required": false,
-            "default": 1,
-            "type": "integer"
-          }
-        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -368,24 +350,6 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Number of results (>= 10)",
-            "required": false,
-            "default": 10,
-            "type": "integer"
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page number",
-            "required": false,
-            "default": 1,
-            "type": "integer"
-          }
-        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -645,8 +609,8 @@
         "tags": [
           "Requerant"
         ],
-        "summary": "List all requetes",
-        "description": "List all requetes",
+        "summary": "List all requetes by requerantId",
+        "description": "List all requetes by requerantId",
         "produces": [
           "application/json"
         ],
@@ -681,7 +645,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Requete"
+                "$ref": "#/definitions/RequeteRead"
               }
             }
           },
@@ -706,8 +670,8 @@
         "tags": [
           "Requerant"
         ],
-        "summary": "Get an requete",
-        "description": "Get an requete",
+        "summary": "Get a requete",
+        "description": "Get a requete",
         "produces": [
           "application/json"
         ],
@@ -738,7 +702,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/Requete"
+              "$ref": "#/definitions/RequeteRead"
             }
           },
           "400": {
@@ -776,7 +740,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Requete"
+                "$ref": "#/definitions/RequeteRead"
               }
             }
           },
@@ -796,13 +760,77 @@
         ]
       }
     },
+    "/operateurs/{operateurId}/requetes": {
+      "get": {
+        "tags": [
+          "Requete"
+        ],
+        "summary": "List all requetes by operateurId",
+        "description": "List all requetes by operateurId",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of results (>= 10)",
+            "required": false,
+            "default": 10,
+            "type": "integer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "default": 1,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RequeteRead"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "requete_auth": [
+              "read:requete"
+            ]
+          }
+        ]
+      }
+    },
     "/operateurs/{operateurId}/requerants/{requerantId}/requetes": {
       "get": {
         "tags": [
           "Requete"
         ],
-        "summary": "List all requetes",
-        "description": "List all requetes",
+        "summary": "List all requetes by operateurId and requerantId",
+        "description": "List all requetes by operateurId and requerantId",
         "produces": [
           "application/json"
         ],
@@ -844,7 +872,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Requete"
+                "$ref": "#/definitions/RequeteRead"
               }
             }
           },
@@ -853,6 +881,9 @@
           },
           "403": {
             "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
           }
         },
         "security": [
@@ -867,8 +898,8 @@
         "tags": [
           "Requete"
         ],
-        "summary": "Create an requete",
-        "description": "Create an requete",
+        "summary": "Create a requete",
+        "description": "Create a requete",
         "produces": [
           "application/json"
         ],
@@ -900,7 +931,7 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/Requete"
+              "$ref": "#/definitions/RequeteRead"
             },
             "description": "successful operation"
           },
@@ -928,8 +959,8 @@
         "tags": [
           "Requete"
         ],
-        "summary": "Get an requete",
-        "description": "Get an requete",
+        "summary": "Get a requete",
+        "description": "Get a requete",
         "produces": [
           "application/json"
         ],
@@ -960,7 +991,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/Requete"
+              "$ref": "#/definitions/RequeteRead"
             }
           },
           "400": {
@@ -985,7 +1016,7 @@
         "tags": [
           "Requete"
         ],
-        "summary": "Update an requete",
+        "summary": "Update a requete",
         "parameters": [
           {
             "name": "operateurId",
@@ -1011,7 +1042,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Update informations of an requete",
+            "description": "Update informations of a requete",
             "required": true,
             "schema": {
               "$ref": "#/definitions/RequeteCreate"
@@ -1044,7 +1075,7 @@
         "tags": [
           "Requete"
         ],
-        "summary": "Delete an requete",
+        "summary": "Delete a requete",
         "parameters": [
           {
             "name": "operateurId",
@@ -1815,8 +1846,8 @@
         "tags": [
           "Passport"
         ],
-        "summary": "List all passports",
-        "description": "List all passports",
+        "summary": "List all passports by requeteId",
+        "description": "List all passports by requeteId",
         "produces": [
           "application/json"
         ],
@@ -1840,22 +1871,6 @@
             "in": "path",
             "description": "Requete id",
             "required": true,
-            "type": "integer"
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Number of results (>= 10)",
-            "required": false,
-            "default": 10,
-            "type": "integer"
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page number",
-            "required": false,
-            "default": 1,
             "type": "integer"
           }
         ],
@@ -4107,7 +4122,7 @@
           "$ref": "#/definitions/Pays"
         },
         "creePar": {
-          "$ref": "#/definitions/Operateur"
+          "$ref": "#/definitions/OperateurRead"
         },
         "creeLe": {
           "type": "string",
@@ -4412,6 +4427,36 @@
         }
       }
     },
+    "RequeteRead": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "$ref": "#/definitions/TypeRequete",
+          "description": "updatable=false, nullable=false"
+        },
+        "status": {
+          "$ref": "#/definitions/StatusRequete",
+          "description": "updatable=false, nullable=false"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Actual date time"
+        },
+        "requerant": {
+          "$ref": "#/definitions/RequerantRead",
+          "description": "updatable=false, nullable=false"
+        },
+        "operateur": {
+          "$ref": "#/definitions/OperateurRead",
+          "description": "updatable=false, nullable=false"
+        }
+      }
+    },
     "RequeteCreate": {
       "type": "object",
       "required": [
@@ -4619,7 +4664,7 @@
           "format": "date-time"
         },
         "creePar": {
-          "$ref": "#/definitions/Operateur"
+          "$ref": "#/definitions/OperateurRead"
         }
       }
     },
