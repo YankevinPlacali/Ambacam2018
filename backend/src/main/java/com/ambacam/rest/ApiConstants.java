@@ -34,4 +34,8 @@ public class ApiConstants {
 
 	public static final String PAYS_ITEM = PAYS_COLLECTION + "/{paysId}";
 
+	public static final String TYPE_REQUETE_COLLECTION = "/type-requetes";
+
+	public static final String TYPE_REQUETE_ITEM = TYPE_REQUETE_COLLECTION + "/{typeRequeteId}";
+
 }

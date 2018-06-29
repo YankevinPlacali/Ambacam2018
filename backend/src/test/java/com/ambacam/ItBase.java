@@ -23,6 +23,7 @@ import com.ambacam.model.Operateur;
 import com.ambacam.model.Pays;
 import com.ambacam.model.Role;
 import com.ambacam.model.StatusRequete;
+import com.ambacam.model.TypeRequete;
 import com.ambacam.transfert.operateurs.Operateur2OperateurCreatedTO;
 import com.ambacam.transfert.operateurs.Operateur2OperateurUpdateTO;
 import com.ambacam.transfert.operateurs.OperateurCreateTO;
@@ -66,6 +67,13 @@ public class ItBase {
 		StatusRequete statusRequete = new StatusRequete().nom("nom-" + random.nextLong())
 				.description("description-" + random.nextLong());
 		return statusRequete;
+	}
+
+	protected TypeRequete buildTypeRequete() {
+
+		TypeRequete typeRequete = new TypeRequete().nom("nom-" + random.nextLong())
+				.description("description-" + random.nextLong());
+		return typeRequete;
 	}
 
 	protected MotifSuppression buildMotifSuppression() {
