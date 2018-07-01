@@ -23,6 +23,7 @@ import com.ambacam.model.MotifSuppression;
 import com.ambacam.model.Operateur;
 import com.ambacam.model.Pays;
 import com.ambacam.model.Requerant;
+import com.ambacam.model.RequeteGroupe;
 import com.ambacam.model.Role;
 import com.ambacam.model.StatusRequete;
 import com.ambacam.model.TypeRequete;
@@ -30,6 +31,9 @@ import com.ambacam.transfert.operateurs.Operateur2OperateurCreatedTO;
 import com.ambacam.transfert.operateurs.Operateur2OperateurUpdateTO;
 import com.ambacam.transfert.operateurs.OperateurCreateTO;
 import com.ambacam.transfert.operateurs.OperateurUpdateTO;
+import com.ambacam.transfert.requetegroupes.RequeteGroupeCreateTO;
+import com.ambacam.transfert.requetegroupes.RequeteGroupeUpdateTO;
+import com.ambacam.utils.RequeteGroupeUtils;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -142,6 +146,30 @@ public class ItBase {
 				.dateNaissance(new Date()).sexe("sexe-" + UUID.randomUUID())
 				.profession("profession-" + UUID.randomUUID()).lieuNaissance("lieuNaissance-" + UUID.randomUUID());
 
+	}
+
+	protected RequeteGroupe buildRequeteGroupe(String nom, String description) {
+		return new RequeteGroupe().nom(nom).description(description);
+	}
+
+	protected RequeteGroupe buildRequeteGroupe() {
+		return buildRequeteGroupe(RequeteGroupeUtils.generateRequeteGroupeName(), "description-" + UUID.randomUUID());
+	}
+
+	protected RequeteGroupeCreateTO buildRequeteGroupeCreateTO(String description) {
+		return new RequeteGroupeCreateTO().description(description);
+	}
+
+	protected RequeteGroupeCreateTO buildRequeteGroupeCreateTO() {
+		return buildRequeteGroupeCreateTO("description-" + UUID.randomUUID());
+	}
+
+	protected RequeteGroupeUpdateTO buildRequeteGroupeUpdateTO(String description) {
+		return new RequeteGroupeUpdateTO().description(description);
+	}
+
+	protected RequeteGroupeUpdateTO buildRequeteGroupeUpdateTO() {
+		return buildRequeteGroupeUpdateTO("description-" + UUID.randomUUID());
 	}
 
 }

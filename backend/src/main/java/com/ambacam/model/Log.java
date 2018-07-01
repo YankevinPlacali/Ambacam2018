@@ -11,6 +11,8 @@ import javax.persistence.Id;
 
 import org.joda.time.DateTime;
 
+import com.ambacam.utils.DateUtils;
+
 @Entity
 public class Log implements Serializable {
 
@@ -66,8 +68,8 @@ public class Log implements Serializable {
 						+ "[%s (%s)] on the date [%d-%d-%d] at [%d:%d:%d] " + "for the following reason [%s]",
 				acteurActif.getActeur().toString(), acteurActif.getPropertiesAsString(), action.getNom(),
 				acteurPassif.getActeur().toString(), acteurPassif.getPropertiesAsString(), (date.getDay() + 1),
-				(date.getMonth() + 1), (date.getYear() + 1900), date.getHours(), date.getMinutes(), date.getSeconds(),
-				motif.getNom());
+				(date.getMonth() + 1), (DateUtils.getActualYear(date)), date.getHours(), date.getMinutes(),
+				date.getSeconds(), motif.getNom());
 	}
 
 }
