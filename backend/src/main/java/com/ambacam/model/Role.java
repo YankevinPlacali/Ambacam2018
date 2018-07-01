@@ -1,6 +1,7 @@
 package com.ambacam.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -34,7 +35,7 @@ public class Role implements Serializable {
 
 	@ManyToMany(mappedBy = "roles")
 	@JsonIgnore
-	private List<Requerant> requerants;
+	private List<Requerant> requerants = new ArrayList<>();
 
 	public Role() {
 	}

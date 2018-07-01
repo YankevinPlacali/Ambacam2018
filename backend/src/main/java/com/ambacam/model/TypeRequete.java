@@ -9,9 +9,7 @@ import java.io.Serializable;
 @Entity
 public class TypeRequete implements Serializable {
 
-
 	private static final long serialVersionUID = 5920307812613757722L;
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
