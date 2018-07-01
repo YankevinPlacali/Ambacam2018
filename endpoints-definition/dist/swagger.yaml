@@ -976,8 +976,8 @@ paths:
     get:
       tags:
         - RequeteGroupe
-      summary: Find all recepisses of a requete
-      description: Find all recepisses of a requete
+      summary: List all requete groupe
+      description: List all requete groupe
       produces:
         - application/json
       parameters:
@@ -1172,6 +1172,43 @@ paths:
           description: Not authorized
         '404':
           description: Object not found
+      security:
+        - requete_auth:
+            - 'read:requete'
+  '/operateurs/{operateurId}/requete-groupes/{requeteGroupeId}/assign':
+    put:
+      tags:
+        - RequeteGroupe
+      summary: Assign/remove requetes to/from a requete groupe
+      description: Assign/remove some requetes to/from a requete groupe
+      produces:
+        - application/json
+      parameters:
+        - name: operateurId
+          in: path
+          description: Operateur id
+          required: true
+          type: integer
+        - name: requeteGroupeId
+          in: path
+          description: RequeteGroupe id
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Operateur information
+          required: true
+          schema:
+            $ref: '#/definitions/AssignTO'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid parameter (If a requete id does not exist or if a requete in add is already assign to another requete groupe)
+        '403':
+          description: Not authorized
+        '404':
+          description: Object not found (If the requete groupe does not exist)
       security:
         - requete_auth:
             - 'read:requete'
@@ -2904,6 +2941,22 @@ definitions:
       statusId:
         type: integer
         format: int64
+  AssignTO:
+    type: object
+    required:
+      - requeteIds
+      - statusId
+    properties:
+      add:
+        type: array
+        items:
+          type: integer
+          format: int64
+      remove:
+        type: array
+        items:
+          type: integer
+          format: int64
   Passport:
     type: object
     properties:
@@ -3002,6 +3055,9 @@ definitions:
   RequeteGroupeRead:
     type: object
     properties:
+      id:
+        type: integer
+        format: int64
       nom:
         type: string
       description:
@@ -3009,6 +3065,9 @@ definitions:
       creeLe:
         type: string
         format: date-time
+      status:
+        description: is \"draft\" if the requete groupe has no requete. It is \"mixed\" if the the requete groupe contains requete with different status. It is the status name of one requete if all requetes of the requete groupe are the same.
+        type: string
       creePar:
         $ref: '#/definitions/OperateurRead'
   RequeteGroupeCreate:
