@@ -4,7 +4,7 @@
 export class User{
   
   constructor(
-    public idno: number,
-    public date: Date
+    public receiptnumber: number,
+    public birthday: Date
   ){}
 }

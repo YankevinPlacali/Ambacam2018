@@ -12,10 +12,11 @@ export class LayoutComponent implements OnInit {
 
   model = new User(18, new Date());
 
-   submitted = false;
+  submitted = false;
 
-  onSubmit() { this.submitted = true; console.log("click")}
-  
+  onSubmit() { this.submitted = true; console.log("click"); }
+
+  get diagnostic() { return JSON.stringify(this.model); }
 
   ngOnInit() {
   }

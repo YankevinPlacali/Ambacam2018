@@ -1,25 +1,29 @@
-
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 	<div class="container">
 		<a class="navbar-brand" href="#">Passport Tracking</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarResponsive" aria-controls="navbarResponsive"
-			aria-expanded="false" aria-label="Toggle navigation">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+		 aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">Home
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Home
 						<span class="sr-only">(current)</span>
-				</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Dashboard</a>
+					</a>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Dashboard</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Login</a>
+				</li>
 			</ul>
 		</div>
 	</div>
 </nav>
+
 <body>
 	<!-- Page Content -->
 	<div class="container">
@@ -34,29 +38,33 @@
 				<hr>
 
 				<!-- Preview Image -->
-				<img class="img-fluid rounded" src="./assets/image/gps_tracking.png"
-					alt="">
+				<img class="img-fluid rounded" src="./assets/image/gps_tracking.png" alt="">
 
 				<hr>
 
 				<!-- Post Content -->
 				<div class="lead">
-					<div class="container">
-						<h1>Track your Passport</h1>
-						<form>
+					<div *ngIf="!submitted" class="container">
+						<h3>Fill in the form below to get information relativ to your demand of passport.</h3>
+						<form (ngSubmit)="onSubmit()" #userForm="ngForm">
 							<div class="form-group">
-								<label for="name">ID Number</label> <input type="text"
-									class="form-control" id="idno" required>
+								<label for="receiptnumber">Receipt Number</label>
+								<input type="number" class="form-control" id="receiptnumber" required [(ngModel)]="model.receiptnumber" name="receiptnumber">
 							</div>
 
 							<div class="form-group">
-								<label for="alterEgo">Birthday</label> <input type="date"
-									class="form-control" id="date">
+								<label for="birthday">Birthday</label>
+								<input type="date" class="form-control" id="birthday" required [(ngModel)]="model.birthday" name="birthday">
 							</div>
 
 							<button type="submit" class="btn btn-success">Submit</button>
 
 						</form>
+					</div>
+					<div *ngIf="submitted" class="container">
+							<h3>Statut of your passport</h3>
+							<p>Receipt Number:	{{model.receiptnumber}}</p>
+							<p>Birthday: {{model.birthday}}</p>
 					</div>
 				</div>
 				<hr>
@@ -71,9 +79,8 @@
 					<h5 class="card-header">Search</h5>
 					<div class="card-body">
 						<div class="input-group">
-							<input type="text" class="form-control"
-								placeholder="Search for..."> <span
-								class="input-group-btn">
+							<input type="text" class="form-control" placeholder="Search for...">
+							<span class="input-group-btn">
 								<button class="btn btn-secondary" type="button">Go!</button>
 							</span>
 						</div>
@@ -87,16 +94,28 @@
 						<div class="row">
 							<div class="col-lg-6">
 								<ul class="list-unstyled mb-0">
-									<li><a href="#">Web Design</a></li>
-									<li><a href="#">HTML</a></li>
-									<li><a href="#">Freebies</a></li>
+									<li>
+										<a href="#">Web Design</a>
+									</li>
+									<li>
+										<a href="#">HTML</a>
+									</li>
+									<li>
+										<a href="#">Freebies</a>
+									</li>
 								</ul>
 							</div>
 							<div class="col-lg-6">
 								<ul class="list-unstyled mb-0">
-									<li><a href="#">JavaScript</a></li>
-									<li><a href="#">CSS</a></li>
-									<li><a href="#">Tutorials</a></li>
+									<li>
+										<a href="#">JavaScript</a>
+									</li>
+									<li>
+										<a href="#">CSS</a>
+									</li>
+									<li>
+										<a href="#">Tutorials</a>
+									</li>
 								</ul>
 							</div>
 						</div>
@@ -106,9 +125,9 @@
 				<!-- Side Widget -->
 				<div class="card my-4">
 					<h5 class="card-header">Side Widget</h5>
-					<div class="card-body">You can put anything you want inside
-						of these side widgets. They are easy to use, and feature the new
-						Bootstrap 4 card containers!</div>
+					<div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card
+						containers!
+					</div>
 				</div>
 
 			</div>
@@ -123,8 +142,7 @@
 <!-- Footer -->
 <footer class="py-5 bg-dark">
 	<div class="container">
-		<p class="m-0 text-center text-white">Copyright &copy; Your
-			Website 2018</p>
+		<p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
 	</div>
 	<!-- /.container -->
 </footer>
