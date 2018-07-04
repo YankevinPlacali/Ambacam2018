@@ -3039,6 +3039,10 @@ definitions:
         type: string
   RequeteGroupe:
     type: object
+    required:
+      - nom
+      - creeLe
+      - creePar
     properties:
       id:
         type: integer
@@ -3054,6 +3058,12 @@ definitions:
         $ref: '#/definitions/Operateur'
   RequeteGroupeRead:
     type: object
+    required:
+      - id
+      - nom
+      - creeLe
+      - creePar
+      - status
     properties:
       id:
         type: integer
