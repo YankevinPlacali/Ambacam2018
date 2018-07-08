@@ -131,10 +131,10 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("logs.size()", is(equalTo(2)))
-				.body("logs.id", contains(log1.getId().intValue(), log2.getId().intValue()))
-				.body("logs[0].id", is(equalTo(log1.getId().intValue())))
-				.body("logs[0].description", is(equalTo(log1.getDescription())));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(log1.getId().intValue(), log2.getId().intValue()))
+				.body("content[0].id", is(equalTo(log1.getId().intValue())))
+				.body("content[0].description", is(equalTo(log1.getDescription())));
 	}
 
 	@Test
@@ -154,8 +154,8 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().queryParam("limit", 3).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.LOG_COLLECTION).then().log().body().statusCode(200).body("page", is(equalTo(0)))
-				.body("totalPages", is(equalTo(2))).body("logs.size()", is(equalTo(3)))
-				.body("logs.id", contains(log1.getId().intValue(), log2.getId().intValue(), log3.getId().intValue()));
+				.body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(3)))
+				.body("content.id", contains(log1.getId().intValue(), log2.getId().intValue(), log3.getId().intValue()));
 	}
 
 	@Test
@@ -175,8 +175,8 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().queryParam("page", 1).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.LOG_COLLECTION).then().log().body().statusCode(200).body("page", is(equalTo(1)))
-				.body("totalPages", is(equalTo(2))).body("logs.size()", is(equalTo(2)))
-				.body("logs.id", contains(log3.getId().intValue(), log4.getId().intValue()));
+				.body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(log3.getId().intValue(), log4.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -198,8 +198,8 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().queryParam("limit", 3).queryParam("page", 1).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.LOG_COLLECTION).then().log().body().statusCode(200).body("page", is(equalTo(1)))
-				.body("totalPages", is(equalTo(2))).body("logs.size()", is(equalTo(1)))
-				.body("logs.id", contains(log4.getId().intValue()));
+				.body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(1)))
+				.body("content.id", contains(log4.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -221,8 +221,8 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().queryParam("limit", 10).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.LOG_COLLECTION).then().log().body().statusCode(200).body("page", is(equalTo(0)))
-				.body("totalPages", is(equalTo(1))).body("logs.size()", is(equalTo(4)))
-				.body("logs.id", contains(log1.getId().intValue(), log2.getId().intValue(), log3.getId().intValue(),
+				.body("totalPages", is(equalTo(1))).body("content.size()", is(equalTo(4)))
+				.body("content.id", contains(log1.getId().intValue(), log2.getId().intValue(), log3.getId().intValue(),
 						log4.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
@@ -245,7 +245,7 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().queryParam("page", 10).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.LOG_COLLECTION).then().log().body().statusCode(200).body("page", is(equalTo(10)))
-				.body("totalPages", is(equalTo(2))).body("logs.size()", is(equalTo(0)));
+				.body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -258,7 +258,7 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("logs.size()", is(equalTo(1))).body("logs.id", contains(log1.getId().intValue()));
+				.body("content.size()", is(equalTo(1))).body("content.id", contains(log1.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -271,7 +271,7 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("logs.size()", is(equalTo(1))).body("logs.id", contains(log1.getId().intValue()));
+				.body("content.size()", is(equalTo(1))).body("content.id", contains(log1.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -284,7 +284,7 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("logs.size()", is(equalTo(1))).body("logs.id", contains(log1.getId().intValue()));
+				.body("content.size()", is(equalTo(1))).body("content.id", contains(log1.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -308,8 +308,8 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(2)))
-				.body("logs.size()", is(equalTo(2)))
-				.body("logs.id", contains(log1.getId().intValue(), log2.getId().intValue()));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(log1.getId().intValue(), log2.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -333,8 +333,8 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("logs.size()", is(equalTo(2)))
-				.body("logs.id", contains(log3.getId().intValue(), log4.getId().intValue()));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(log3.getId().intValue(), log4.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -359,8 +359,8 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("logs.size()", is(equalTo(2)))
-				.body("logs.id", contains(log2.getId().intValue(), log3.getId().intValue()));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(log2.getId().intValue(), log3.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -386,7 +386,7 @@ public class LogsResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("logs.size()", is(equalTo(1))).body("logs.id", contains(log2.getId().intValue()));
+				.body("content.size()", is(equalTo(1))).body("content.id", contains(log2.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}

@@ -12,7 +12,7 @@ import com.ambacam.model.Log;
 import com.ambacam.repository.LogRepository;
 import com.ambacam.search.logs.LogCriteria;
 import com.ambacam.search.logs.LogSpecs;
-import com.ambacam.transfert.logs.LogSearchTO;
+import com.ambacam.transfert.SearchResultTO;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -45,7 +45,7 @@ public class LogService {
 	 * @param criteria
 	 * @return
 	 */
-	public LogSearchTO list(Integer limit, Integer page, LogCriteria criteria) {
+	public SearchResultTO<Log> list(Integer limit, Integer page, LogCriteria criteria) {
 
 		Integer searchLimit = limit;
 		Integer searchPage = page;
@@ -64,8 +64,8 @@ public class LogService {
 		Page<Log> pageLog = logRepository.findAll(specs,
 				new PageRequest(searchPage, searchLimit, new Sort(Sort.Direction.ASC, "date")));
 
-		LogSearchTO logSearchTO = new LogSearchTO();
-		logSearchTO.setLogs(pageLog.getContent());
+		SearchResultTO<Log> logSearchTO = new SearchResultTO<Log>();
+		logSearchTO.setContent(pageLog.getContent());
 		logSearchTO.setPage(pageLog.getNumber());
 		logSearchTO.setTotalPages(pageLog.getTotalPages());
 		return logSearchTO;

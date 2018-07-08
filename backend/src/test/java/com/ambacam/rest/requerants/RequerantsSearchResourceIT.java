@@ -76,7 +76,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		// create creator2
 		creator2 = operateurRepository.save(buildOperateur().nom("creator2").nationalite(pays2));
 
-		// create requerants
+		// create content
 		requerant1 = repository.save(buildRequerant().nom("keyWord").creePar(creator1).nationalite(pays1));
 
 		Thread.sleep(1000);
@@ -108,17 +108,17 @@ public class RequerantsSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(2)))
-				.body("requerants.size()", is(equalTo(2)))
-				.body("requerants.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()))
-				.body("requerants[0].id", is(equalTo(requerant1.getId().intValue())))
-				.body("requerants[0].nom", is(equalTo(requerant1.getNom())))
-				.body("requerants[0].prenom", is(equalTo(requerant1.getPrenom())))
-				.body("requerants[0].dateNaissance", is(equalTo(requerant1.getDateNaissance().getTime())))
-				.body("requerants[0].creeLe", is(equalTo(requerant1.getCreeLe().getTime())))
-				.body("requerants[0].sexe", is(equalTo(requerant1.getSexe())))
-				.body("requerants[0].profession", is(equalTo(requerant1.getProfession())))
-				.body("requerants[0].nationalite", is(equalTo(requerant1.getNationalite().getNom())))
-				.body("requerants[0].lieuNaissance", is(equalTo(requerant1.getLieuNaissance())));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()))
+				.body("content[0].id", is(equalTo(requerant1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(requerant1.getNom())))
+				.body("content[0].prenom", is(equalTo(requerant1.getPrenom())))
+				.body("content[0].dateNaissance", is(equalTo(requerant1.getDateNaissance().getTime())))
+				.body("content[0].creeLe", is(equalTo(requerant1.getCreeLe().getTime())))
+				.body("content[0].sexe", is(equalTo(requerant1.getSexe())))
+				.body("content[0].profession", is(equalTo(requerant1.getProfession())))
+				.body("content[0].nationalite", is(equalTo(requerant1.getNationalite().getNom())))
+				.body("content[0].lieuNaissance", is(equalTo(requerant1.getLieuNaissance())));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -131,8 +131,8 @@ public class RequerantsSearchResourceIT extends ItBase {
 		given().queryParam("limit", 2).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.REQUERANT_SEARCH_COLLECTION).then().log().body().statusCode(200)
 				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(2)))
-				.body("requerants.size()", is(equalTo(2)))
-				.body("requerants.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -145,8 +145,8 @@ public class RequerantsSearchResourceIT extends ItBase {
 		given().queryParam("page", 1).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.REQUERANT_SEARCH_COLLECTION).then().log().body().statusCode(200)
 				.body("page", is(equalTo(1))).body("totalPages", is(equalTo(2)))
-				.body("requerants.size()", is(equalTo(1)))
-				.body("requerants.id", contains(requerant3.getId().intValue()));
+				.body("content.size()", is(equalTo(1)))
+				.body("content.id", contains(requerant3.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -159,7 +159,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		given().queryParam("limit", 10).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.REQUERANT_SEARCH_COLLECTION).then().log().body().statusCode(200)
 				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("requerants.size()", is(equalTo(3))).body("requerants.id", contains(requerant1.getId().intValue(),
+				.body("content.size()", is(equalTo(3))).body("content.id", contains(requerant1.getId().intValue(),
 						requerant2.getId().intValue(), requerant3.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
@@ -173,7 +173,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		given().queryParam("page", 10).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.REQUERANT_SEARCH_COLLECTION).then().log().body().statusCode(200)
 				.body("page", is(equalTo(10))).body("totalPages", is(equalTo(2)))
-				.body("requerants.size()", is(equalTo(0)));
+				.body("content.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -186,8 +186,8 @@ public class RequerantsSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("requerants.size()", is(equalTo(2)))
-				.body("requerants.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -200,8 +200,8 @@ public class RequerantsSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("requerants.size()", is(equalTo(1)))
-				.body("requerants.id", contains(requerant1.getId().intValue()));
+				.body("content.size()", is(equalTo(1)))
+				.body("content.id", contains(requerant1.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -214,8 +214,8 @@ public class RequerantsSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("requerants.size()", is(equalTo(1)))
-				.body("requerants.id", contains(requerant1.getId().intValue()));
+				.body("content.size()", is(equalTo(1)))
+				.body("content.id", contains(requerant1.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -228,8 +228,8 @@ public class RequerantsSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("requerants.size()", is(equalTo(2)))
-				.body("requerants.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -242,8 +242,8 @@ public class RequerantsSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("requerants.size()", is(equalTo(2)))
-				.body("requerants.id", contains(requerant2.getId().intValue(), requerant3.getId().intValue()));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(requerant2.getId().intValue(), requerant3.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -258,8 +258,8 @@ public class RequerantsSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(2)))
-				.body("requerants.size()", is(equalTo(2)))
-				.body("requerants.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -272,8 +272,8 @@ public class RequerantsSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("requerants.size()", is(equalTo(2)))
-				.body("requerants.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -286,8 +286,8 @@ public class RequerantsSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("requerants.size()", is(equalTo(2)))
-				.body("requerants.id", contains(requerant1.getId().intValue(), requerant3.getId().intValue()));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(requerant1.getId().intValue(), requerant3.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -301,8 +301,8 @@ public class RequerantsSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("requerants.size()", is(equalTo(1)))
-				.body("requerants.id", contains(requerant1.getId().intValue()));
+				.body("content.size()", is(equalTo(1)))
+				.body("content.id", contains(requerant1.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -316,8 +316,8 @@ public class RequerantsSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("requerants.size()", is(equalTo(2)))
-				.body("requerants.id", contains(requerant1.getId().intValue(), requerant3.getId().intValue()));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(requerant1.getId().intValue(), requerant3.getId().intValue()));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}

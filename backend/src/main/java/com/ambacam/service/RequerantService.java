@@ -21,10 +21,10 @@ import com.ambacam.repository.PaysRepository;
 import com.ambacam.repository.RequerantRepository;
 import com.ambacam.search.requerants.RequerantCriteria;
 import com.ambacam.search.requerants.RequerantSpecs;
+import com.ambacam.transfert.SearchResultTO;
 import com.ambacam.transfert.requerants.Requerant2RequerantReadTO;
 import com.ambacam.transfert.requerants.RequerantCreateTO;
 import com.ambacam.transfert.requerants.RequerantReadTO;
-import com.ambacam.transfert.requerants.RequerantSearchTO;
 import com.ambacam.transfert.requerants.RequerantUpdateTO;
 
 @Service
@@ -102,7 +102,7 @@ public class RequerantService {
 	 * @param criteria
 	 * @return
 	 */
-	public RequerantSearchTO search(Integer limit, Integer page, RequerantCriteria criteria) {
+	public SearchResultTO<RequerantReadTO> search(Integer limit, Integer page, RequerantCriteria criteria) {
 
 		Integer searchLimit = limit;
 		Integer searchPage = page;
@@ -121,8 +121,8 @@ public class RequerantService {
 		Page<Requerant> pageRequerant = requerantRepository.findAll(specs,
 				new PageRequest(searchPage, searchLimit, new Sort(Sort.Direction.ASC, "nom")));
 
-		RequerantSearchTO requerantSearchTO = new RequerantSearchTO();
-		requerantSearchTO.setRequerants(pageRequerant.getContent().stream()
+		SearchResultTO<RequerantReadTO> requerantSearchTO = new SearchResultTO<RequerantReadTO>();
+		requerantSearchTO.setContent(pageRequerant.getContent().stream()
 				.map(requerant -> Requerant2RequerantReadTO.apply(requerant)).collect(Collectors.toList()));
 		requerantSearchTO.setPage(pageRequerant.getNumber());
 		requerantSearchTO.setTotalPages(pageRequerant.getTotalPages());
