@@ -4016,7 +4016,7 @@
         "totalPages": {
           "type": "integer"
         },
-        "requerants": {
+        "content": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/RequerantRead"
@@ -4093,7 +4093,7 @@
         "totalPages": {
           "type": "integer"
         },
-        "operateurs": {
+        "content": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/OperateurRead"
@@ -4447,7 +4447,7 @@
         "totalPages": {
           "type": "integer"
         },
-        "logs": {
+        "content": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Log"

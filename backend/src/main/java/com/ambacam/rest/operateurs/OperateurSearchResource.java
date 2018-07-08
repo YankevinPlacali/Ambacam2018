@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ambacam.rest.ApiConstants;
 import com.ambacam.search.operateurs.OperateurCriteria;
 import com.ambacam.service.OperateurService;
-import com.ambacam.transfert.operateurs.OperateurSearchTO;
+import com.ambacam.transfert.SearchResultTO;
+import com.ambacam.transfert.operateurs.OperateurReadTO;
 
 @RestController
 @RequestMapping(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
@@ -33,7 +34,7 @@ public class OperateurSearchResource {
 	@RequestMapping(name = ApiConstants.OPERATEUR_SEARCH_COLLECTION, method = RequestMethod.POST)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public OperateurSearchTO search(@QueryParam("limit") Integer limit, @QueryParam("page") Integer page,
+	public SearchResultTO<OperateurReadTO> search(@QueryParam("limit") Integer limit, @QueryParam("page") Integer page,
 			@RequestBody @Valid OperateurCriteria criteria) {
 		log.info("find operateurs by parameters");
 

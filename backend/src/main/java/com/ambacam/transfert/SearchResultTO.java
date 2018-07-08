@@ -1,10 +1,15 @@
 package com.ambacam.transfert;
 
-public class SearchResultTO {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SearchResultTO<T> {
 
 	private int page;
 
 	private int totalPages;
+
+	private List<T> content = new ArrayList<>();
 
 	public int getPage() {
 		return page;
@@ -20,6 +25,14 @@ public class SearchResultTO {
 
 	public void setTotalPages(int totalPages) {
 		this.totalPages = totalPages;
+	}
+
+	public List<T> getContent() {
+		return content;
+	}
+
+	public void setContent(List<T> content) {
+		this.content = content;
 	}
 
 }

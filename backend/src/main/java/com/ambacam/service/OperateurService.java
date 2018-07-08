@@ -19,11 +19,11 @@ import com.ambacam.repository.OperateurRepository;
 import com.ambacam.repository.PaysRepository;
 import com.ambacam.search.operateurs.OperateurCriteria;
 import com.ambacam.search.operateurs.OperateurSpecs;
+import com.ambacam.transfert.SearchResultTO;
 import com.ambacam.transfert.operateurs.Operateur2OperateurReadTO;
 import com.ambacam.transfert.operateurs.OperateurCreateTO;
 import com.ambacam.transfert.operateurs.OperateurCreateTO2Operateur;
 import com.ambacam.transfert.operateurs.OperateurReadTO;
-import com.ambacam.transfert.operateurs.OperateurSearchTO;
 import com.ambacam.transfert.operateurs.OperateurUpdateTO;
 
 @Service
@@ -98,7 +98,7 @@ public class OperateurService {
 	 * @param criteria
 	 * @return
 	 */
-	public OperateurSearchTO search(Integer limit, Integer page, OperateurCriteria criteria) {
+	public SearchResultTO<OperateurReadTO> search(Integer limit, Integer page, OperateurCriteria criteria) {
 
 		Integer searchLimit = limit;
 		Integer searchPage = page;
@@ -117,8 +117,8 @@ public class OperateurService {
 		Page<Operateur> pageOperateur = operateurRepository.findAll(specs,
 				new PageRequest(searchPage, searchLimit, new Sort(Sort.Direction.ASC, "nom")));
 
-		OperateurSearchTO operateurSearchTO = new OperateurSearchTO();
-		operateurSearchTO.setOperateurs(pageOperateur.getContent().stream()
+		SearchResultTO<OperateurReadTO> operateurSearchTO = new SearchResultTO<OperateurReadTO>();
+		operateurSearchTO.setContent(pageOperateur.getContent().stream()
 				.map(operateur -> Operateur2OperateurReadTO.apply(operateur)).collect(Collectors.toList()));
 		operateurSearchTO.setPage(pageOperateur.getNumber());
 		operateurSearchTO.setTotalPages(pageOperateur.getTotalPages());

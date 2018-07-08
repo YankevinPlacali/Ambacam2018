@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ambacam.rest.ApiConstants;
 import com.ambacam.search.requerants.RequerantCriteria;
 import com.ambacam.service.RequerantService;
-import com.ambacam.transfert.requerants.RequerantSearchTO;
+import com.ambacam.transfert.SearchResultTO;
+import com.ambacam.transfert.requerants.RequerantReadTO;
 
 @RestController
 @RequestMapping(ApiConstants.REQUERANT_SEARCH_COLLECTION)
@@ -33,7 +34,7 @@ public class RequerantSearchResource {
 	@RequestMapping(name = ApiConstants.REQUERANT_SEARCH_COLLECTION, method = RequestMethod.POST)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public RequerantSearchTO search(@QueryParam("limit") Integer limit, @QueryParam("page") Integer page,
+	public SearchResultTO<RequerantReadTO> search(@QueryParam("limit") Integer limit, @QueryParam("page") Integer page,
 			@RequestBody @Valid RequerantCriteria criteria) {
 		log.info("find requerants by parameters");
 

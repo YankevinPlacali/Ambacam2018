@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ambacam.model.Log;
 import com.ambacam.rest.ApiConstants;
 import com.ambacam.search.logs.LogCriteria;
 import com.ambacam.service.LogService;
-import com.ambacam.transfert.logs.LogSearchTO;
+import com.ambacam.transfert.SearchResultTO;
 
 @RestController
 @RequestMapping(ApiConstants.LOG_COLLECTION)
@@ -33,7 +34,7 @@ public class LogsResource {
 	@RequestMapping(method = RequestMethod.POST)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public LogSearchTO list(@QueryParam("limit") Integer limit, @QueryParam("page") Integer page,
+	public SearchResultTO<Log> list(@QueryParam("limit") Integer limit, @QueryParam("page") Integer page,
 			@RequestBody @Valid LogCriteria criteria) {
 		log.info("Find logs by parameters");
 

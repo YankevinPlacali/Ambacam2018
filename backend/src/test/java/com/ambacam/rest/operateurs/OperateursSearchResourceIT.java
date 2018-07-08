@@ -111,16 +111,16 @@ public class OperateursSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(2)))
-				.body("operateurs.size()", is(equalTo(2)))
-				.body("operateurs.id", contains(creator1.getId().intValue(), creator2.getId().intValue()))
-				.body("operateurs[0].id", is(equalTo(creator1.getId().intValue())))
-				.body("operateurs[0].nom", is(equalTo(creator1.getNom())))
-				.body("operateurs[0].prenom", is(equalTo(creator1.getPrenom())))
-				.body("operateurs[0].sexe", is(equalTo(creator1.getSexe())))
-				.body("operateurs[0].nationalite.id", is(equalTo(creator1.getNationalite().getId().intValue())))
-				.body("operateurs[0].creePar.id", is(nullValue()))
-				.body("operateurs[0].creeLe", is(equalTo(creator1.getCreeLe().getTime())))
-				.body("operateurs[0].roles.size()", is(equalTo(0)));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(creator1.getId().intValue(), creator2.getId().intValue()))
+				.body("content[0].id", is(equalTo(creator1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(creator1.getNom())))
+				.body("content[0].prenom", is(equalTo(creator1.getPrenom())))
+				.body("content[0].sexe", is(equalTo(creator1.getSexe())))
+				.body("content[0].nationalite.id", is(equalTo(creator1.getNationalite().getId().intValue())))
+				.body("content[0].creePar.id", is(nullValue()))
+				.body("content[0].creeLe", is(equalTo(creator1.getCreeLe().getTime())))
+				.body("content[0].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -132,19 +132,18 @@ public class OperateursSearchResourceIT extends ItBase {
 		// System under test
 		given().queryParam("limit", 3).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
-				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(2)))
-				.body("operateurs.size()", is(equalTo(3)))
-				.body("operateurs.id",
+				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(3)))
+				.body("content.id",
 						contains(creator1.getId().intValue(), creator2.getId().intValue(),
 								operateur1.getId().intValue()))
-				.body("operateurs[0].id", is(equalTo(creator1.getId().intValue())))
-				.body("operateurs[0].nom", is(equalTo(creator1.getNom())))
-				.body("operateurs[0].prenom", is(equalTo(creator1.getPrenom())))
-				.body("operateurs[0].sexe", is(equalTo(creator1.getSexe())))
-				.body("operateurs[0].nationalite.id", is(equalTo(creator1.getNationalite().getId().intValue())))
-				.body("operateurs[0].creePar.id", is(nullValue()))
-				.body("operateurs[0].creeLe", is(equalTo(creator1.getCreeLe().getTime())))
-				.body("operateurs[0].roles.size()", is(equalTo(0)));
+				.body("content[0].id", is(equalTo(creator1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(creator1.getNom())))
+				.body("content[0].prenom", is(equalTo(creator1.getPrenom())))
+				.body("content[0].sexe", is(equalTo(creator1.getSexe())))
+				.body("content[0].nationalite.id", is(equalTo(creator1.getNationalite().getId().intValue())))
+				.body("content[0].creePar.id", is(nullValue()))
+				.body("content[0].creeLe", is(equalTo(creator1.getCreeLe().getTime())))
+				.body("content[0].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -156,17 +155,16 @@ public class OperateursSearchResourceIT extends ItBase {
 		// System under test
 		given().queryParam("page", 1).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
-				.body("page", is(equalTo(1))).body("totalPages", is(equalTo(2)))
-				.body("operateurs.size()", is(equalTo(2)))
-				.body("operateurs.id", contains(operateur1.getId().intValue(), operateur2.getId().intValue()))
-				.body("operateurs[0].id", is(equalTo(operateur1.getId().intValue())))
-				.body("operateurs[0].nom", is(equalTo(operateur1.getNom())))
-				.body("operateurs[0].prenom", is(equalTo(operateur1.getPrenom())))
-				.body("operateurs[0].sexe", is(equalTo(operateur1.getSexe())))
-				.body("operateurs[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
-				.body("operateurs[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
-				.body("operateurs[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
-				.body("operateurs[0].roles.size()", is(equalTo(0)));
+				.body("page", is(equalTo(1))).body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(operateur1.getId().intValue(), operateur2.getId().intValue()))
+				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(operateur1.getNom())))
+				.body("content[0].prenom", is(equalTo(operateur1.getPrenom())))
+				.body("content[0].sexe", is(equalTo(operateur1.getSexe())))
+				.body("content[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
+				.body("content[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
+				.body("content[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
+				.body("content[0].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -178,19 +176,18 @@ public class OperateursSearchResourceIT extends ItBase {
 		// System under test
 		given().queryParam("limit", 10).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
-				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("operateurs.size()", is(equalTo(4)))
-				.body("operateurs.id",
+				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1))).body("content.size()", is(equalTo(4)))
+				.body("content.id",
 						contains(creator1.getId().intValue(), creator2.getId().intValue(),
 								operateur1.getId().intValue(), operateur2.getId().intValue()))
-				.body("operateurs[0].id", is(equalTo(creator1.getId().intValue())))
-				.body("operateurs[0].nom", is(equalTo(creator1.getNom())))
-				.body("operateurs[0].prenom", is(equalTo(creator1.getPrenom())))
-				.body("operateurs[0].sexe", is(equalTo(creator1.getSexe())))
-				.body("operateurs[0].nationalite.id", is(equalTo(creator1.getNationalite().getId().intValue())))
-				.body("operateurs[0].creePar.id", is(nullValue()))
-				.body("operateurs[0].creeLe", is(equalTo(creator1.getCreeLe().getTime())))
-				.body("operateurs[0].roles.size()", is(equalTo(0)));
+				.body("content[0].id", is(equalTo(creator1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(creator1.getNom())))
+				.body("content[0].prenom", is(equalTo(creator1.getPrenom())))
+				.body("content[0].sexe", is(equalTo(creator1.getSexe())))
+				.body("content[0].nationalite.id", is(equalTo(creator1.getNationalite().getId().intValue())))
+				.body("content[0].creePar.id", is(nullValue()))
+				.body("content[0].creeLe", is(equalTo(creator1.getCreeLe().getTime())))
+				.body("content[0].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -203,7 +200,7 @@ public class OperateursSearchResourceIT extends ItBase {
 		given().queryParam("page", 10).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
 				.body("page", is(equalTo(10))).body("totalPages", is(equalTo(2)))
-				.body("operateurs.size()", is(equalTo(0)));
+				.body("content.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -216,16 +213,16 @@ public class OperateursSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("operateurs.size()", is(equalTo(2)))
-				.body("operateurs.id", contains(creator1.getId().intValue(), creator2.getId().intValue()))
-				.body("operateurs[0].id", is(equalTo(creator1.getId().intValue())))
-				.body("operateurs[0].nom", is(equalTo(creator1.getNom())))
-				.body("operateurs[0].prenom", is(equalTo(creator1.getPrenom())))
-				.body("operateurs[0].sexe", is(equalTo(creator1.getSexe())))
-				.body("operateurs[0].nationalite.id", is(equalTo(creator1.getNationalite().getId().intValue())))
-				.body("operateurs[0].creePar.id", is(nullValue()))
-				.body("operateurs[0].creeLe", is(equalTo(creator1.getCreeLe().getTime())))
-				.body("operateurs[0].roles.size()", is(equalTo(0)));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(creator1.getId().intValue(), creator2.getId().intValue()))
+				.body("content[0].id", is(equalTo(creator1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(creator1.getNom())))
+				.body("content[0].prenom", is(equalTo(creator1.getPrenom())))
+				.body("content[0].sexe", is(equalTo(creator1.getSexe())))
+				.body("content[0].nationalite.id", is(equalTo(creator1.getNationalite().getId().intValue())))
+				.body("content[0].creePar.id", is(nullValue()))
+				.body("content[0].creeLe", is(equalTo(creator1.getCreeLe().getTime())))
+				.body("content[0].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -238,16 +235,15 @@ public class OperateursSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("operateurs.size()", is(equalTo(1)))
-				.body("operateurs.id", contains(operateur1.getId().intValue()))
-				.body("operateurs[0].id", is(equalTo(operateur1.getId().intValue())))
-				.body("operateurs[0].nom", is(equalTo(operateur1.getNom())))
-				.body("operateurs[0].prenom", is(equalTo(operateur1.getPrenom())))
-				.body("operateurs[0].sexe", is(equalTo(operateur1.getSexe())))
-				.body("operateurs[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
-				.body("operateurs[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
-				.body("operateurs[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
-				.body("operateurs[0].roles.size()", is(equalTo(0)));
+				.body("content.size()", is(equalTo(1))).body("content.id", contains(operateur1.getId().intValue()))
+				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(operateur1.getNom())))
+				.body("content[0].prenom", is(equalTo(operateur1.getPrenom())))
+				.body("content[0].sexe", is(equalTo(operateur1.getSexe())))
+				.body("content[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
+				.body("content[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
+				.body("content[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
+				.body("content[0].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -260,16 +256,15 @@ public class OperateursSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("operateurs.size()", is(equalTo(1)))
-				.body("operateurs.id", contains(operateur1.getId().intValue()))
-				.body("operateurs[0].id", is(equalTo(operateur1.getId().intValue())))
-				.body("operateurs[0].nom", is(equalTo(operateur1.getNom())))
-				.body("operateurs[0].prenom", is(equalTo(operateur1.getPrenom())))
-				.body("operateurs[0].sexe", is(equalTo(operateur1.getSexe())))
-				.body("operateurs[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
-				.body("operateurs[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
-				.body("operateurs[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
-				.body("operateurs[0].roles.size()", is(equalTo(0)));
+				.body("content.size()", is(equalTo(1))).body("content.id", contains(operateur1.getId().intValue()))
+				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(operateur1.getNom())))
+				.body("content[0].prenom", is(equalTo(operateur1.getPrenom())))
+				.body("content[0].sexe", is(equalTo(operateur1.getSexe())))
+				.body("content[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
+				.body("content[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
+				.body("content[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
+				.body("content[0].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -282,16 +277,16 @@ public class OperateursSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("operateurs.size()", is(equalTo(2)))
-				.body("operateurs.id", contains(creator1.getId().intValue(), creator2.getId().intValue()))
-				.body("operateurs[0].id", is(equalTo(creator1.getId().intValue())))
-				.body("operateurs[0].nom", is(equalTo(creator1.getNom())))
-				.body("operateurs[0].prenom", is(equalTo(creator1.getPrenom())))
-				.body("operateurs[0].sexe", is(equalTo(creator1.getSexe())))
-				.body("operateurs[0].nationalite.id", is(equalTo(creator1.getNationalite().getId().intValue())))
-				.body("operateurs[0].creePar.id", is(nullValue()))
-				.body("operateurs[0].creeLe", is(equalTo(creator1.getCreeLe().getTime())))
-				.body("operateurs[0].roles.size()", is(equalTo(0)));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(creator1.getId().intValue(), creator2.getId().intValue()))
+				.body("content[0].id", is(equalTo(creator1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(creator1.getNom())))
+				.body("content[0].prenom", is(equalTo(creator1.getPrenom())))
+				.body("content[0].sexe", is(equalTo(creator1.getSexe())))
+				.body("content[0].nationalite.id", is(equalTo(creator1.getNationalite().getId().intValue())))
+				.body("content[0].creePar.id", is(nullValue()))
+				.body("content[0].creeLe", is(equalTo(creator1.getCreeLe().getTime())))
+				.body("content[0].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -304,16 +299,16 @@ public class OperateursSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("operateurs.size()", is(equalTo(2)))
-				.body("operateurs.id", contains(operateur1.getId().intValue(), operateur2.getId().intValue()))
-				.body("operateurs[0].id", is(equalTo(operateur1.getId().intValue())))
-				.body("operateurs[0].nom", is(equalTo(operateur1.getNom())))
-				.body("operateurs[0].prenom", is(equalTo(operateur1.getPrenom())))
-				.body("operateurs[0].sexe", is(equalTo(operateur1.getSexe())))
-				.body("operateurs[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
-				.body("operateurs[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
-				.body("operateurs[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
-				.body("operateurs[0].roles.size()", is(equalTo(0)));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(operateur1.getId().intValue(), operateur2.getId().intValue()))
+				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(operateur1.getNom())))
+				.body("content[0].prenom", is(equalTo(operateur1.getPrenom())))
+				.body("content[0].sexe", is(equalTo(operateur1.getSexe())))
+				.body("content[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
+				.body("content[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
+				.body("content[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
+				.body("content[0].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -327,16 +322,16 @@ public class OperateursSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("operateurs.size()", is(equalTo(2)))
-				.body("operateurs.id", contains(operateur1.getId().intValue(), operateur2.getId().intValue()))
-				.body("operateurs[0].id", is(equalTo(operateur1.getId().intValue())))
-				.body("operateurs[0].nom", is(equalTo(operateur1.getNom())))
-				.body("operateurs[0].prenom", is(equalTo(operateur1.getPrenom())))
-				.body("operateurs[0].sexe", is(equalTo(operateur1.getSexe())))
-				.body("operateurs[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
-				.body("operateurs[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
-				.body("operateurs[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
-				.body("operateurs[0].roles.size()", is(equalTo(0)));
+				.body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(operateur1.getId().intValue(), operateur2.getId().intValue()))
+				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(operateur1.getNom())))
+				.body("content[0].prenom", is(equalTo(operateur1.getPrenom())))
+				.body("content[0].sexe", is(equalTo(operateur1.getSexe())))
+				.body("content[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
+				.body("content[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
+				.body("content[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
+				.body("content[0].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -349,16 +344,15 @@ public class OperateursSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("operateurs.size()", is(equalTo(1)))
-				.body("operateurs.id", contains(operateur1.getId().intValue()))
-				.body("operateurs[0].id", is(equalTo(operateur1.getId().intValue())))
-				.body("operateurs[0].nom", is(equalTo(operateur1.getNom())))
-				.body("operateurs[0].prenom", is(equalTo(operateur1.getPrenom())))
-				.body("operateurs[0].sexe", is(equalTo(operateur1.getSexe())))
-				.body("operateurs[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
-				.body("operateurs[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
-				.body("operateurs[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
-				.body("operateurs[0].roles.size()", is(equalTo(0)));
+				.body("content.size()", is(equalTo(1))).body("content.id", contains(operateur1.getId().intValue()))
+				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(operateur1.getNom())))
+				.body("content[0].prenom", is(equalTo(operateur1.getPrenom())))
+				.body("content[0].sexe", is(equalTo(operateur1.getSexe())))
+				.body("content[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
+				.body("content[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
+				.body("content[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
+				.body("content[0].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -374,16 +368,15 @@ public class OperateursSearchResourceIT extends ItBase {
 		// System under test
 		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("operateurs.size()", is(equalTo(1)))
-				.body("operateurs.id", contains(operateur1.getId().intValue()))
-				.body("operateurs[0].id", is(equalTo(operateur1.getId().intValue())))
-				.body("operateurs[0].nom", is(equalTo(operateur1.getNom())))
-				.body("operateurs[0].prenom", is(equalTo(operateur1.getPrenom())))
-				.body("operateurs[0].sexe", is(equalTo(operateur1.getSexe())))
-				.body("operateurs[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
-				.body("operateurs[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
-				.body("operateurs[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
-				.body("operateurs[0].roles.size()", is(equalTo(0)));
+				.body("content.size()", is(equalTo(1))).body("content.id", contains(operateur1.getId().intValue()))
+				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
+				.body("content[0].nom", is(equalTo(operateur1.getNom())))
+				.body("content[0].prenom", is(equalTo(operateur1.getPrenom())))
+				.body("content[0].sexe", is(equalTo(operateur1.getSexe())))
+				.body("content[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
+				.body("content[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
+				.body("content[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
+				.body("content[0].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
