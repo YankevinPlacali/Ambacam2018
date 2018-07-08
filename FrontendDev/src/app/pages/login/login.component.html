@@ -1,0 +1,47 @@
+<!--login
+<jw-modal id="custom-modal-1">
+  <h1>A Custom Modal!</h1>
+  <div class="loginmodal-container">
+  <h1>Login to Your Account</h1>
+  <br>
+  <form>
+    <input type="text" name="user" placeholder="Username">
+    <input type="password" name="pass" placeholder="Password">
+    <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+  </form>
+
+  <div class="login-help">
+    <a href="#">Register</a> -
+    <a href="#">Forgot Password</a>
+  </div>
+</div>
+  <button >Login</button>
+</jw-modal>
+
+<mat-card class="card1">
+  <mat-card-header>
+    <mat-card-title><h1>Dialog Demo</h1></mat-card-title>
+  </mat-card-header>
+  <hr>
+  <mat-card-content>
+    <button mat-raised-button (click)="openDialog()">Open Dialog</button>
+    <hr>
+    <strong>Result: {{dialogResult}}</strong>
+  </mat-card-content>
+</mat-card>-->
+
+<div>
+  <h2 mat-dialog-title>MY DIALOG</h2>
+  <hr>
+  <mat-dialog-content>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam maxime cum dolorem officiis assumenda rem alias, omnis nobis nam. Ratione soluta libero architecto cupiditate at fugit consectetur sit dignissimos vitae.
+    <br>
+    <br>
+    <strong>{{data}}</strong>
+  </mat-dialog-content>
+  <hr>
+  <mat-dialog-actions>
+    <button mat-button (click)="onCloseConfirm()">CONFIRM</button>&nbsp;
+    <button mat-button (click)="onCloseCancel()">CANCEL</button>
+  </mat-dialog-actions>
+</div>

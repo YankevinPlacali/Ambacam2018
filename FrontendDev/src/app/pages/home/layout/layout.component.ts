@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../components/User';
 
+
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent implements OnInit {
-
+ 
   constructor() { }
 
-  model = new User(18, new Date());
+  model = new User(18, new Date(), 75);
 
   submitted = false;
 
-  onSubmit() { this.submitted = true; console.log("click"); }
-
-  get diagnostic() { return JSON.stringify(this.model); }
+  onSubmit() { this.submitted = true; console.log("click") }
 
   ngOnInit() {
   }
