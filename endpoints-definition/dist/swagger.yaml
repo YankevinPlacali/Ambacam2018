@@ -9,8 +9,7 @@ info:
   title: Ambacam 2018
   contact:
     email: hervalnganya@yahoo.fr
-host: service.ambacam.com
-basePath: /tracking
+host: 18.222.141.21:8080
 tags:
   - name: Requerant
     description: Interfaces related to operations on the models Requerant and Recepisse
@@ -2794,8 +2793,8 @@ definitions:
       numero:
         type: integer
         format: int64
-      requerant:
-        $ref: '#/definitions/Requerant'
+      requete:
+        $ref: '#/definitions/Requete'
   RecepisseCreate:
     type: object
     required:

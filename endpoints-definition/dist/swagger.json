@@ -8,8 +8,7 @@
       "email": "hervalnganya@yahoo.fr"
     }
   },
-  "host": "service.ambacam.com",
-  "basePath": "/tracking",
+  "host": "18.222.141.21:8080",
   "tags": [
     {
       "name": "Requerant",
@@ -4359,8 +4358,8 @@
           "type": "integer",
           "format": "int64"
         },
-        "requerant": {
-          "$ref": "#/definitions/Requerant"
+        "requete": {
+          "$ref": "#/definitions/Requete"
         }
       }
     },
