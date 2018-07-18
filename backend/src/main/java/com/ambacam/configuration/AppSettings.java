@@ -13,6 +13,8 @@ public class AppSettings {
 
 	private int searchDefaultPageNumber;
 
+	private String crossOrigin;
+
 	public String getProjectName() {
 		return projectName;
 	}
@@ -35,6 +37,14 @@ public class AppSettings {
 
 	public void setSearchDefaultPageNumber(int searchDefaultPageNumber) {
 		this.searchDefaultPageNumber = searchDefaultPageNumber;
+	}
+
+	public String getCrossOrigin() {
+		return crossOrigin;
+	}
+
+	public void setCrossOrigin(String crossOrigin) {
+		this.crossOrigin = crossOrigin;
 	}
 
 }

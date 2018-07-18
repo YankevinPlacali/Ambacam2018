@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 
 @RestController
 @RequestMapping(ApiConstants.TYPE_REQUETE_ITEM)
+@CrossOrigin(origins = "${ambacam2018.app.settings.cross-origin}")
 public class TypeRequeteResource {
 
 	private static final Logger log = LoggerFactory.getLogger(TypeRequeteResource.class);

@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 
 @RestController
 @RequestMapping(ApiConstants.PAYS_ITEM)
+@CrossOrigin(origins = "${ambacam2018.app.settings.cross-origin}")
 @Validated
 public class PaysResource {
 
