@@ -1,42 +1,30 @@
 package com.ambacam;
 
-import static io.restassured.RestAssured.given;
-
-import java.util.Date;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
-
-import javax.ws.rs.core.HttpHeaders;
-
+import com.ambacam.model.*;
+import com.ambacam.transfert.operateurs.Operateur2OperateurCreatedTO;
+import com.ambacam.transfert.operateurs.Operateur2OperateurUpdateTO;
+import com.ambacam.transfert.operateurs.OperateurCreateTO;
+import com.ambacam.transfert.operateurs.OperateurUpdateTO;
+import com.ambacam.transfert.recepisses.RecepisseCreateTO;
+import com.ambacam.transfert.recepisses.RecepisseUpdateTO;
+import com.ambacam.transfert.requetegroupes.RequeteGroupeCreateTO;
+import com.ambacam.transfert.requetegroupes.RequeteGroupeUpdateTO;
+import com.ambacam.utils.RequeteGroupeUtils;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.runner.RunWith;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.ambacam.model.Action;
-import com.ambacam.model.Autorite;
-import com.ambacam.model.Log;
-import com.ambacam.model.LogActeur;
-import com.ambacam.model.MotifSuppression;
-import com.ambacam.model.Operateur;
-import com.ambacam.model.Pays;
-import com.ambacam.model.Requerant;
-import com.ambacam.model.RequeteGroupe;
-import com.ambacam.model.Role;
-import com.ambacam.model.StatusRequete;
-import com.ambacam.model.TypeRequete;
-import com.ambacam.transfert.operateurs.Operateur2OperateurCreatedTO;
-import com.ambacam.transfert.operateurs.Operateur2OperateurUpdateTO;
-import com.ambacam.transfert.operateurs.OperateurCreateTO;
-import com.ambacam.transfert.operateurs.OperateurUpdateTO;
-import com.ambacam.transfert.requetegroupes.RequeteGroupeCreateTO;
-import com.ambacam.transfert.requetegroupes.RequeteGroupeUpdateTO;
-import com.ambacam.utils.RequeteGroupeUtils;
+import javax.ws.rs.core.HttpHeaders;
+import java.util.Date;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
+import static io.restassured.RestAssured.given;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -170,6 +158,27 @@ public class ItBase {
 
 	protected RequeteGroupeUpdateTO buildRequeteGroupeUpdateTO() {
 		return buildRequeteGroupeUpdateTO("description-" + UUID.randomUUID());
+	}
+
+	protected Requete buildRequete() {
+		Requete item = new Requete();
+		item.setDate(new Date());
+		return item;
+	}
+
+	protected Recepisse buildRecepisse() {
+		Recepisse item = new Recepisse();
+		item.setNumero(random.nextLong());
+		return item;
+	}
+
+	protected RecepisseCreateTO buildRecepisseCreateTO(Long numero) {
+		return new RecepisseCreateTO().numero(numero);
+	}
+
+	protected RecepisseUpdateTO buildRecepisseUpdateTO() {
+		return new RecepisseUpdateTO()
+				.numero(random.nextLong());
 	}
 
 }
