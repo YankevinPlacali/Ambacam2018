@@ -48,4 +48,12 @@ public class ApiConstants {
 
 	public static final String OPERATEUR_REQUETE_GROUPE_ITEM = OPERATEUR_REQUETE_GROUPE_COLLECTION
 			+ "/{requeteGroupeId}";
+
+	public static final String REQUETE_COLLECTION = "/requetes";
+
+	public static final String REQUETE_ITEM = REQUETE_COLLECTION + "/{requeteId}";
+
+	public static final String RECEPISSE_COLLECTION = REQUERANT_ITEM + REQUETE_ITEM + "/recepisses";
+
+	public static final String RECEPISSE_ITEM = RECEPISSE_COLLECTION + "/{recepisseId}";
 }
