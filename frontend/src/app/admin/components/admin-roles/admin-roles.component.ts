@@ -6,7 +6,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RequestType} from '../../models/request/requestType';
 import {RequestMessage} from '../../models/request/requestMessage';
 import {RequestVisibility} from '../../models/request/requestVisibility';
-import {AppConstantMessages} from '../../../AppConstantMessages';
+import {AppConstantMessages} from '../../../appConstantMessages';
 import {Strings} from '../../utils/strings';
 import {Location} from '@angular/common';
 // Variable in assets/js/scripts.js file
