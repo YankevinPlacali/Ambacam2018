@@ -7,8 +7,8 @@
 mvnw
 mvnw.cmd
 bin/
-./src/app/server.ts
-./node_modules/
+src/app/server.ts
+node_modules/
  
 # Intellij
 .idea/
