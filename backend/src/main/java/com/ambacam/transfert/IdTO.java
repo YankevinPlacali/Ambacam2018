@@ -7,6 +7,9 @@ public class IdTO<T> {
 	@NotNull(message = "The id must not be null")
 	private T id;
 
+	public IdTO() {
+	}
+	
 	public IdTO(T id) {
 		this.id = id;
 	}

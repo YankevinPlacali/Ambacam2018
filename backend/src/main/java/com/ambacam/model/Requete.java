@@ -37,7 +37,7 @@ public class Requete implements Serializable {
 	private Operateur operateur;
 
 	@ManyToOne
-	@JoinColumn(name = "requete_groupe_id", nullable = false)
+	@JoinColumn(name = "requete_groupe_id")
 	private RequeteGroupe requeteGroupe;
 
 	public Requete() {
@@ -63,6 +63,11 @@ public class Requete implements Serializable {
 	public void setStatus(StatusRequete status) {
 		this.status = status;
 	}
+	
+	public Requete status(StatusRequete status) {
+            this.status = status;
+            return this;
+    }
 
 	public TypeRequete getType() {
 		return type;
@@ -71,6 +76,11 @@ public class Requete implements Serializable {
 	public void setType(TypeRequete type) {
 		this.type = type;
 	}
+	
+	public Requete type(TypeRequete type) {
+            this.type = type;
+            return this;
+    }
 
 	public Date getDate() {
 		return date;
@@ -79,6 +89,11 @@ public class Requete implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	public Requete date(Date date) {
+            this.date = date;
+            return this;
+    }
 
 	public Requerant getRequerant() {
 		return requerant;
@@ -88,6 +103,11 @@ public class Requete implements Serializable {
 		this.requerant = requerant;
 	}
 
+	public Requete requerant(Requerant requerant) {
+            this.requerant = requerant;
+            return this;
+    }
+	
 	public Operateur getOperateur() {
 		return operateur;
 	}
@@ -95,6 +115,11 @@ public class Requete implements Serializable {
 	public void setOperateur(Operateur operateur) {
 		this.operateur = operateur;
 	}
+	
+	public Requete operateur(Operateur operateur) {
+            this.operateur = operateur;
+            return this;
+    }
 
 	public RequeteGroupe getRequeteGroupe() {
 		return requeteGroupe;
@@ -103,6 +128,11 @@ public class Requete implements Serializable {
 	public void setRequeteGroupe(RequeteGroupe requeteGroupe) {
 		this.requeteGroupe = requeteGroupe;
 	}
+	
+	public Requete requeteGroupe(RequeteGroupe requeteGroupe) {
+            this.requeteGroupe = requeteGroupe;
+            return this;
+    }
 
 	@Override
 	public int hashCode() {
