@@ -48,7 +48,8 @@ public class ApiConstants {
 
 	public static final String OPERATEUR_REQUETE_GROUPE_ITEM = OPERATEUR_REQUETE_GROUPE_COLLECTION
 			+ "/{requeteGroupeId}";
-
+			public static final String OPERATEUR_REQUETE_GROUPE_ITEM_STATUS = OPERATEUR_REQUETE_GROUPE_ITEM
+                + "/status";
 	public static final String REQUETE_COLLECTION = "/requetes";
 
 	public static final String REQUETE_ITEM = REQUETE_COLLECTION + "/{requeteId}";
