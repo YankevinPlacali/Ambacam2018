@@ -1,7 +1,6 @@
 package com.ambacam.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Requete implements Serializable {
+public class Requete extends AuditingCommonEntity implements Serializable {
 	private static final long serialVersionUID = 3382958287248625084L;
 
 	@Id
@@ -25,8 +24,6 @@ public class Requete implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "type_requete_id", nullable = false)
 	private TypeRequete type;
-
-	private Date date;
 
 	@ManyToOne
 	@JoinColumn(name = "requete_id", nullable = false, updatable = false)
@@ -63,11 +60,11 @@ public class Requete implements Serializable {
 	public void setStatus(StatusRequete status) {
 		this.status = status;
 	}
-	
+
 	public Requete status(StatusRequete status) {
-            this.status = status;
-            return this;
-    }
+		this.status = status;
+		return this;
+	}
 
 	public TypeRequete getType() {
 		return type;
@@ -76,24 +73,11 @@ public class Requete implements Serializable {
 	public void setType(TypeRequete type) {
 		this.type = type;
 	}
-	
+
 	public Requete type(TypeRequete type) {
-            this.type = type;
-            return this;
-    }
-
-	public Date getDate() {
-		return date;
+		this.type = type;
+		return this;
 	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	
-	public Requete date(Date date) {
-            this.date = date;
-            return this;
-    }
 
 	public Requerant getRequerant() {
 		return requerant;
@@ -104,10 +88,10 @@ public class Requete implements Serializable {
 	}
 
 	public Requete requerant(Requerant requerant) {
-            this.requerant = requerant;
-            return this;
-    }
-	
+		this.requerant = requerant;
+		return this;
+	}
+
 	public Operateur getOperateur() {
 		return operateur;
 	}
@@ -115,11 +99,11 @@ public class Requete implements Serializable {
 	public void setOperateur(Operateur operateur) {
 		this.operateur = operateur;
 	}
-	
+
 	public Requete operateur(Operateur operateur) {
-            this.operateur = operateur;
-            return this;
-    }
+		this.operateur = operateur;
+		return this;
+	}
 
 	public RequeteGroupe getRequeteGroupe() {
 		return requeteGroupe;
@@ -128,11 +112,11 @@ public class Requete implements Serializable {
 	public void setRequeteGroupe(RequeteGroupe requeteGroupe) {
 		this.requeteGroupe = requeteGroupe;
 	}
-	
+
 	public Requete requeteGroupe(RequeteGroupe requeteGroupe) {
-            this.requeteGroupe = requeteGroupe;
-            return this;
-    }
+		this.requeteGroupe = requeteGroupe;
+		return this;
+	}
 
 	@Override
 	public int hashCode() {
@@ -154,8 +138,7 @@ public class Requete implements Serializable {
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		}
-		else if (!id.equals(other.id))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

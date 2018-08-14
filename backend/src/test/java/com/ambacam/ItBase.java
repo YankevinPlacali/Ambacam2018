@@ -162,7 +162,6 @@ public class ItBase {
 
 	protected Requete buildRequete() {
 		Requete item = new Requete();
-		item.setDate(new Date());
 		return item;
 	}
 
@@ -178,7 +177,7 @@ public class ItBase {
 
 	protected RecepisseUpdateTO buildRecepisseUpdateTO() {
 		return new RecepisseUpdateTO()
-				.numero(random.nextLong());
+		.numero(random.nextLong());
 	}
 
 }

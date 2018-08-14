@@ -154,7 +154,7 @@ public class RecepissesResourceIT extends ItBase {
 		RecepisseCreateTO create = buildRecepisseCreateTO(null);
 
 		given().contentType(ContentType.JSON).body(create).log().body()
-				.post(ApiConstants.RECEPISSE_COLLECTION, requerant.getId(), requete.getId()).then().log().body()
+				.post(ApiConstants.RECEPISSE_COLLECTION,requerant.getId(), requete.getId()).then().log().body()
 				.statusCode(400);
 	}
 
