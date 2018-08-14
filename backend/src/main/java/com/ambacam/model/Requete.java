@@ -26,7 +26,7 @@ public class Requete extends AuditingCommonEntity implements Serializable {
 	private TypeRequete type;
 
 	@ManyToOne
-	@JoinColumn(name = "requete_id", nullable = false, updatable = false)
+	@JoinColumn(name = "requerant_id", nullable = false, updatable = false)
 	private Requerant requerant;
 
 	@ManyToOne

@@ -1,16 +1,21 @@
-package com.ambacam.rest.requetes;
+package com.ambacam.rest.requerants.requetes;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ambacam.ItBase;
+import com.ambacam.configuration.AppSettings;
 import com.ambacam.model.Operateur;
 import com.ambacam.model.Pays;
 import com.ambacam.model.Requerant;
@@ -26,8 +31,9 @@ import com.ambacam.repository.RequeteRepository;
 import com.ambacam.repository.StatusRequeteRepository;
 import com.ambacam.repository.TypeRequeteRepository;
 import com.ambacam.rest.ApiConstants;
+import com.ambacam.service.RequeteService;
 
-public class RequeteBatchResourceIT extends ItBase {
+public class RequerantRequetesResourceIT extends ItBase {
 
 	@Autowired
 	private TypeRequeteRepository typeRequeteRepository;
@@ -49,6 +55,12 @@ public class RequeteBatchResourceIT extends ItBase {
 
 	@Autowired
 	private RequeteRepository requeteRepository;
+
+	@Autowired
+	private RequeteService requeteService;
+
+	@Mock
+	private AppSettings appSettings;
 
 	private TypeRequete typeRequete;
 
@@ -74,7 +86,7 @@ public class RequeteBatchResourceIT extends ItBase {
 	public void setup() throws Exception {
 		super.setup();
 
-		typeRequete = typeRequeteRepository.save(buildTypeRequete());
+		typeRequete = typeRequeteRepository.save(buildTypeRequete().nom("type1"));
 
 		statusRequete = statusRequeteRepository.save(buildStatusRequete().nom("status1"));
 
@@ -99,13 +111,17 @@ public class RequeteBatchResourceIT extends ItBase {
 		requete1.setOperateur(operateur1);
 		requete1 = requeteRepository.save(requete1);
 
+		Thread.sleep(100);
+
 		requete2 = buildRequete();
 		requete2.setRequeteGroupe(requeteGroupe);
-		requete2.setRequerant(requerant2);
+		requete2.setRequerant(requerant1);
 		requete2.setType(typeRequete);
 		requete2.setStatus(statusRequete);
 		requete2.setOperateur(operateur1);
 		requete2 = requeteRepository.save(requete2);
+
+		Thread.sleep(100);
 
 		requete3 = buildRequete();
 		requete3.setRequeteGroupe(requeteGroupe);
@@ -115,6 +131,8 @@ public class RequeteBatchResourceIT extends ItBase {
 		requete3.setOperateur(operateur2);
 		requete3 = requeteRepository.save(requete3);
 
+		Thread.sleep(100);
+
 		requete4 = buildRequete();
 		requete4.setRequeteGroupe(requeteGroupe);
 		requete4.setRequerant(requerant2);
@@ -122,6 +140,8 @@ public class RequeteBatchResourceIT extends ItBase {
 		requete4.setStatus(statusRequete);
 		requete4.setOperateur(operateur2);
 		requete4 = requeteRepository.save(requete4);
+
+		simulateNominalBehaviors();
 
 	}
 
@@ -141,12 +161,26 @@ public class RequeteBatchResourceIT extends ItBase {
 	}
 
 	@Test
-	public void listBatch() {
-		given().get(ApiConstants.REQUETE_BATCH_COLLECTION).then().log().body().statusCode(200)
-				.body("size()", is(equalTo(4)))
-				.body("id",
-						contains(requete1.getId().intValue(), requete2.getId().intValue(), requete3.getId().intValue(),
-								requete4.getId().intValue()))
+	public void get() {
+		given().get(ApiConstants.REQUERANT_REQUETE_ITEM, requerant1.getId(), requete1.getId()).then().log().body()
+				.statusCode(200).body("id", is(equalTo(requete1.getId().intValue())))
+				.body("type.id", is(equalTo(typeRequete.getId().intValue())))
+				.body("status.id", is(equalTo(statusRequete.getId().intValue())))
+				.body("date", is(equalTo(requete1.getCreeLe().getTime())))
+				.body("requerant.id", is(equalTo(requerant1.getId().intValue())))
+				.body("operateur.id", is(equalTo(operateur1.getId().intValue())));
+	}
+
+	@Test
+	public void getNotFound() {
+		given().get(ApiConstants.REQUERANT_REQUETE_ITEM, requerant1.getId(), random.nextLong()).then().statusCode(404);
+	}
+
+	@Test
+	public void listByRequerantFirstPageDefaultLimit() {
+		given().queryParam("page", 0).get(ApiConstants.REQUERANT_REQUETE_COLLECTION, requerant1.getId()).then().log()
+				.body().statusCode(200).body("size()", is(equalTo(1)))
+				.body("id", containsInAnyOrder(requete1.getId().intValue()))
 				.body("find{it.id==" + requete1.getId().intValue() + "}.type.id",
 						is(equalTo(typeRequete.getId().intValue())))
 				.body("find{it.id==" + requete1.getId().intValue() + "}.status.id",
@@ -157,6 +191,42 @@ public class RequeteBatchResourceIT extends ItBase {
 						is(equalTo(requerant1.getId().intValue())))
 				.body("find{it.id==" + requete1.getId().intValue() + "}.operateur.id",
 						is(equalTo(operateur1.getId().intValue())));
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
+	}
+
+	@Test
+	public void listByRequerantLastPageDefaultLimit() {
+		given().queryParam("page", 2).get(ApiConstants.REQUERANT_REQUETE_COLLECTION, requerant1.getId()).then().log()
+				.body().statusCode(200).body("size()", is(equalTo(1)))
+				.body("id", containsInAnyOrder(requete3.getId().intValue()));
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
+	}
+
+	@Test
+	public void listByRequerant() {
+		given().queryParam("limit", 3).get(ApiConstants.REQUERANT_REQUETE_COLLECTION, requerant1.getId()).then().log()
+				.body().statusCode(200).body("size()", is(equalTo(3)))
+				.body("id",
+						containsInAnyOrder(requete1.getId().intValue(), requete2.getId().intValue(),
+								requete3.getId().intValue()))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.type.id",
+						is(equalTo(typeRequete.getId().intValue())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.status.id",
+						is(equalTo(statusRequete.getId().intValue())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.date",
+						is(equalTo(requete1.getCreeLe().getTime())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.requerant.id",
+						is(equalTo(requerant1.getId().intValue())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.operateur.id",
+						is(equalTo(operateur1.getId().intValue())));
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
+	}
+
+	private void simulateNominalBehaviors() {
+
+		// Simulate the page size to simplify the tests
+		when(appSettings.getSearchDefaultPageSize()).thenReturn(1);
+		requeteService.setAppSettings(appSettings);
 	}
 
 }

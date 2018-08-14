@@ -30,6 +30,13 @@ public class ApiConstants {
 
 	public static final String AUTORITE_ITEM = AUTORITE_COLLECTION + "/{autoriteId}";
 
+	// requerants
+	public static final String REQUERANT_COLLECTION = "/requerants";
+
+	public static final String REQUERANT_SEARCH_COLLECTION = REQUERANT_COLLECTION + "/search";
+
+	public static final String REQUERANT_ITEM = REQUERANT_COLLECTION + "/{requerantId}";
+
 	// operateurs
 	public static final String OPERATEUR_COLLECTION = "/operateurs";
 
@@ -47,19 +54,13 @@ public class ApiConstants {
 	// operateur requetes
 	public static final String OPERATEUR_REQUETE_COLLECTION = OPERATEUR_ITEM + "/requetes";
 
-	// requerants
-	public static final String REQUERANT_COLLECTION = "/requerants";
+	// operateur requerant requetes
+	public static final String OPERATEUR_REQUERANT_REQUETE_COLLECTION = OPERATEUR_ITEM + REQUERANT_ITEM + "/requetes";
 
-	public static final String REQUERANT_SEARCH_COLLECTION = REQUERANT_COLLECTION + "/search";
+	public static final String OPERATEUR_REQUERANT_REQUETE_ITEM = OPERATEUR_REQUERANT_REQUETE_COLLECTION
+			+ "/{requeteId}";
 
-	public static final String REQUERANT_ITEM = REQUERANT_COLLECTION + "/{requerantId}";
-
-	// requerant requetes
-	public static final String REQUERANT_REQUETE_COLLECTION = OPERATEUR_ITEM + REQUERANT_ITEM + "/requetes";
-
-	public static final String REQUERANT_REQUETE_ITEM = REQUERANT_REQUETE_COLLECTION + "/{requeteId}";
-
-	public static final String REQUERANT_REQUETE_ITEM_STATUS = REQUERANT_REQUETE_ITEM + "/status";
+	public static final String OPERATEUR_REQUERANT_REQUETE_ITEM_STATUS = OPERATEUR_REQUERANT_REQUETE_ITEM + "/status";
 
 	// pays
 	public static final String PAYS_COLLECTION = "/pays";
@@ -75,6 +76,11 @@ public class ApiConstants {
 	public static final String REQUETE_BATCH_COLLECTION = "/requetes";
 
 	public static final String REQUETE_ITEM = REQUETE_BATCH_COLLECTION + "/{requeteId}";
+
+	// requerant requetes
+	public static final String REQUERANT_REQUETE_COLLECTION = REQUERANT_ITEM + REQUETE_BATCH_COLLECTION;
+
+	public static final String REQUERANT_REQUETE_ITEM = REQUERANT_ITEM + REQUETE_ITEM;
 
 	// recepisses
 	public static final String RECEPISSE_COLLECTION = REQUERANT_ITEM + REQUETE_ITEM + "/recepisses";

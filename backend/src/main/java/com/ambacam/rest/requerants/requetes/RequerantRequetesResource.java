@@ -1,4 +1,4 @@
-package com.ambacam.rest.operateurs.requetes;
+package com.ambacam.rest.requerants.requetes;
 
 import java.util.List;
 
@@ -21,23 +21,22 @@ import com.ambacam.service.RequeteService;
 import com.ambacam.transfert.requetes.RequeteReadTO;
 
 @RestController
-@RequestMapping(ApiConstants.OPERATEUR_REQUETE_COLLECTION)
+@RequestMapping(ApiConstants.REQUERANT_REQUETE_COLLECTION)
 @CrossOrigin(origins = "${ambacam2018.app.settings.cross-origin}")
 @Validated
-public class OperateurRequetesResource {
-	private static final Logger log = LoggerFactory.getLogger(OperateurRequetesResource.class);
+public class RequerantRequetesResource {
+	private static final Logger log = LoggerFactory.getLogger(RequerantRequetesResource.class);
 
 	@Autowired
 	private RequeteService requeteService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<RequeteReadTO> listByOperateur(@QueryParam("limit") Integer limit, @QueryParam("page") Integer page,
-			@PathVariable("operateurId") Long operateurId) {
-		log.info("List all requetes by operateurId [operateurId={}]", operateurId);
+	public List<RequeteReadTO> listByRequerant(@QueryParam("limit") Integer limit, @QueryParam("page") Integer page,
+			@PathVariable("requerantId") Long requerantId) {
+		log.info("List all requetes by requerantId [ requerantId={}]", requerantId);
 
-		return requeteService.listByOperateur(operateurId, limit, page);
+		return requeteService.listByRequerant(requerantId, limit, page);
 
 	}
-
 }
