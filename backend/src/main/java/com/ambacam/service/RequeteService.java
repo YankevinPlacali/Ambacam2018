@@ -35,283 +35,318 @@ import com.ambacam.transfert.requetes.RequeteTO;
 @Transactional(rollbackFor = Exception.class)
 public class RequeteService {
 
-    @Autowired
-    private RequerantRepository requerantRepository;
+	@Autowired
+	private RequerantRepository requerantRepository;
 
-    @Autowired
-    private OperateurRepository operateurRepository;
+	@Autowired
+	private OperateurRepository operateurRepository;
 
-    @Autowired
-    private StatusRequeteRepository statusRequeteRepository;
+	@Autowired
+	private StatusRequeteRepository statusRequeteRepository;
 
-    @Autowired
-    private TypeRequeteRepository typeRequeteRepository;
+	@Autowired
+	private TypeRequeteRepository typeRequeteRepository;
 
-    @Autowired
-    private RequeteRepository requeteRepository;
+	@Autowired
+	private RequeteRepository requeteRepository;
 
-    @Autowired
-    private AppSettings appSettings;
+	@Autowired
+	private AppSettings appSettings;
 
-    /**
-     * Create a requete
-     * 
-     * @param operateurId
-     * @param requerantId
-     * @param createTO
-     *            the requete to create
-     * 
-     * @return The new requete read created
-     * @throws ResourceNotFoundException
-     *             if the given operateurId does not exist
-     * @throws ResourceNotFoundException
-     *             if the given requerantId does not exist
-     * @throws ResourceBadRequestException
-     *             if the given typeId does not exist
-     */
-    public RequeteReadTO create(Long operateurId, Long requerantId, RequeteTO createTO) {
-        // find requerant
-        Requerant requerant = findRequerant(requerantId);
+	/**
+	 * Create a requete
+	 * 
+	 * @param operateurId
+	 * @param requerantId
+	 * @param createTO
+	 *            the requete to create
+	 * 
+	 * @return The new requete read created
+	 * @throws ResourceNotFoundException
+	 *             if the given operateurId does not exist
+	 * @throws ResourceNotFoundException
+	 *             if the given requerantId does not exist
+	 * @throws ResourceBadRequestException
+	 *             if the given typeId does not exist
+	 */
+	public RequeteReadTO create(Long operateurId, Long requerantId, RequeteTO createTO) {
+		// find requerant
+		Requerant requerant = findRequerant(requerantId);
 
-        // find type
-        TypeRequete type = findTypeRequete(createTO.getTypeId());
+		// find type
+		TypeRequete type = findTypeRequete(createTO.getTypeId());
 
-        // find operateur
-        Operateur operateur = findOperateur(operateurId);
+		// find operateur
+		Operateur operateur = findOperateur(operateurId);
 
-        // create requete
-        Requete requete = new Requete();
-        requete.setId(null);
-        requete.setType(type);
-        requete.setRequerant(requerant);
-        requete.setOperateur(operateur);
-        requete.setStatus(statusRequeteRepository.findByNom(StatusRequeteValues.DRAFT) != null
-                ? statusRequeteRepository.findByNom(StatusRequeteValues.DRAFT)
-                : statusRequeteRepository.save(new StatusRequete().nom(StatusRequeteValues.DRAFT)));
+		// create requete
+		Requete requete = new Requete();
+		requete.setId(null);
+		requete.setType(type);
+		requete.setRequerant(requerant);
+		requete.setOperateur(operateur);
+		requete.setStatus(statusRequeteRepository.findByNom(StatusRequeteValues.DRAFT) != null
+				? statusRequeteRepository.findByNom(StatusRequeteValues.DRAFT)
+				: statusRequeteRepository.save(new StatusRequete().nom(StatusRequeteValues.DRAFT)));
 
-        return Requete2RequeteReadTO.apply(requeteRepository.save(requete));
-    }
+		return Requete2RequeteReadTO.apply(requeteRepository.save(requete));
+	}
 
-    /**
-     * List all requetes
-     * 
-     * @return the list of requetes stored
-     */
-    public List<RequeteReadTO> listBatch() {
-        return requeteRepository.findAll().stream().map(requete -> Requete2RequeteReadTO.apply(requete))
-                .collect(Collectors.toList());
-    }
+	/**
+	 * List all requetes
+	 * 
+	 * @return the list of requetes stored
+	 */
+	public List<RequeteReadTO> listBatch() {
+		return requeteRepository.findAll().stream().map(requete -> Requete2RequeteReadTO.apply(requete))
+				.collect(Collectors.toList());
+	}
 
-    /**
-     * 
-     * List all requetes by operateurId
-     * 
-     * @param operateurId
-     * @param limit
-     * @param page
-     * @return the list of requetes stored
-     */
+	/**
+	 * 
+	 * List all requetes by operateurId
+	 * 
+	 * @param operateurId
+	 * @param limit
+	 * @param page
+	 * @return the list of requetes stored
+	 */
+	public List<RequeteReadTO> listByOperateur(Long operateurId, Integer limit, Integer page) {
+		Integer searchLimit = limit;
+		Integer searchPage = page;
 
-    public List<RequeteReadTO> listByOperateur(Long operateurId, Integer limit, Integer page) {
-        Integer searchLimit = limit;
-        Integer searchPage = page;
+		RequeteCriteria criteria = new RequeteCriteria();
+		criteria.setOperateurId(operateurId);
+		RequeteSpecs specs = new RequeteSpecs(criteria);
 
-        RequeteCriteria criteria = new RequeteCriteria();
-        criteria.setOperateurId(operateurId);
-        RequeteSpecs specs = new RequeteSpecs(criteria);
+		if (searchLimit == null || searchLimit < appSettings.getSearchDefaultPageSize()) {
+			searchLimit = appSettings.getSearchDefaultPageSize();
+		}
 
-        if (searchLimit == null || searchLimit < appSettings.getSearchDefaultPageSize()) {
-            searchLimit = appSettings.getSearchDefaultPageSize();
-        }
+		if (searchPage == null || searchPage < appSettings.getSearchDefaultPageNumber()) {
+			searchPage = appSettings.getSearchDefaultPageNumber();
+		}
 
-        if (searchPage == null || searchPage < appSettings.getSearchDefaultPageNumber()) {
-            searchPage = appSettings.getSearchDefaultPageNumber();
-        }
+		Page<Requete> pageRequete = requeteRepository.findAll(specs,
+				new PageRequest(searchPage, searchLimit, new Sort(Sort.Direction.ASC, "creeLe")));
 
-        Page<Requete> pageRequete = requeteRepository.findAll(specs,
-                new PageRequest(searchPage, searchLimit, new Sort(Sort.Direction.ASC, "creeLe")));
+		return pageRequete.getContent().stream().map(requete -> Requete2RequeteReadTO.apply(requete))
+				.collect(Collectors.toList());
 
-        return pageRequete.getContent().stream().map(requete -> Requete2RequeteReadTO.apply(requete))
-                .collect(Collectors.toList());
+	}
 
-    }
+	/**
+	 * 
+	 * List all requetes by requerantId
+	 * 
+	 * @param requerantId
+	 * @param limit
+	 * @param page
+	 * @return the list of requetes stored
+	 */
+	public List<RequeteReadTO> listByRequerant(Long requerantId, Integer limit, Integer page) {
+		Integer searchLimit = limit;
+		Integer searchPage = page;
 
-    /**
-     * List all requetes by operateurId and requerantId
-     * 
-     * @param operateurId
-     * @param requerantId
-     * @param limit
-     * @param page
-     * @return the list of requetes stored
-     */
-    public List<RequeteReadTO> listByOperateurAndRequerant(Long operateurId, Long requerantId, Integer limit, Integer page) {
-        Integer searchLimit = limit;
-        Integer searchPage = page;
+		RequeteCriteria criteria = new RequeteCriteria();
+		criteria.setRequerantId(requerantId);
+		RequeteSpecs specs = new RequeteSpecs(criteria);
 
-        RequeteCriteria criteria = new RequeteCriteria();
-        criteria.setOperateurId(operateurId);
-        criteria.setRequerantId(requerantId);
+		if (searchLimit == null || searchLimit < appSettings.getSearchDefaultPageSize()) {
+			searchLimit = appSettings.getSearchDefaultPageSize();
+		}
 
-        RequeteSpecs specs = new RequeteSpecs(criteria);
+		if (searchPage == null || searchPage < appSettings.getSearchDefaultPageNumber()) {
+			searchPage = appSettings.getSearchDefaultPageNumber();
+		}
 
-        if (searchLimit == null || searchLimit < appSettings.getSearchDefaultPageSize()) {
-            searchLimit = appSettings.getSearchDefaultPageSize();
-        }
+		Page<Requete> pageRequete = requeteRepository.findAll(specs,
+				new PageRequest(searchPage, searchLimit, new Sort(Sort.Direction.ASC, "creeLe")));
 
-        if (searchPage == null || searchPage < appSettings.getSearchDefaultPageNumber()) {
-            searchPage = appSettings.getSearchDefaultPageNumber();
-        }
+		return pageRequete.getContent().stream().map(requete -> Requete2RequeteReadTO.apply(requete))
+				.collect(Collectors.toList());
 
-        Page<Requete> pageRequete = requeteRepository.findAll(specs,
-                new PageRequest(searchPage, searchLimit, new Sort(Sort.Direction.ASC, "creeLe")));
+	}
 
-        return pageRequete.getContent().stream().map(requete -> Requete2RequeteReadTO.apply(requete))
-                .collect(Collectors.toList());
+	/**
+	 * List all requetes by operateurId and requerantId
+	 * 
+	 * @param operateurId
+	 * @param requerantId
+	 * @param limit
+	 * @param page
+	 * @return the list of requetes stored
+	 */
+	public List<RequeteReadTO> listByOperateurAndRequerant(Long operateurId, Long requerantId, Integer limit,
+			Integer page) {
+		Integer searchLimit = limit;
+		Integer searchPage = page;
 
-    }
+		RequeteCriteria criteria = new RequeteCriteria();
+		criteria.setOperateurId(operateurId);
+		criteria.setRequerantId(requerantId);
 
-    /**
-     * Get a requete
-     * 
-     * @param id
-     * 
-     * @return The requete read found
-     * @throws ResourceNotFoundException
-     *             if the requete does not exist
-     */
-    public RequeteReadTO get(Long id) {
-        return Requete2RequeteReadTO.apply(findRequete(id));
-    }
+		RequeteSpecs specs = new RequeteSpecs(criteria);
 
-    /**
-     * Delete a requete
-     * 
-     * @param id
-     *            The id of the requete to delete
-     * @throws ResourceNotFoundException
-     *             if the requete is not found
-     */
-    public void delete(Long id) {
-        // find requete
-        findRequete(id);
+		if (searchLimit == null || searchLimit < appSettings.getSearchDefaultPageSize()) {
+			searchLimit = appSettings.getSearchDefaultPageSize();
+		}
 
-        // delete requete
-        requeteRepository.delete(id);
-    }
+		if (searchPage == null || searchPage < appSettings.getSearchDefaultPageNumber()) {
+			searchPage = appSettings.getSearchDefaultPageNumber();
+		}
 
-    /**
-     * Update a requete
-     * 
-     * @param id
-     *            The id of the requete to update
-     * @param updateTO
-     *            The new requete modifications
-     * 
-     * @return The requete updated
-     * 
-     * @throws ResourceNotFoundException
-     *             if the requete is not found
-     * @throws ResourceBadRequestException
-     *             if the given typeId does not exist
-     */
-    public Requete update(Long id, RequeteTO updateTO) {
+		Page<Requete> pageRequete = requeteRepository.findAll(specs,
+				new PageRequest(searchPage, searchLimit, new Sort(Sort.Direction.ASC, "creeLe")));
 
-        // find requete
-        Requete found = findRequete(id);
+		return pageRequete.getContent().stream().map(requete -> Requete2RequeteReadTO.apply(requete))
+				.collect(Collectors.toList());
 
-        // find type
-        TypeRequete type = findTypeRequete(updateTO.getTypeId());
+	}
 
-        // update
-        found.setType(type);
+	/**
+	 * Get a requete
+	 * 
+	 * @param id
+	 * 
+	 * @return The requete read found
+	 * @throws ResourceNotFoundException
+	 *             if the requete does not exist
+	 */
+	public RequeteReadTO get(Long id) {
+		return Requete2RequeteReadTO.apply(findRequete(id));
+	}
 
-        return requeteRepository.save(found);
-    }
+	/**
+	 * Delete a requete
+	 * 
+	 * @param id
+	 *            The id of the requete to delete
+	 * @throws ResourceNotFoundException
+	 *             if the requete is not found
+	 */
+	public void delete(Long id) {
+		// find requete
+		findRequete(id);
 
-    /**
-     * Update status of a requete
-     * 
-     * @param id
-     *            The id of the requete to update
-     * @param requeteStatusTO
-     *            The new status modifications
-     * 
-     * @return The requete updated
-     * 
-     * @throws ResourceNotFoundException
-     *             if the requete is not found
-     * @throws ResourceBadRequestException
-     *             if the given statusId does not exist
-     */
-    public Requete updateStatus(Long id, RequeteStatusTO requeteStatusTO) {
+		// delete requete
+		requeteRepository.delete(id);
+	}
 
-        // find requete
-        Requete found = findRequete(id);
+	/**
+	 * Update a requete
+	 * 
+	 * @param id
+	 *            The id of the requete to update
+	 * @param updateTO
+	 *            The new requete modifications
+	 * 
+	 * @return The requete updated
+	 * 
+	 * @throws ResourceNotFoundException
+	 *             if the requete is not found
+	 * @throws ResourceBadRequestException
+	 *             if the given typeId does not exist
+	 */
+	public Requete update(Long id, RequeteTO updateTO) {
 
-        // find status
-        StatusRequete status = findStatusRequete(requeteStatusTO.getStatusId());
+		// find requete
+		Requete found = findRequete(id);
 
-        // update
-        found.status(status);
+		// find type
+		TypeRequete type = findTypeRequete(updateTO.getTypeId());
 
-        return requeteRepository.save(found);
-    }
+		// update
+		found.setType(type);
 
-    private Requete findRequete(Long id) {
-        Requete requete = requeteRepository.findOne(id);
-        if (requete == null) {
-            throw new ResourceNotFoundException(String.format("The requete with the id %s does not exist", id.toString()));
-        }
-        return requete;
-    }
+		return requeteRepository.save(found);
+	}
 
-    private Operateur findOperateur(Long id) {
-        // find operateur
-        Operateur operateur = operateurRepository.findOne(id);
-        if (operateur == null) {
-            throw new ResourceNotFoundException(
-                    String.format("The operateur with the id %s does not exist", id.toString()));
-        }
+	/**
+	 * Update status of a requete
+	 * 
+	 * @param id
+	 *            The id of the requete to update
+	 * @param requeteStatusTO
+	 *            The new status modifications
+	 * 
+	 * @return The requete updated
+	 * 
+	 * @throws ResourceNotFoundException
+	 *             if the requete is not found
+	 * @throws ResourceBadRequestException
+	 *             if the given statusId does not exist
+	 */
+	public Requete updateStatus(Long id, RequeteStatusTO requeteStatusTO) {
 
-        return operateur;
-    }
+		// find requete
+		Requete found = findRequete(id);
 
-    private Requerant findRequerant(Long id) {
-        // find requerant
-        Requerant found = requerantRepository.findOne(id);
-        if (found == null) {
-            throw new ResourceNotFoundException(
-                    String.format("The requerant with the id %s does not exist", id.toString()));
-        }
-        return found;
-    }
+		// find status
+		StatusRequete status = findStatusRequete(requeteStatusTO.getStatusId());
 
-    private StatusRequete findStatusRequete(Long id) {
-        // find statusRequete
-        StatusRequete found = statusRequeteRepository.findOne(id);
-        if (found == null) {
-            throw new ResourceBadRequestException("The statusRequete " + id.toString() + " does not exist");
-        }
+		// update
+		found.status(status);
 
-        return found;
-    }
+		return requeteRepository.save(found);
+	}
 
-    private TypeRequete findTypeRequete(Long id) {
-        // find typeRequete
-        TypeRequete found = typeRequeteRepository.findOne(id);
-        if (found == null) {
-            throw new ResourceBadRequestException("The typeRequete " + id.toString() + " does not exist");
-        }
+	private Requete findRequete(Long id) {
+		Requete requete = requeteRepository.findOne(id);
+		if (requete == null) {
+			throw new ResourceNotFoundException(
+					String.format("The requete with the id %s does not exist", id.toString()));
+		}
+		return requete;
+	}
 
-        return found;
-    }
+	private Operateur findOperateur(Long id) {
+		// find operateur
+		Operateur operateur = operateurRepository.findOne(id);
+		if (operateur == null) {
+			throw new ResourceNotFoundException(
+					String.format("The operateur with the id %s does not exist", id.toString()));
+		}
 
-    public AppSettings getAppSettings() {
-        return appSettings;
-    }
+		return operateur;
+	}
 
-    public void setAppSettings(AppSettings appSettings) {
-        this.appSettings = appSettings;
-    }
+	private Requerant findRequerant(Long id) {
+		// find requerant
+		Requerant found = requerantRepository.findOne(id);
+		if (found == null) {
+			throw new ResourceNotFoundException(
+					String.format("The requerant with the id %s does not exist", id.toString()));
+		}
+		return found;
+	}
+
+	private StatusRequete findStatusRequete(Long id) {
+		// find statusRequete
+		StatusRequete found = statusRequeteRepository.findOne(id);
+		if (found == null) {
+			throw new ResourceBadRequestException("The statusRequete " + id.toString() + " does not exist");
+		}
+
+		return found;
+	}
+
+	private TypeRequete findTypeRequete(Long id) {
+		// find typeRequete
+		TypeRequete found = typeRequeteRepository.findOne(id);
+		if (found == null) {
+			throw new ResourceBadRequestException("The typeRequete " + id.toString() + " does not exist");
+		}
+
+		return found;
+	}
+
+	public AppSettings getAppSettings() {
+		return appSettings;
+	}
+
+	public void setAppSettings(AppSettings appSettings) {
+		this.appSettings = appSettings;
+	}
+
 }

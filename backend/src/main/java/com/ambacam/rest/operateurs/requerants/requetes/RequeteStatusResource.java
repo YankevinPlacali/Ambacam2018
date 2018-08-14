@@ -1,4 +1,4 @@
-package com.ambacam.rest.requerants.requetes;
+package com.ambacam.rest.operateurs.requerants.requetes;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -20,26 +20,25 @@ import com.ambacam.service.RequeteService;
 import com.ambacam.transfert.requetes.RequeteStatusTO;
 
 @RestController
-@RequestMapping(ApiConstants.REQUERANT_REQUETE_ITEM_STATUS)
+@RequestMapping(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM_STATUS)
 @CrossOrigin(origins = "${ambacam2018.app.settings.cross-origin}")
 @Validated
 public class RequeteStatusResource {
 
-    private static final Logger log = LoggerFactory.getLogger(RequeteStatusResource.class);
+	private static final Logger log = LoggerFactory.getLogger(RequeteStatusResource.class);
 
-    @Autowired
-    private RequeteService requeteService;
+	@Autowired
+	private RequeteService requeteService;
 
-    @RequestMapping(method = RequestMethod.PUT)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void updateStatus(
-            @PathVariable("operateurId") Long operateurId,
-            @PathVariable("requerantId") Long requerantId,
-            @PathVariable("requeteId") Long requeteId,
-            @RequestBody @Valid RequeteStatusTO requeteStatusTO) {
+	@RequestMapping(method = RequestMethod.PUT)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void updateStatus(@PathVariable("operateurId") Long operateurId,
+			@PathVariable("requerantId") Long requerantId, @PathVariable("requeteId") Long requeteId,
+			@RequestBody @Valid RequeteStatusTO requeteStatusTO) {
 
-        log.info("Update a requete [operateurId={}, requerantId={}, requeteId={}]", operateurId, requerantId, requeteId);
-        requeteService.updateStatus(requeteId, requeteStatusTO);
-    }
+		log.info("Update a requete [operateurId={}, requerantId={}, requeteId={}]", operateurId, requerantId,
+				requeteId);
+		requeteService.updateStatus(requeteId, requeteStatusTO);
+	}
 
 }
