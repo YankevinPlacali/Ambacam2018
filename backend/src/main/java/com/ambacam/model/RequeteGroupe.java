@@ -105,12 +105,10 @@ public class RequeteGroupe extends AuditingCommonEntity implements Serializable 
 
 		if (statuses.isEmpty()) {
 			return StatusRequeteValues.DRAFT;
-		}
-		else {
+		} else {
 			if (statuses.size() == 1) {
 				return statuses.iterator().next();
-			}
-			else {
+			} else {
 				return StatusRequeteValues.MIXED;
 			}
 		}

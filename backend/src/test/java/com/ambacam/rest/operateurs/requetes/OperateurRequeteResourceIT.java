@@ -34,187 +34,180 @@ import com.ambacam.service.RequeteService;
 
 public class OperateurRequeteResourceIT extends ItBase {
 
-    @Autowired
-    private TypeRequeteRepository typeRequeteRepository;
+	@Autowired
+	private TypeRequeteRepository typeRequeteRepository;
 
-    @Autowired
-    private StatusRequeteRepository statusRequeteRepository;
+	@Autowired
+	private StatusRequeteRepository statusRequeteRepository;
 
-    @Autowired
-    private RequeteGroupeRepository requeteGroupeRepository;
+	@Autowired
+	private RequeteGroupeRepository requeteGroupeRepository;
 
-    @Autowired
-    private PaysRepository paysRepository;
+	@Autowired
+	private PaysRepository paysRepository;
 
-    @Autowired
-    private OperateurRepository operateurRepository;
+	@Autowired
+	private OperateurRepository operateurRepository;
 
-    @Autowired
-    private RequerantRepository requerantRepository;
+	@Autowired
+	private RequerantRepository requerantRepository;
 
-    @Autowired
-    private RequeteRepository requeteRepository;
+	@Autowired
+	private RequeteRepository requeteRepository;
 
-    @Autowired
-    private RequeteService requeteService;
+	@Autowired
+	private RequeteService requeteService;
 
-    @Mock
-    private AppSettings appSettings;
+	@Mock
+	private AppSettings appSettings;
 
-    private TypeRequete typeRequete;
+	private TypeRequete typeRequete;
 
-    private StatusRequete statusRequete;
+	private StatusRequete statusRequete;
 
-    private RequeteGroupe requeteGroupe;
+	private RequeteGroupe requeteGroupe;
 
-    private Pays pays;
+	private Pays pays;
 
-    private Operateur operateur1;
-    private Operateur operateur2;
+	private Operateur operateur1;
+	private Operateur operateur2;
 
-    private Requerant requerant1;
-    private Requerant requerant2;
+	private Requerant requerant1;
+	private Requerant requerant2;
 
-    private Requete requete1;
-    private Requete requete2;
-    private Requete requete3;
-    private Requete requete4;
+	private Requete requete1;
+	private Requete requete2;
+	private Requete requete3;
+	private Requete requete4;
 
-    @Override
-    @Before
-    public void setup() throws Exception {
-        super.setup();
+	@Override
+	@Before
+	public void setup() throws Exception {
+		super.setup();
 
-        typeRequete = typeRequeteRepository.save(buildTypeRequete());
+		typeRequete = typeRequeteRepository.save(buildTypeRequete());
 
-        statusRequete = statusRequeteRepository.save(buildStatusRequete().nom("status1"));
+		statusRequete = statusRequeteRepository.save(buildStatusRequete().nom("status1"));
 
-        pays = paysRepository.save(buildPays());
+		pays = paysRepository.save(buildPays());
 
-        operateur1 = operateurRepository.save(buildOperateur().nom("operateur1").nationalite(pays));
-        operateur2 = operateurRepository.save(buildOperateur().nom("operateur2").nationalite(pays));
+		operateur1 = operateurRepository.save(buildOperateur().nom("operateur1").nationalite(pays));
+		operateur2 = operateurRepository.save(buildOperateur().nom("operateur2").nationalite(pays));
 
-        requeteGroupe = buildRequeteGroupe();
-        requeteGroupe.setCreePar(operateur1);
-        requeteGroupe = requeteGroupeRepository.save(requeteGroupe);
+		requeteGroupe = buildRequeteGroupe();
+		requeteGroupe.setCreePar(operateur1);
+		requeteGroupe = requeteGroupeRepository.save(requeteGroupe);
 
-        requerant1 = requerantRepository.save(buildRequerant().nom("requerant1").creePar(operateur1).nationalite(pays));
-        requerant2 = requerantRepository.save(buildRequerant().nom("requerant2").creePar(operateur2).nationalite(pays));
+		requerant1 = requerantRepository.save(buildRequerant().nom("requerant1").creePar(operateur1).nationalite(pays));
+		requerant2 = requerantRepository.save(buildRequerant().nom("requerant2").creePar(operateur2).nationalite(pays));
 
-        // create requetes
-        requete1 = buildRequete();
-        requete1.setRequeteGroupe(requeteGroupe);
-        requete1.setRequerant(requerant1);
-        requete1.setType(typeRequete);
-        requete1.setStatus(statusRequete);
-        requete1.setOperateur(operateur1);
-        requete1 = requeteRepository.save(requete1);
-        
-        Thread.sleep(1000);
+		// create requetes
+		requete1 = buildRequete();
+		requete1.setRequeteGroupe(requeteGroupe);
+		requete1.setRequerant(requerant1);
+		requete1.setType(typeRequete);
+		requete1.setStatus(statusRequete);
+		requete1.setOperateur(operateur1);
+		requete1 = requeteRepository.save(requete1);
 
-        requete2 = buildRequete();
-        requete2.setRequeteGroupe(requeteGroupe);
-        requete2.setRequerant(requerant2);
-        requete2.setType(typeRequete);
-        requete2.setStatus(statusRequete);
-        requete2.setOperateur(operateur1);
-        requete2 = requeteRepository.save(requete2);
+		Thread.sleep(1000);
 
-        Thread.sleep(1000);
-        
-        requete3 = buildRequete();
-        requete3.setRequeteGroupe(requeteGroupe);
-        requete3.setRequerant(requerant1);
-        requete3.setType(typeRequete);
-        requete3.setStatus(statusRequete);
-        requete3.setOperateur(operateur2);
-        requete3 = requeteRepository.save(requete3);
+		requete2 = buildRequete();
+		requete2.setRequeteGroupe(requeteGroupe);
+		requete2.setRequerant(requerant2);
+		requete2.setType(typeRequete);
+		requete2.setStatus(statusRequete);
+		requete2.setOperateur(operateur1);
+		requete2 = requeteRepository.save(requete2);
 
-        Thread.sleep(1000);
-        
-        requete4 = buildRequete();
-        requete4.setRequeteGroupe(requeteGroupe);
-        requete4.setRequerant(requerant2);
-        requete4.setType(typeRequete);
-        requete4.setStatus(statusRequete);
-        requete4.setOperateur(operateur2);
-        requete4 = requeteRepository.save(requete4);
+		Thread.sleep(1000);
 
-        simulateNominalBehaviors();
+		requete3 = buildRequete();
+		requete3.setRequeteGroupe(requeteGroupe);
+		requete3.setRequerant(requerant1);
+		requete3.setType(typeRequete);
+		requete3.setStatus(statusRequete);
+		requete3.setOperateur(operateur2);
+		requete3 = requeteRepository.save(requete3);
 
-    }
+		Thread.sleep(1000);
 
-    @Override
-    @After
-    public void cleanup() throws Exception {
+		requete4 = buildRequete();
+		requete4.setRequeteGroupe(requeteGroupe);
+		requete4.setRequerant(requerant2);
+		requete4.setType(typeRequete);
+		requete4.setStatus(statusRequete);
+		requete4.setOperateur(operateur2);
+		requete4 = requeteRepository.save(requete4);
 
-        requeteRepository.deleteAll();
-        requeteGroupeRepository.deleteAll();
-        requerantRepository.deleteAll();
-        statusRequeteRepository.deleteAll();
-        typeRequeteRepository.deleteAll();
-        operateurRepository.deleteAll();
-        paysRepository.deleteAll();
+		simulateNominalBehaviors();
 
-        super.cleanup();
-    }
+	}
 
-    @Test
-    public void listByOperateurFirstPageDefaultLimit() {
-        preLoadedGiven
-                .queryParam("page", 0)
-                .get(ApiConstants.OPERATEUR_REQUETE_COLLECTION, operateur1.getId())
-                .then()
-                .log().body()
-                .statusCode(200)
-                .body("size()", is(equalTo(1)))
-                .body("id", containsInAnyOrder(requete1.getId().intValue()))
-                .body("find{it.id==" + requete1.getId().intValue() + "}.type.id", is(equalTo(typeRequete.getId().intValue())))
-                .body("find{it.id==" + requete1.getId().intValue() + "}.status.id", is(equalTo(statusRequete.getId().intValue())))
-                .body("find{it.id==" + requete1.getId().intValue() + "}.date", is(equalTo(requete1.getCreeLe().getTime())))
-                .body("find{it.id==" + requete1.getId().intValue() + "}.requerant.id", is(equalTo(requerant1.getId().intValue())))
-                .body("find{it.id==" + requete1.getId().intValue() + "}.operateur.id",
-                        is(equalTo(operateur1.getId().intValue())));
-        verify(appSettings, times(1)).getSearchDefaultPageSize();
-    }
+	@Override
+	@After
+	public void cleanup() throws Exception {
 
-    @Test
-    public void listByOperateurLastPageDefaultLimit() {
-        preLoadedGiven
-                .queryParam("page", 1)
-                .get(ApiConstants.OPERATEUR_REQUETE_COLLECTION, operateur1.getId())
-                .then()
-                .log().body()
-                .statusCode(200)
-                .body("size()", is(equalTo(1)))
-                .body("id", containsInAnyOrder(requete2.getId().intValue()));
-        verify(appSettings, times(1)).getSearchDefaultPageSize();
-    }
+		requeteRepository.deleteAll();
+		requeteGroupeRepository.deleteAll();
+		requerantRepository.deleteAll();
+		statusRequeteRepository.deleteAll();
+		typeRequeteRepository.deleteAll();
+		operateurRepository.deleteAll();
+		paysRepository.deleteAll();
 
-    @Test
-    public void listByOperateur() {
-        preLoadedGiven
-                .queryParam("limit", 2)
-                .get(ApiConstants.OPERATEUR_REQUETE_COLLECTION, operateur1.getId())
-                .then()
-                .log().body()
-                .statusCode(200)
-                .body("size()", is(equalTo(2)))
-                .body("id", containsInAnyOrder(requete1.getId().intValue(), requete2.getId().intValue()))
-                .body("find{it.id==" + requete1.getId().intValue() + "}.type.id", is(equalTo(typeRequete.getId().intValue())))
-                .body("find{it.id==" + requete1.getId().intValue() + "}.status.id", is(equalTo(statusRequete.getId().intValue())))
-                .body("find{it.id==" + requete1.getId().intValue() + "}.date", is(equalTo(requete1.getCreeLe().getTime())))
-                .body("find{it.id==" + requete1.getId().intValue() + "}.requerant.id", is(equalTo(requerant1.getId().intValue())))
-                .body("find{it.id==" + requete1.getId().intValue() + "}.operateur.id",
-                        is(equalTo(operateur1.getId().intValue())));
-        verify(appSettings, times(1)).getSearchDefaultPageSize();
-    }
+		super.cleanup();
+	}
 
-    private void simulateNominalBehaviors() {
+	@Test
+	public void listByOperateurFirstPageDefaultLimit() {
+		preLoadedGiven.queryParam("page", 0).get(ApiConstants.OPERATEUR_REQUETE_COLLECTION, operateur1.getId()).then()
+				.log().body().statusCode(200).body("size()", is(equalTo(1)))
+				.body("id", containsInAnyOrder(requete1.getId().intValue()))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.type.id",
+						is(equalTo(typeRequete.getId().intValue())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.status.id",
+						is(equalTo(statusRequete.getId().intValue())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.date",
+						is(equalTo(requete1.getCreeLe().getTime())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.requerant.id",
+						is(equalTo(requerant1.getId().intValue())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.operateur.id",
+						is(equalTo(operateur1.getId().intValue())));
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
+	}
 
-        // Simulate the page size to simplify the tests
-        when(appSettings.getSearchDefaultPageSize()).thenReturn(1);
-        requeteService.setAppSettings(appSettings);
-    }
+	@Test
+	public void listByOperateurLastPageDefaultLimit() {
+		preLoadedGiven.queryParam("page", 1).get(ApiConstants.OPERATEUR_REQUETE_COLLECTION, operateur1.getId()).then()
+				.log().body().statusCode(200).body("size()", is(equalTo(1)))
+				.body("id", containsInAnyOrder(requete2.getId().intValue()));
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
+	}
+
+	@Test
+	public void listByOperateur() {
+		preLoadedGiven.queryParam("limit", 2).get(ApiConstants.OPERATEUR_REQUETE_COLLECTION, operateur1.getId()).then()
+				.log().body().statusCode(200).body("size()", is(equalTo(2)))
+				.body("id", containsInAnyOrder(requete1.getId().intValue(), requete2.getId().intValue()))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.type.id",
+						is(equalTo(typeRequete.getId().intValue())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.status.id",
+						is(equalTo(statusRequete.getId().intValue())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.date",
+						is(equalTo(requete1.getCreeLe().getTime())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.requerant.id",
+						is(equalTo(requerant1.getId().intValue())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.operateur.id",
+						is(equalTo(operateur1.getId().intValue())));
+		verify(appSettings, times(1)).getSearchDefaultPageSize();
+	}
+
+	private void simulateNominalBehaviors() {
+
+		// Simulate the page size to simplify the tests
+		when(appSettings.getSearchDefaultPageSize()).thenReturn(1);
+		requeteService.setAppSettings(appSettings);
+	}
 
 }

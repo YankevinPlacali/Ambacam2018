@@ -57,6 +57,8 @@ public class ApiConstants {
 			+ "/{requeteGroupeId}";
 	public static final String OPERATEUR_REQUETE_GROUPE_ITEM_STATUS = OPERATEUR_REQUETE_GROUPE_ITEM + "/status";
 
+	public static final String OPERATEUR_REQUETE_GROUPE_ITEM_ASSIGN = OPERATEUR_REQUETE_GROUPE_ITEM + "/assign";
+
 	// operateur requetes
 	public static final String OPERATEUR_REQUETE_COLLECTION = OPERATEUR_ITEM + "/requetes";
 
@@ -87,6 +89,10 @@ public class ApiConstants {
 	public static final String REQUERANT_REQUETE_COLLECTION = REQUERANT_ITEM + REQUETE_BATCH_COLLECTION;
 
 	public static final String REQUERANT_REQUETE_ITEM = REQUERANT_ITEM + REQUETE_ITEM;
+
+	// requete-groupe requetes
+	public static final String REQUETE_GROUPE_REQUETE_STATUS = OPERATEUR_REQUETE_GROUPE_ITEM + REQUETE_BATCH_COLLECTION
+			+ "/status";
 
 	// recepisses
 	public static final String RECEPISSE_COLLECTION = REQUERANT_ITEM + REQUETE_ITEM + "/recepisses";
