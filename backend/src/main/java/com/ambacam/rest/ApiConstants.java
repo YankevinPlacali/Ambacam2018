@@ -94,4 +94,9 @@ public class ApiConstants {
 	public static final String RECEPISSE_ITEM = RECEPISSE_COLLECTION + "/{recepisseId}";
 
 	public static final String REQUETE_COLLECTION = "/requetes";
+
+	// Passports
+	public static final String PASSPORT_COLLECTION = OPERATEUR_REQUERANT_REQUETE_ITEM + "/passports";
+
+	public static final String PASSPORT_ITEM = PASSPORT_COLLECTION + "/{passportId}";
 }

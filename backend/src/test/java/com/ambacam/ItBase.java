@@ -23,6 +23,7 @@ import com.ambacam.model.Log;
 import com.ambacam.model.LogActeur;
 import com.ambacam.model.MotifSuppression;
 import com.ambacam.model.Operateur;
+import com.ambacam.model.Passport;
 import com.ambacam.model.Pays;
 import com.ambacam.model.Recepisse;
 import com.ambacam.model.Requerant;
@@ -38,6 +39,7 @@ import com.ambacam.transfert.operateurs.Operateur2OperateurCreatedTO;
 import com.ambacam.transfert.operateurs.Operateur2OperateurUpdateTO;
 import com.ambacam.transfert.operateurs.OperateurCreateTO;
 import com.ambacam.transfert.operateurs.OperateurUpdateTO;
+import com.ambacam.transfert.passports.PassportCreateTO;
 import com.ambacam.transfert.recepisses.RecepisseCreateTO;
 import com.ambacam.transfert.recepisses.RecepisseUpdateTO;
 import com.ambacam.transfert.requetegroupes.RequeteGroupeCreateTO;
@@ -87,8 +89,8 @@ public class ItBase {
 		defaultPays = paysRepository.save(new Pays().nom(UUID.randomUUID().toString()));
 
 		// create and save operateur
-		defaultOperateur = operateurRepository.save(new Operateur().nom("defaultOperateur")
-				.nationalite(defaultPays).sexe("f").username("operateur-" + UUID.randomUUID().toString())
+		defaultOperateur = operateurRepository.save(new Operateur().nom("defaultOperateur").nationalite(defaultPays)
+				.sexe("f").username("operateur-" + UUID.randomUUID().toString())
 				.password("password-" + UUID.randomUUID().toString()));
 		token = given().auth().basic(appSettings.getAuthorizationUsername(), appSettings.getAuthorizationSecret())
 				.when()
@@ -249,4 +251,32 @@ public class ItBase {
 		return new RecepisseUpdateTO().numero(random.nextLong());
 	}
 
+	protected Passport buildPassport(String numero, Date dateDelivrance, String lieuDelivrance, Autorite autorite,
+			Requete requete) {
+		Passport passport = new Passport();
+		passport.setNumero(numero);
+		passport.setDateDelivrance(dateDelivrance);
+		passport.setLieuDelivrance(lieuDelivrance);
+		passport.setDateExpiration(new Date(dateDelivrance.getTime() + random.nextLong()));
+		passport.setDelivrePar(autorite);
+		passport.setUrlPhoto("photoUrl-" + random.nextLong());
+		passport.setRequete(requete);
+
+		return passport;
+	}
+
+	protected Passport buildPassport(Autorite autorite, Requete requete) {
+		return buildPassport("numero-" + random.nextLong(), new Date(), "lieuDelivrance-" + random.nextLong(), autorite,
+				requete);
+	}
+
+	protected PassportCreateTO buildPassportCreateTO(String numero, Date dateDelivrance, Date dateExpiration,
+			String lieuDelivrance, Long autoriteId) {
+		return new PassportCreateTO(numero, dateDelivrance, dateExpiration, lieuDelivrance, autoriteId);
+	}
+
+	protected PassportCreateTO buildPassportCreateTO(Long autoriteId) {
+		return new PassportCreateTO("numero-" + random.nextLong(), new Date(), new Date(),
+				"lieuDelivrance-" + random.nextLong(), autoriteId);
+	}
 }
