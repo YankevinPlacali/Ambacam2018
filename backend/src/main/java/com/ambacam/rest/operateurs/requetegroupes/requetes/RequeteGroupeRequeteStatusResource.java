@@ -1,4 +1,4 @@
-package com.ambacam.rest.operateurs.requetegroupes;
+package com.ambacam.rest.operateurs.requetegroupes.requetes;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -16,26 +16,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ambacam.rest.ApiConstants;
-import com.ambacam.service.RequeteGroupeService;
-import com.ambacam.transfert.IdTO;
+import com.ambacam.service.RequeteService;
+import com.ambacam.transfert.requetes.AssignStatusTO;
 
 @RestController
-@RequestMapping(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM_STATUS)
+@RequestMapping(ApiConstants.REQUETE_GROUPE_REQUETE_STATUS)
 @CrossOrigin(origins = "${ambacam2018.app.settings.cross-origin}")
 @Validated
-public class RequeteGroupeStatusResource {
-
-	private static final Logger log = LoggerFactory.getLogger(RequeteGroupeStatusResource.class);
+public class RequeteGroupeRequeteStatusResource {
+	private static final Logger log = LoggerFactory.getLogger(RequeteGroupeRequeteStatusResource.class);
 
 	@Autowired
-	private RequeteGroupeService requeteGroupeService;
+	private RequeteService requeteService;
 
 	@RequestMapping(method = RequestMethod.PUT)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void updateStatus(@PathVariable("operateurId") Long operateurId,
-			@PathVariable("requeteGroupeId") Long requeteGroupeId, @RequestBody @Valid IdTO<Long> requeteStatusTO) {
-		log.info("Update status of a requeteGroupe [operateurId={}, requeteGroupeId={}]", operateurId, requeteGroupeId);
+	public void update(@PathVariable("operateurId") Long operateurId,
+			@PathVariable("requeteGroupeId") Long requeteGroupeId, @RequestBody @Valid AssignStatusTO assignStatusTO) {
+		log.info("Update status of some Requetes in a RequeteGroupe [operateurId={}, requeteGroupeId={}]", operateurId,
+				requeteGroupeId);
 
-		requeteGroupeService.updateStatus(requeteGroupeId, requeteStatusTO);
+		requeteService.assignStatus(requeteGroupeId, assignStatusTO);
 	}
 }

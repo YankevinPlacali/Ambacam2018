@@ -44,7 +44,8 @@ public class RequeteResource {
 	@RequestMapping(method = RequestMethod.DELETE)
 	public void delete(@PathVariable("operateurId") Long operateurId, @PathVariable("requerantId") Long requerantId,
 			@PathVariable("requeteId") Long requeteId) {
-		log.info("Delete a requete [operateurId={}, requerantId={}, requeteId={}]", operateurId, requerantId, requeteId);
+		log.info("Delete a requete [operateurId={}, requerantId={}, requeteId={}]", operateurId, requerantId,
+				requeteId);
 
 		requeteService.delete(requeteId);
 
@@ -54,7 +55,8 @@ public class RequeteResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void update(@PathVariable("operateurId") Long operateurId, @PathVariable("requerantId") Long requerantId,
 			@PathVariable("requeteId") Long requeteId, @RequestBody @Valid RequeteTO requeteUpdateTO) {
-		log.info("Update a requete [operateurId={}, requerantId={}, requeteId={}]", operateurId, requerantId, requeteId);
+		log.info("Update a requete [operateurId={}, requerantId={}, requeteId={}]", operateurId, requerantId,
+				requeteId);
 
 		requeteService.update(requeteId, requeteUpdateTO);
 	}

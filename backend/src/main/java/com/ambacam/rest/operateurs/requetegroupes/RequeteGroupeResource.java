@@ -27,38 +27,38 @@ import com.ambacam.transfert.requetegroupes.RequeteGroupeUpdateTO;
 @Validated
 public class RequeteGroupeResource {
 
-    private static final Logger log = LoggerFactory.getLogger(RequeteGroupeResource.class);
+	private static final Logger log = LoggerFactory.getLogger(RequeteGroupeResource.class);
 
-    @Autowired
-    private RequeteGroupeService requeteGroupeService;
+	@Autowired
+	private RequeteGroupeService requeteGroupeService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    @Produces(MediaType.APPLICATION_JSON)
-    public RequeteGroupeReadTO get(@PathVariable("operateurId") Long operateurId,
-            @PathVariable("requeteGroupeId") Long requeteGroupeId) {
-        log.info("Get a requeteGroupe [operateurId={}, requeteGroupeId={}]", operateurId, requeteGroupeId);
+	@RequestMapping(method = RequestMethod.GET)
+	@Produces(MediaType.APPLICATION_JSON)
+	public RequeteGroupeReadTO get(@PathVariable("operateurId") Long operateurId,
+			@PathVariable("requeteGroupeId") Long requeteGroupeId) {
+		log.info("Get a requeteGroupe [operateurId={}, requeteGroupeId={}]", operateurId, requeteGroupeId);
 
-        return requeteGroupeService.get(requeteGroupeId);
+		return requeteGroupeService.get(requeteGroupeId);
 
-    }
+	}
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public void delete(@PathVariable("operateurId") Long operateurId,
-            @PathVariable("requeteGroupeId") Long requeteGroupeId) {
-        log.info("Delete a requeteGroupe [operateurId={}, requeteGroupeId={}]", operateurId, requeteGroupeId);
+	@RequestMapping(method = RequestMethod.DELETE)
+	public void delete(@PathVariable("operateurId") Long operateurId,
+			@PathVariable("requeteGroupeId") Long requeteGroupeId) {
+		log.info("Delete a requeteGroupe [operateurId={}, requeteGroupeId={}]", operateurId, requeteGroupeId);
 
-        requeteGroupeService.delete(requeteGroupeId);
+		requeteGroupeService.delete(requeteGroupeId);
 
-    }
+	}
 
-    @RequestMapping(method = RequestMethod.PUT)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void update(@PathVariable("operateurId") Long operateurId,
-            @PathVariable("requeteGroupeId") Long requeteGroupeId,
-            @RequestBody @Valid RequeteGroupeUpdateTO requeteGroupeUpdateTO) {
-        log.info("Update a requeteGroupe [operateurId={}, requeteGroupeId={}]", operateurId, requeteGroupeId);
+	@RequestMapping(method = RequestMethod.PUT)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void update(@PathVariable("operateurId") Long operateurId,
+			@PathVariable("requeteGroupeId") Long requeteGroupeId,
+			@RequestBody @Valid RequeteGroupeUpdateTO requeteGroupeUpdateTO) {
+		log.info("Update a requeteGroupe [operateurId={}, requeteGroupeId={}]", operateurId, requeteGroupeId);
 
-        requeteGroupeService.update(requeteGroupeId, requeteGroupeUpdateTO);
-    }
+		requeteGroupeService.update(requeteGroupeId, requeteGroupeUpdateTO);
+	}
 
 }

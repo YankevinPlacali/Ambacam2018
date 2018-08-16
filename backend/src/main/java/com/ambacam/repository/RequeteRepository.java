@@ -10,6 +10,6 @@ import com.ambacam.model.RequeteGroupe;
 
 public interface RequeteRepository extends JpaRepository<Requete, Long>, JpaSpecificationExecutor<Requete> {
 
-    List<Requete> findAllByRequeteGroupe(RequeteGroupe requeteGroupe);
+	List<Requete> findAllByRequeteGroupe(RequeteGroupe requeteGroupe);
 
 }
