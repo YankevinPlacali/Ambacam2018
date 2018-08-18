@@ -15,6 +15,14 @@ public class AppSettings {
 
 	private String crossOrigin;
 
+	private String authorizationUsername;
+
+	private String authorizationResourceId;
+
+	private String authorizationSecret;
+
+	private int accessTokenValidity;
+
 	public String getProjectName() {
 		return projectName;
 	}
@@ -45,6 +53,38 @@ public class AppSettings {
 
 	public void setCrossOrigin(String crossOrigin) {
 		this.crossOrigin = crossOrigin;
+	}
+
+	public String getAuthorizationUsername() {
+		return authorizationUsername;
+	}
+
+	public void setAuthorizationUsername(String authorizationUsername) {
+		this.authorizationUsername = authorizationUsername;
+	}
+
+	public String getAuthorizationResourceId() {
+		return authorizationResourceId;
+	}
+
+	public void setAuthorizationResourceId(String authorizationResourceId) {
+		this.authorizationResourceId = authorizationResourceId;
+	}
+
+	public String getAuthorizationSecret() {
+		return authorizationSecret;
+	}
+
+	public void setAuthorizationSecret(String authorizationSecret) {
+		this.authorizationSecret = authorizationSecret;
+	}
+
+	public int getAccessTokenValidity() {
+		return accessTokenValidity;
+	}
+
+	public void setAccessTokenValidity(int accessTokenValidity) {
+		this.accessTokenValidity = accessTokenValidity;
 	}
 
 }

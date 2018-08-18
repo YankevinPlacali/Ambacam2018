@@ -1,6 +1,5 @@
 package com.ambacam.rest.requerants;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
@@ -99,7 +98,7 @@ public class RequerantsResourceIT extends ItBase {
 
         DateTime before = new DateTime();
 
-        int id = given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
+        int id = preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
                 .then().log().body().statusCode(200).extract().body().path("id");
 
         DateTime after = new DateTime();
@@ -131,7 +130,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantCreateTO create = buildRequerantCreateTO(creator1.getId(), null);
 
-        given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
+        preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
                 .then().log().body().statusCode(400);
     }
 
@@ -140,7 +139,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantCreateTO create = buildRequerantCreateTO(creator1.getId(), random.nextLong());
 
-        given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
+        preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
                 .then().log().body().statusCode(400);
     }
 
@@ -149,7 +148,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantCreateTO create = buildRequerantCreateTO(null, pays2.getId());
 
-        given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
+        preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
                 .then().log().body().statusCode(400);
     }
 
@@ -158,7 +157,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantCreateTO create = buildRequerantCreateTO(random.nextLong(), pays2.getId());
 
-        given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
+        preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
                 .then().log().body().statusCode(400);
     }
 
@@ -167,7 +166,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantCreateTO create = buildRequerantCreateTO(creator1.getId(), pays2.getId()).nom(null);
 
-        given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
+        preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
                 .then().log().body().statusCode(400);
     }
 
@@ -176,7 +175,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantCreateTO create = buildRequerantCreateTO(creator1.getId(), pays2.getId()).nom("");
 
-        given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
+        preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
                 .then().log().body().statusCode(400);
     }
 
@@ -185,7 +184,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantCreateTO create = buildRequerantCreateTO(creator1.getId(), pays2.getId()).dateNaissance(null);
 
-        given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
+        preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
                 .then().log().body().statusCode(400);
     }
 
@@ -194,7 +193,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantCreateTO create = buildRequerantCreateTO(creator1.getId(), pays2.getId()).sexe(null);
 
-        given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
+        preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
                 .then().log().body().statusCode(400);
     }
 
@@ -203,7 +202,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantCreateTO create = buildRequerantCreateTO(creator1.getId(), pays2.getId()).sexe("");
 
-        given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
+        preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
                 .then().log().body().statusCode(400);
     }
 
@@ -212,7 +211,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantCreateTO create = buildRequerantCreateTO(creator1.getId(), pays2.getId()).lieuNaissance(null);
 
-        given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
+        preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
                 .then().log().body().statusCode(400);
     }
 
@@ -221,13 +220,13 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantCreateTO create = buildRequerantCreateTO(creator1.getId(), pays2.getId()).lieuNaissance("");
 
-        given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
+        preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.REQUERANT_COLLECTION)
                 .then().log().body().statusCode(400);
     }
 
     @Test
     public void list() {
-        given().get(ApiConstants.REQUERANT_COLLECTION).then().log().body().statusCode(200)
+        preLoadedGiven.get(ApiConstants.REQUERANT_COLLECTION).then().log().body().statusCode(200)
                 .body("size()", is(equalTo(3)))
                 .body("id",
                         containsInAnyOrder(requerant1.getId().intValue(), requerant2.getId().intValue(),
@@ -248,7 +247,7 @@ public class RequerantsResourceIT extends ItBase {
 
     @Test
     public void get() {
-        given().get(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then().log().body().statusCode(200)
+        preLoadedGiven.get(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then().log().body().statusCode(200)
                 .body("id", is(equalTo(requerant1.getId().intValue())))
                 .body("nom", is(equalTo(requerant1.getNom())))
                 .body("prenom", is(equalTo(requerant1.getPrenom())))
@@ -266,13 +265,13 @@ public class RequerantsResourceIT extends ItBase {
 
     @Test
     public void getNotFound() {
-        given().get(ApiConstants.REQUERANT_ITEM, random.nextLong()).then().statusCode(404);
+        preLoadedGiven.get(ApiConstants.REQUERANT_ITEM, random.nextLong()).then().statusCode(404);
     }
 
     @Test
     public void delete() {
 
-        given().delete(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then().statusCode(200);
+        preLoadedGiven.delete(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then().statusCode(200);
 
         // check that the requerant has been deleted
         Requerant actual = repository.findOne(requerant1.getId());
@@ -282,7 +281,7 @@ public class RequerantsResourceIT extends ItBase {
 
     @Test
     public void deleteNotFound() {
-        given().delete(ApiConstants.REQUERANT_ITEM, random.nextLong()).then().statusCode(404);
+        preLoadedGiven.delete(ApiConstants.REQUERANT_ITEM, random.nextLong()).then().statusCode(404);
     }
 
     @Test
@@ -290,7 +289,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantUpdateTO update = buildRequerantUpdateTO(pays2.getId());
 
-        given().contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
+        preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
                 .log().body().statusCode(200);
 
         // check that the requerant has been saved
@@ -321,7 +320,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantUpdateTO update = buildRequerantUpdateTO(pays2.getId()).nom(null);
 
-        given().contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
+        preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
                 .log().body().statusCode(400);
     }
 
@@ -330,7 +329,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantUpdateTO update = buildRequerantUpdateTO(pays2.getId()).nom("");
 
-        given().contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
+        preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
                 .log().body().statusCode(400);
     }
 
@@ -339,7 +338,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantUpdateTO update = buildRequerantUpdateTO(pays2.getId()).dateNaissance(null);
 
-        given().contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
+        preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
                 .log().body().statusCode(400);
     }
 
@@ -348,7 +347,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantUpdateTO update = buildRequerantUpdateTO(pays2.getId()).sexe(null);
 
-        given().contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
+        preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
                 .log().body().statusCode(400);
     }
 
@@ -357,7 +356,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantUpdateTO update = buildRequerantUpdateTO(pays2.getId()).sexe("");
 
-        given().contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
+        preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
                 .log().body().statusCode(400);
     }
 
@@ -366,7 +365,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantUpdateTO update = buildRequerantUpdateTO(pays2.getId()).lieuNaissance(null);
 
-        given().contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
+        preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
                 .log().body().statusCode(400);
     }
 
@@ -375,7 +374,7 @@ public class RequerantsResourceIT extends ItBase {
 
         RequerantUpdateTO update = buildRequerantUpdateTO(pays2.getId()).lieuNaissance("");
 
-        given().contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
+        preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.REQUERANT_ITEM, requerant1.getId()).then()
                 .log().body().statusCode(400);
     }
 

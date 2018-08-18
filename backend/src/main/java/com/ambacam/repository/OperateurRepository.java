@@ -10,4 +10,6 @@ import com.ambacam.model.Operateur;
 public interface OperateurRepository extends JpaRepository<Operateur, Long>, JpaSpecificationExecutor<Operateur> {
 
 	List<Operateur> findByCreeParId(Long id);
+
+	Operateur findOneByUsername(String username);
 }

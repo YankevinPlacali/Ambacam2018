@@ -1,6 +1,5 @@
 package com.ambacam.rest.operateurs.requetes;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -111,7 +110,7 @@ public class OperateurRequeteResourceIT extends ItBase {
         requete1.setOperateur(operateur1);
         requete1 = requeteRepository.save(requete1);
         
-        Thread.sleep(100);
+        Thread.sleep(1000);
 
         requete2 = buildRequete();
         requete2.setRequeteGroupe(requeteGroupe);
@@ -121,7 +120,7 @@ public class OperateurRequeteResourceIT extends ItBase {
         requete2.setOperateur(operateur1);
         requete2 = requeteRepository.save(requete2);
 
-        Thread.sleep(100);
+        Thread.sleep(1000);
         
         requete3 = buildRequete();
         requete3.setRequeteGroupe(requeteGroupe);
@@ -131,7 +130,7 @@ public class OperateurRequeteResourceIT extends ItBase {
         requete3.setOperateur(operateur2);
         requete3 = requeteRepository.save(requete3);
 
-        Thread.sleep(100);
+        Thread.sleep(1000);
         
         requete4 = buildRequete();
         requete4.setRequeteGroupe(requeteGroupe);
@@ -162,7 +161,7 @@ public class OperateurRequeteResourceIT extends ItBase {
 
     @Test
     public void listByOperateurFirstPageDefaultLimit() {
-        given()
+        preLoadedGiven
                 .queryParam("page", 0)
                 .get(ApiConstants.OPERATEUR_REQUETE_COLLECTION, operateur1.getId())
                 .then()
@@ -181,7 +180,7 @@ public class OperateurRequeteResourceIT extends ItBase {
 
     @Test
     public void listByOperateurLastPageDefaultLimit() {
-        given()
+        preLoadedGiven
                 .queryParam("page", 1)
                 .get(ApiConstants.OPERATEUR_REQUETE_COLLECTION, operateur1.getId())
                 .then()
@@ -194,7 +193,7 @@ public class OperateurRequeteResourceIT extends ItBase {
 
     @Test
     public void listByOperateur() {
-        given()
+        preLoadedGiven
                 .queryParam("limit", 2)
                 .get(ApiConstants.OPERATEUR_REQUETE_COLLECTION, operateur1.getId())
                 .then()

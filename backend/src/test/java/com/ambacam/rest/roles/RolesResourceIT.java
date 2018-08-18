@@ -1,6 +1,5 @@
 package com.ambacam.rest.roles;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
@@ -50,7 +49,7 @@ public class RolesResourceIT extends ItBase {
 	@Test
 	public void create() {
 		Role create = buildRole();
-		int id = given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ROLE_COLLECTION)
+		int id = preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ROLE_COLLECTION)
 				.then().log().body().statusCode(200).extract().body().path("id");
 
 		// check that the role has been saved
@@ -64,47 +63,47 @@ public class RolesResourceIT extends ItBase {
 	public void createNomNull() {
 		Role create = buildRole();
 		create.setNom(null);
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ROLE_COLLECTION).then().log()
-				.body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ROLE_COLLECTION).then()
+				.log().body().statusCode(400);
 	}
 
 	@Test
 	public void createNomVide() {
 		Role create = buildRole();
 		create.setNom("");
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ROLE_COLLECTION).then().log()
-				.body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ROLE_COLLECTION).then()
+				.log().body().statusCode(400);
 	}
 
 	@Test
 	public void createMemeNom() {
 		Role create = buildRole();
 		create.setNom(role1.getNom());
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ROLE_COLLECTION).then().log()
-				.body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ROLE_COLLECTION).then()
+				.log().body().statusCode(400);
 	}
 
 	@Test
 	public void list() {
-		given().get(ApiConstants.ROLE_COLLECTION).then().log().body().statusCode(200).body("size()", is(equalTo(2)))
+		preLoadedGiven.get(ApiConstants.ROLE_COLLECTION).then().log().body().statusCode(200).body("size()", is(equalTo(2)))
 				.body("id", containsInAnyOrder(role1.getId().intValue(), role2.getId().intValue()));
 	}
 
 	@Test
 	public void get() {
-		given().get(ApiConstants.ROLE_ITEM, role2.getId()).then().log().body().statusCode(200)
+		preLoadedGiven.get(ApiConstants.ROLE_ITEM, role2.getId()).then().log().body().statusCode(200)
 				.body("id", is(equalTo(role2.getId().intValue()))).body("nom", is(equalTo(role2.getNom())))
 				.body("description", is(equalTo(role2.getDescription())));
 	}
 
 	@Test
 	public void getNotFound() {
-		given().get(ApiConstants.ROLE_ITEM, random.nextLong()).then().statusCode(404);
+		preLoadedGiven.get(ApiConstants.ROLE_ITEM, random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
 	public void delete() {
-		given().delete(ApiConstants.ROLE_ITEM, role1.getId()).then().statusCode(200);
+		preLoadedGiven.delete(ApiConstants.ROLE_ITEM, role1.getId()).then().statusCode(200);
 
 		// check that the role has been deleted
 		Role actual = repository.findOne(role1.getId());
@@ -114,13 +113,13 @@ public class RolesResourceIT extends ItBase {
 
 	@Test
 	public void deleteNotFound() {
-		given().delete(ApiConstants.ROLE_ITEM, random.nextLong()).then().statusCode(404);
+		preLoadedGiven.delete(ApiConstants.ROLE_ITEM, random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
 	public void update() {
 		Role update = buildRole();
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.ROLE_ITEM, role2.getId()).then().log()
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.ROLE_ITEM, role2.getId()).then().log()
 				.body().statusCode(200);
 
 		// check that the role has been saved
@@ -134,15 +133,15 @@ public class RolesResourceIT extends ItBase {
 	@Test
 	public void updateNotFound() {
 		Role update = buildRole();
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.ROLE_ITEM, random.nextLong()).then().log()
-				.body().statusCode(404);
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.ROLE_ITEM, random.nextLong()).then()
+				.log().body().statusCode(404);
 	}
 
 	@Test
 	public void updateMemeNom() {
 		Role update = buildRole();
 		update.setNom(role1.getNom());
-		given().contentType(ContentType.JSON).body(update).log().body().put(ApiConstants.ROLE_ITEM, role1.getId())
+		preLoadedGiven.contentType(ContentType.JSON).body(update).log().body().put(ApiConstants.ROLE_ITEM, role1.getId())
 				.then().log().body().statusCode(200);
 
 		// check that the role has been saved
@@ -155,7 +154,7 @@ public class RolesResourceIT extends ItBase {
 	public void updateNomExists() {
 		Role update = buildRole();
 		update.setNom(role2.getNom());
-		given().contentType(ContentType.JSON).body(update).log().body().put(ApiConstants.ROLE_ITEM, role1.getId())
+		preLoadedGiven.contentType(ContentType.JSON).body(update).log().body().put(ApiConstants.ROLE_ITEM, role1.getId())
 				.then().log().body().statusCode(400);
 	}
 

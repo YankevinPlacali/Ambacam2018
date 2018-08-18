@@ -1,6 +1,5 @@
 package com.ambacam.rest.operateurs;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -68,22 +67,22 @@ public class OperateursSearchResourceIT extends ItBase {
 		// create pays2
 		pays2 = paysRepository.save(buildPays());
 
-		Thread.sleep(1000);
+		Thread.sleep(100);
 		// create creator1
 		creator1 = repository.save(buildOperateur().nom("creator1").nationalite(pays1));
 
-		Thread.sleep(1000);
+		Thread.sleep(100);
 		// create creator2
 		creator2 = repository.save(buildOperateur().nom("creator2").nationalite(pays2));
 
-		Thread.sleep(1000);
+		Thread.sleep(100);
 		// create operateur1
 		operateur1 = buildOperateur().nom("operateur1");
 		operateur1.setCreePar(creator1);
 		operateur1.setNationalite(pays1);
 		operateur1 = repository.save(operateur1);
 
-		Thread.sleep(1000);
+		Thread.sleep(100);
 		// create operateur 2
 		operateur2 = buildOperateur().nom("operateur2");
 		operateur2.setCreePar(creator2);
@@ -109,9 +108,9 @@ public class OperateursSearchResourceIT extends ItBase {
 		OperateurCriteria criteria = new OperateurCriteria();
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
-				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(2)))
-				.body("content.size()", is(equalTo(2)))
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body()
+				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
+				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(3))).body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(creator1.getId().intValue(), creator2.getId().intValue()))
 				.body("content[0].id", is(equalTo(creator1.getId().intValue())))
 				.body("content[0].nom", is(equalTo(creator1.getNom())))
@@ -130,12 +129,12 @@ public class OperateursSearchResourceIT extends ItBase {
 		OperateurCriteria criteria = new OperateurCriteria();
 
 		// System under test
-		given().queryParam("limit", 3).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("limit", 3).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
 				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(3)))
 				.body("content.id",
 						contains(creator1.getId().intValue(), creator2.getId().intValue(),
-								operateur1.getId().intValue()))
+								defaultOperateur.getId().intValue()))
 				.body("content[0].id", is(equalTo(creator1.getId().intValue())))
 				.body("content[0].nom", is(equalTo(creator1.getNom())))
 				.body("content[0].prenom", is(equalTo(creator1.getPrenom())))
@@ -153,18 +152,18 @@ public class OperateursSearchResourceIT extends ItBase {
 		OperateurCriteria criteria = new OperateurCriteria();
 
 		// System under test
-		given().queryParam("page", 1).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("page", 1).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
-				.body("page", is(equalTo(1))).body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(2)))
-				.body("content.id", contains(operateur1.getId().intValue(), operateur2.getId().intValue()))
-				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
-				.body("content[0].nom", is(equalTo(operateur1.getNom())))
-				.body("content[0].prenom", is(equalTo(operateur1.getPrenom())))
-				.body("content[0].sexe", is(equalTo(operateur1.getSexe())))
-				.body("content[0].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
-				.body("content[0].creePar.id", is(operateur1.getCreePar().getId().intValue()))
-				.body("content[0].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
-				.body("content[0].roles.size()", is(equalTo(0)));
+				.body("page", is(equalTo(1))).body("totalPages", is(equalTo(3))).body("content.size()", is(equalTo(2)))
+				.body("content.id", contains(defaultOperateur.getId().intValue(), operateur1.getId().intValue()))
+				.body("content[1].id", is(equalTo(operateur1.getId().intValue())))
+				.body("content[1].nom", is(equalTo(operateur1.getNom())))
+				.body("content[1].prenom", is(equalTo(operateur1.getPrenom())))
+				.body("content[1].sexe", is(equalTo(operateur1.getSexe())))
+				.body("content[1].nationalite.id", is(operateur1.getNationalite().getId().intValue()))
+				.body("content[1].creePar.id", is(operateur1.getCreePar().getId().intValue()))
+				.body("content[1].creeLe", is(equalTo(operateur1.getCreeLe().getTime())))
+				.body("content[1].roles.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
 	}
@@ -174,12 +173,13 @@ public class OperateursSearchResourceIT extends ItBase {
 		OperateurCriteria criteria = new OperateurCriteria();
 
 		// System under test
-		given().queryParam("limit", 10).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("limit", 10).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
-				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1))).body("content.size()", is(equalTo(4)))
+				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1))).body("content.size()", is(equalTo(5)))
 				.body("content.id",
 						contains(creator1.getId().intValue(), creator2.getId().intValue(),
-								operateur1.getId().intValue(), operateur2.getId().intValue()))
+								defaultOperateur.getId().intValue(), operateur1.getId().intValue(),
+								operateur2.getId().intValue()))
 				.body("content[0].id", is(equalTo(creator1.getId().intValue())))
 				.body("content[0].nom", is(equalTo(creator1.getNom())))
 				.body("content[0].prenom", is(equalTo(creator1.getPrenom())))
@@ -197,9 +197,9 @@ public class OperateursSearchResourceIT extends ItBase {
 		OperateurCriteria criteria = new OperateurCriteria();
 
 		// System under test
-		given().queryParam("page", 10).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("page", 10).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
-				.body("page", is(equalTo(10))).body("totalPages", is(equalTo(2)))
+				.body("page", is(equalTo(10))).body("totalPages", is(equalTo(3)))
 				.body("content.size()", is(equalTo(0)));
 
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
@@ -211,9 +211,9 @@ public class OperateursSearchResourceIT extends ItBase {
 		criteria.setKeyword("creator");
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
-				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("content.size()", is(equalTo(2)))
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body()
+				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
+				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1))).body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(creator1.getId().intValue(), creator2.getId().intValue()))
 				.body("content[0].id", is(equalTo(creator1.getId().intValue())))
 				.body("content[0].nom", is(equalTo(creator1.getNom())))
@@ -233,9 +233,10 @@ public class OperateursSearchResourceIT extends ItBase {
 		criteria.setKeyword(operateur1.getPrenom().substring(10).toUpperCase());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
-				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("content.size()", is(equalTo(1))).body("content.id", contains(operateur1.getId().intValue()))
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body()
+				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
+				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1))).body("content.size()", is(equalTo(1)))
+				.body("content.id", contains(operateur1.getId().intValue()))
 				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
 				.body("content[0].nom", is(equalTo(operateur1.getNom())))
 				.body("content[0].prenom", is(equalTo(operateur1.getPrenom())))
@@ -254,9 +255,10 @@ public class OperateursSearchResourceIT extends ItBase {
 		criteria.setKeyword(operateur1.getPrenom().substring(10).toLowerCase());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
-				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("content.size()", is(equalTo(1))).body("content.id", contains(operateur1.getId().intValue()))
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body()
+				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
+				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1))).body("content.size()", is(equalTo(1)))
+				.body("content.id", contains(operateur1.getId().intValue()))
 				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
 				.body("content[0].nom", is(equalTo(operateur1.getNom())))
 				.body("content[0].prenom", is(equalTo(operateur1.getPrenom())))
@@ -275,9 +277,9 @@ public class OperateursSearchResourceIT extends ItBase {
 		criteria.setCreeLeBefore(creator2.getCreeLe());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
-				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("content.size()", is(equalTo(2)))
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body()
+				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
+				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(creator1.getId().intValue(), creator2.getId().intValue()))
 				.body("content[0].id", is(equalTo(creator1.getId().intValue())))
 				.body("content[0].nom", is(equalTo(creator1.getNom())))
@@ -297,9 +299,9 @@ public class OperateursSearchResourceIT extends ItBase {
 		criteria.setCreeLeAfter(operateur1.getCreeLe());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
-				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("content.size()", is(equalTo(2)))
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body()
+				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
+				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1))).body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(operateur1.getId().intValue(), operateur2.getId().intValue()))
 				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
 				.body("content[0].nom", is(equalTo(operateur1.getNom())))
@@ -320,9 +322,9 @@ public class OperateursSearchResourceIT extends ItBase {
 		criteria.setCreeLeAfter(operateur1.getCreeLe());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
-				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("content.size()", is(equalTo(2)))
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body()
+				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
+				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1))).body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(operateur1.getId().intValue(), operateur2.getId().intValue()))
 				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
 				.body("content[0].nom", is(equalTo(operateur1.getNom())))
@@ -342,9 +344,10 @@ public class OperateursSearchResourceIT extends ItBase {
 		criteria.setCreatorId(creator1.getId());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
-				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("content.size()", is(equalTo(1))).body("content.id", contains(operateur1.getId().intValue()))
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body()
+				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
+				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1))).body("content.size()", is(equalTo(1)))
+				.body("content.id", contains(operateur1.getId().intValue()))
 				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
 				.body("content[0].nom", is(equalTo(operateur1.getNom())))
 				.body("content[0].prenom", is(equalTo(operateur1.getPrenom())))
@@ -366,9 +369,10 @@ public class OperateursSearchResourceIT extends ItBase {
 		criteria.setCreatorId(creator1.getId());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.OPERATEUR_SEARCH_COLLECTION)
-				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
-				.body("content.size()", is(equalTo(1))).body("content.id", contains(operateur1.getId().intValue()))
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body()
+				.post(ApiConstants.OPERATEUR_SEARCH_COLLECTION).then().log().body().statusCode(200)
+				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1))).body("content.size()", is(equalTo(1)))
+				.body("content.id", contains(operateur1.getId().intValue()))
 				.body("content[0].id", is(equalTo(operateur1.getId().intValue())))
 				.body("content[0].nom", is(equalTo(operateur1.getNom())))
 				.body("content[0].prenom", is(equalTo(operateur1.getPrenom())))

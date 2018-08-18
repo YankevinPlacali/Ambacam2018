@@ -1,6 +1,5 @@
 package com.ambacam.rest.operateurs;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
@@ -102,8 +101,9 @@ public class OperateursResourceIT extends ItBase {
 
 		DateTime before = new DateTime();
 
-		int id = given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
-				.then().log().body().statusCode(200).extract().body().path("id");
+		int id = preLoadedGiven.contentType(ContentType.JSON).body(create).log().body()
+				.post(ApiConstants.OPERATEUR_COLLECTION).then().log().body().statusCode(200).extract().body()
+				.path("id");
 
 		DateTime after = new DateTime();
 
@@ -129,8 +129,8 @@ public class OperateursResourceIT extends ItBase {
 		create.setCreatorId(creator1.getId());
 		create.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -141,8 +141,8 @@ public class OperateursResourceIT extends ItBase {
 		create.setCreatorId(creator1.getId());
 		create.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -153,8 +153,8 @@ public class OperateursResourceIT extends ItBase {
 		create.setCreatorId(creator1.getId());
 		create.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -165,8 +165,8 @@ public class OperateursResourceIT extends ItBase {
 		create.setCreatorId(creator1.getId());
 		create.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -177,8 +177,8 @@ public class OperateursResourceIT extends ItBase {
 		create.setCreatorId(creator1.getId());
 		create.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -189,8 +189,8 @@ public class OperateursResourceIT extends ItBase {
 		create.setCreatorId(creator1.getId());
 		create.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -201,8 +201,8 @@ public class OperateursResourceIT extends ItBase {
 		create.setCreatorId(creator1.getId());
 		create.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -213,8 +213,8 @@ public class OperateursResourceIT extends ItBase {
 		create.setCreatorId(creator1.getId());
 		create.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -224,8 +224,8 @@ public class OperateursResourceIT extends ItBase {
 		create.setPaysId(null);
 		create.setCreatorId(creator1.getId());
 
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -235,8 +235,8 @@ public class OperateursResourceIT extends ItBase {
 		create.setPaysId(random.nextLong());
 		create.setCreatorId(creator1.getId());
 
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -246,8 +246,8 @@ public class OperateursResourceIT extends ItBase {
 		create.setCreatorId(null);
 		create.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -257,17 +257,16 @@ public class OperateursResourceIT extends ItBase {
 		create.setCreatorId(random.nextLong());
 		create.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
 	public void list() {
-		given().get(ApiConstants.OPERATEUR_COLLECTION).then().log().body().statusCode(200)
-				.body("size()", is(equalTo(4)))
-				.body("id",
-						containsInAnyOrder(operateur1.getId().intValue(), operateur2.getId().intValue(),
-								creator1.getId().intValue(), creator2.getId().intValue()))
+		preLoadedGiven.get(ApiConstants.OPERATEUR_COLLECTION).then().log().body().statusCode(200)
+				.body("size()", is(equalTo(5)))
+				.body("id", containsInAnyOrder(operateur1.getId().intValue(), operateur2.getId().intValue(),
+						creator1.getId().intValue(), creator2.getId().intValue(), defaultOperateur.getId().intValue()))
 				.body("find{it.id==" + operateur1.getId().intValue() + "}.nom", is(equalTo(operateur1.getNom())))
 				.body("find{it.id==" + operateur1.getId().intValue() + "}.prenom", is(equalTo(operateur1.getPrenom())))
 				.body("find{it.id==" + operateur1.getId().intValue() + "}.sexe", is(equalTo(operateur1.getSexe())))
@@ -282,7 +281,7 @@ public class OperateursResourceIT extends ItBase {
 
 	@Test
 	public void get() {
-		given().get(ApiConstants.OPERATEUR_ITEM, operateur2.getId()).then().log().body().statusCode(200)
+		preLoadedGiven.get(ApiConstants.OPERATEUR_ITEM, operateur2.getId()).then().log().body().statusCode(200)
 				.body("id", is(equalTo(operateur2.getId().intValue()))).body("nom", is(equalTo(operateur2.getNom())))
 				.body("prenom", is(equalTo(operateur2.getPrenom()))).body("sexe", is(equalTo(operateur2.getSexe())))
 				.body("nationalite.id", is(equalTo(operateur2.getNationalite().getId().intValue())))
@@ -292,7 +291,7 @@ public class OperateursResourceIT extends ItBase {
 
 	@Test
 	public void getNotFound() {
-		given().get(ApiConstants.OPERATEUR_ITEM, random.nextLong()).then().statusCode(404);
+		preLoadedGiven.get(ApiConstants.OPERATEUR_ITEM, random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
@@ -301,7 +300,7 @@ public class OperateursResourceIT extends ItBase {
 		operateur2.setCreePar(operateur1);
 		repository.save(operateur2);
 
-		given().delete(ApiConstants.OPERATEUR_ITEM, operateur1.getId()).then().statusCode(200);
+		preLoadedGiven.delete(ApiConstants.OPERATEUR_ITEM, operateur1.getId()).then().statusCode(200);
 
 		// check that the operateur has been deleted
 		Operateur actual = repository.findOne(operateur1.getId());
@@ -315,7 +314,7 @@ public class OperateursResourceIT extends ItBase {
 
 	@Test
 	public void deleteNotFound() {
-		given().delete(ApiConstants.OPERATEUR_ITEM, random.nextLong()).then().statusCode(404);
+		preLoadedGiven.delete(ApiConstants.OPERATEUR_ITEM, random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
@@ -325,8 +324,8 @@ public class OperateursResourceIT extends ItBase {
 
 		update.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId()).then()
-				.log().body().statusCode(200);
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId())
+				.then().log().body().statusCode(200);
 
 		// check that the operateur has been saved
 		Operateur actual = repository.findOne(operateur2.getId());
@@ -349,8 +348,8 @@ public class OperateursResourceIT extends ItBase {
 
 		update.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, random.nextLong()).then()
-				.log().body().statusCode(404);
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, random.nextLong())
+				.then().log().body().statusCode(404);
 	}
 
 	@Test
@@ -361,8 +360,8 @@ public class OperateursResourceIT extends ItBase {
 		update.setNom(null);
 		update.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId()).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId())
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -373,8 +372,8 @@ public class OperateursResourceIT extends ItBase {
 		update.setNom("");
 		update.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId()).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId())
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -385,8 +384,8 @@ public class OperateursResourceIT extends ItBase {
 		update.setSexe(null);
 		update.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId()).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId())
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -397,8 +396,8 @@ public class OperateursResourceIT extends ItBase {
 		update.setSexe("");
 		update.setPaysId(pays1.getId());
 
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId()).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId())
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -408,8 +407,8 @@ public class OperateursResourceIT extends ItBase {
 
 		update.setPaysId(null);
 
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId()).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId())
+				.then().log().body().statusCode(400);
 	}
 
 	@Test
@@ -419,7 +418,7 @@ public class OperateursResourceIT extends ItBase {
 
 		update.setPaysId(random.nextLong());
 
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId()).then()
-				.log().body().statusCode(400);
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.OPERATEUR_ITEM, operateur2.getId())
+				.then().log().body().statusCode(400);
 	}
 }

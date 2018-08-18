@@ -2,6 +2,7 @@ package com.ambacam.rest.roles;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -35,7 +36,7 @@ public class RolesResource {
 	@RequestMapping(method = RequestMethod.POST)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Role create(@RequestBody @Valid Role role) {
+	public Role create(HttpServletRequest request, @RequestBody @Valid Role role) {
 		log.info("Create a role");
 		// create
 		Role created = roleService.create(role);
