@@ -1,6 +1,5 @@
 package com.ambacam.rest.requerants;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -106,7 +105,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		RequerantCriteria criteria = new RequerantCriteria();
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(2)))
 				.body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()))
@@ -128,7 +127,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		RequerantCriteria criteria = new RequerantCriteria();
 
 		// System under test
-		given().queryParam("limit", 2).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("limit", 2).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.REQUERANT_SEARCH_COLLECTION).then().log().body().statusCode(200)
 				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(2)))
 				.body("content.size()", is(equalTo(2)))
@@ -142,7 +141,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		RequerantCriteria criteria = new RequerantCriteria();
 
 		// System under test
-		given().queryParam("page", 1).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("page", 1).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.REQUERANT_SEARCH_COLLECTION).then().log().body().statusCode(200)
 				.body("page", is(equalTo(1))).body("totalPages", is(equalTo(2)))
 				.body("content.size()", is(equalTo(1)))
@@ -156,7 +155,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		RequerantCriteria criteria = new RequerantCriteria();
 
 		// System under test
-		given().queryParam("limit", 10).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("limit", 10).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.REQUERANT_SEARCH_COLLECTION).then().log().body().statusCode(200)
 				.body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(3))).body("content.id", contains(requerant1.getId().intValue(),
@@ -170,7 +169,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		RequerantCriteria criteria = new RequerantCriteria();
 
 		// System under test
-		given().queryParam("page", 10).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("page", 10).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.REQUERANT_SEARCH_COLLECTION).then().log().body().statusCode(200)
 				.body("page", is(equalTo(10))).body("totalPages", is(equalTo(2)))
 				.body("content.size()", is(equalTo(0)));
@@ -184,7 +183,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		criteria.setKeyword("keyWord");
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
@@ -198,7 +197,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		criteria.setKeyword(requerant1.getPrenom().substring(10).toUpperCase());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(1)))
 				.body("content.id", contains(requerant1.getId().intValue()));
@@ -212,7 +211,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		criteria.setKeyword(requerant1.getPrenom().substring(10).toLowerCase());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(1)))
 				.body("content.id", contains(requerant1.getId().intValue()));
@@ -226,7 +225,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		criteria.setCreeLeBefore(requerant2.getCreeLe());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
@@ -240,7 +239,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		criteria.setCreeLeAfter(requerant2.getCreeLe());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(requerant2.getId().intValue(), requerant3.getId().intValue()));
@@ -256,7 +255,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		criteria.setCreeLeAfter(after.toDate());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(2)))
 				.body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
@@ -270,7 +269,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		criteria.setCreatorId(creator1.getId());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(requerant1.getId().intValue(), requerant2.getId().intValue()));
@@ -284,7 +283,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		criteria.setDateNaissance(requerant1.getDateNaissance());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(requerant1.getId().intValue(), requerant3.getId().intValue()));
@@ -299,7 +298,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		criteria.setCreatorId(creator1.getId());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(1)))
 				.body("content.id", contains(requerant1.getId().intValue()));
@@ -314,7 +313,7 @@ public class RequerantsSearchResourceIT extends ItBase {
 		;
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.REQUERANT_SEARCH_COLLECTION)
 				.then().log().body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(requerant1.getId().intValue(), requerant3.getId().intValue()));

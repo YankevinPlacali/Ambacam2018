@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,7 +57,7 @@ public class Operateur extends AuditingCommonEntity implements Serializable {
 	@JoinColumn(name = "cree_par_id", nullable = true, updatable = true)
 	private Operateur creePar;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "operateur_role", joinColumns = @JoinColumn(name = "operateur_id", nullable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false, updatable = false))
 	private Set<Role> roles = new HashSet<>();
 
@@ -66,6 +67,11 @@ public class Operateur extends AuditingCommonEntity implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Operateur id(Long id) {
+		this.id = id;
+		return this;
 	}
 
 	public String getNom() {
@@ -89,12 +95,22 @@ public class Operateur extends AuditingCommonEntity implements Serializable {
 		this.prenom = prenom;
 	}
 
+	public Operateur prenom(String prenom) {
+		this.prenom = prenom;
+		return this;
+	}
+
 	public String getSexe() {
 		return sexe;
 	}
 
 	public void setSexe(String sexe) {
 		this.sexe = sexe;
+	}
+
+	public Operateur sexe(String sexe) {
+		this.sexe = sexe;
+		return this;
 	}
 
 	public Pays getNationalite() {
@@ -118,12 +134,22 @@ public class Operateur extends AuditingCommonEntity implements Serializable {
 		this.username = username;
 	}
 
+	public Operateur username(String username) {
+		this.username = username;
+		return this;
+	}
+
 	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Operateur password(String password) {
+		this.password = password;
+		return this;
 	}
 
 	public Operateur getCreePar() {
@@ -140,6 +166,36 @@ public class Operateur extends AuditingCommonEntity implements Serializable {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Operateur withRoles(Role role) {
+		this.roles.add(role);
+		return this;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Operateur other = (Operateur) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

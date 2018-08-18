@@ -1,6 +1,5 @@
 package com.ambacam.rest.logs;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -129,7 +128,7 @@ public class LogsResourceIT extends ItBase {
 		LogCriteria criteria = new LogCriteria();
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(log1.getId().intValue(), log2.getId().intValue()))
@@ -152,7 +151,7 @@ public class LogsResourceIT extends ItBase {
 		repository.save(Arrays.asList(log3, log4));
 
 		// System under test
-		given().queryParam("limit", 3).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("limit", 3).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.LOG_COLLECTION).then().log().body().statusCode(200).body("page", is(equalTo(0)))
 				.body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(3)))
 				.body("content.id", contains(log1.getId().intValue(), log2.getId().intValue(), log3.getId().intValue()));
@@ -173,7 +172,7 @@ public class LogsResourceIT extends ItBase {
 		repository.save(Arrays.asList(log3, log4));
 
 		// System under test
-		given().queryParam("page", 1).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("page", 1).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.LOG_COLLECTION).then().log().body().statusCode(200).body("page", is(equalTo(1)))
 				.body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(log3.getId().intValue(), log4.getId().intValue()));
@@ -196,7 +195,7 @@ public class LogsResourceIT extends ItBase {
 		repository.save(Arrays.asList(log3, log4));
 
 		// System under test
-		given().queryParam("limit", 3).queryParam("page", 1).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("limit", 3).queryParam("page", 1).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.LOG_COLLECTION).then().log().body().statusCode(200).body("page", is(equalTo(1)))
 				.body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(1)))
 				.body("content.id", contains(log4.getId().intValue()));
@@ -219,7 +218,7 @@ public class LogsResourceIT extends ItBase {
 		repository.save(Arrays.asList(log3, log4));
 
 		// System under test
-		given().queryParam("limit", 10).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("limit", 10).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.LOG_COLLECTION).then().log().body().statusCode(200).body("page", is(equalTo(0)))
 				.body("totalPages", is(equalTo(1))).body("content.size()", is(equalTo(4)))
 				.body("content.id", contains(log1.getId().intValue(), log2.getId().intValue(), log3.getId().intValue(),
@@ -243,7 +242,7 @@ public class LogsResourceIT extends ItBase {
 		repository.save(Arrays.asList(log3, log4));
 
 		// System under test
-		given().queryParam("page", 10).contentType(ContentType.JSON).body(criteria).log().body()
+		preLoadedGiven.queryParam("page", 10).contentType(ContentType.JSON).body(criteria).log().body()
 				.post(ApiConstants.LOG_COLLECTION).then().log().body().statusCode(200).body("page", is(equalTo(10)))
 				.body("totalPages", is(equalTo(2))).body("content.size()", is(equalTo(0)));
 
@@ -256,7 +255,7 @@ public class LogsResourceIT extends ItBase {
 		criteria.setKeyword(log1.getDescription().substring(30));
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(1))).body("content.id", contains(log1.getId().intValue()));
 
@@ -269,7 +268,7 @@ public class LogsResourceIT extends ItBase {
 		criteria.setKeyword(log1.getDescription().substring(30).toUpperCase());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(1))).body("content.id", contains(log1.getId().intValue()));
 
@@ -282,7 +281,7 @@ public class LogsResourceIT extends ItBase {
 		criteria.setKeyword(log1.getDescription().substring(30).toUpperCase());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(1))).body("content.id", contains(log1.getId().intValue()));
 
@@ -306,7 +305,7 @@ public class LogsResourceIT extends ItBase {
 		criteria.setDateBefore(log3.getDate());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(2)))
 				.body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(log1.getId().intValue(), log2.getId().intValue()));
@@ -331,7 +330,7 @@ public class LogsResourceIT extends ItBase {
 		criteria.setDateAfter(log3.getDate());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(log3.getId().intValue(), log4.getId().intValue()));
@@ -357,7 +356,7 @@ public class LogsResourceIT extends ItBase {
 		criteria.setDateAfter(log2.getDate());
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(2)))
 				.body("content.id", contains(log2.getId().intValue(), log3.getId().intValue()));
@@ -384,7 +383,7 @@ public class LogsResourceIT extends ItBase {
 		criteria.setKeyword(log2.getDescription().substring(30));
 
 		// System under test
-		given().contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
+		preLoadedGiven.contentType(ContentType.JSON).body(criteria).log().body().post(ApiConstants.LOG_COLLECTION).then().log()
 				.body().statusCode(200).body("page", is(equalTo(0))).body("totalPages", is(equalTo(1)))
 				.body("content.size()", is(equalTo(1))).body("content.id", contains(log2.getId().intValue()));
 

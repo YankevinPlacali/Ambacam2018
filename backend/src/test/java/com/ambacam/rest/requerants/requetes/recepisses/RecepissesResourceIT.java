@@ -1,6 +1,5 @@
 package com.ambacam.rest.requerants.requetes.recepisses;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
@@ -137,7 +136,7 @@ public class RecepissesResourceIT extends ItBase {
 
 		RecepisseCreateTO create = buildRecepisseCreateTO(random.nextLong());
 
-		int id = given().contentType(ContentType.JSON).body(create).log().body()
+		int id = preLoadedGiven.contentType(ContentType.JSON).body(create).log().body()
 				.post(ApiConstants.RECEPISSE_COLLECTION, requerant.getId(), requete.getId()).then().log().body()
 				.statusCode(200).extract().body().path("id");
 
@@ -153,7 +152,7 @@ public class RecepissesResourceIT extends ItBase {
 
 		RecepisseCreateTO create = buildRecepisseCreateTO(null);
 
-		given().contentType(ContentType.JSON).body(create).log().body()
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body()
 				.post(ApiConstants.RECEPISSE_COLLECTION,requerant.getId(), requete.getId()).then().log().body()
 				.statusCode(400);
 	}
@@ -163,14 +162,14 @@ public class RecepissesResourceIT extends ItBase {
 
 		RecepisseCreateTO create = buildRecepisseCreateTO(random.nextLong());
 
-		given().contentType(ContentType.JSON).body(create).log().body()
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body()
 				.post(ApiConstants.RECEPISSE_COLLECTION, requerant.getId(), random.nextLong()).then().log().body()
 				.statusCode(404);
 	}
 
 	@Test
 	public void list() {
-		given().get(ApiConstants.RECEPISSE_COLLECTION, requerant.getId(), requete.getId()).then().log().body()
+		preLoadedGiven.get(ApiConstants.RECEPISSE_COLLECTION, requerant.getId(), requete.getId()).then().log().body()
 				.statusCode(200).body("size()", is(equalTo(2)))
 				.body("id", containsInAnyOrder(recepisse1.getId().intValue(), recepisse2.getId().intValue()))
 				.body("find{it.id==" + recepisse1.getId().intValue() + "}.numero", is(equalTo(recepisse1.getNumero())));
@@ -178,21 +177,21 @@ public class RecepissesResourceIT extends ItBase {
 
 	@Test
 	public void get() {
-		given().get(ApiConstants.RECEPISSE_ITEM, requerant.getId(), requete.getId(), recepisse1.getId()).then().log()
+		preLoadedGiven.get(ApiConstants.RECEPISSE_ITEM, requerant.getId(), requete.getId(), recepisse1.getId()).then().log()
 				.body().statusCode(200).body("id", is(equalTo(recepisse1.getId().intValue())))
 				.body("numero", is(equalTo(recepisse1.getNumero())));
 	}
 
 	@Test
 	public void getNotFound() {
-		given().get(ApiConstants.RECEPISSE_ITEM, requerant.getId(), requete.getId(), random.nextLong()).then()
+		preLoadedGiven.get(ApiConstants.RECEPISSE_ITEM, requerant.getId(), requete.getId(), random.nextLong()).then()
 				.statusCode(404);
 	}
 
 	@Test
 	public void delete() {
 
-		given().delete(ApiConstants.RECEPISSE_ITEM, requerant.getId(), requete.getId(), recepisse2.getId()).then()
+		preLoadedGiven.delete(ApiConstants.RECEPISSE_ITEM, requerant.getId(), requete.getId(), recepisse2.getId()).then()
 				.statusCode(200);
 
 		// check that the requerant has been deleted
@@ -203,7 +202,7 @@ public class RecepissesResourceIT extends ItBase {
 
 	@Test
 	public void deleteNotFound() {
-		given().delete(ApiConstants.RECEPISSE_ITEM, requerant.getId(), requete.getId(), random.nextLong()).then()
+		preLoadedGiven.delete(ApiConstants.RECEPISSE_ITEM, requerant.getId(), requete.getId(), random.nextLong()).then()
 				.statusCode(404);
 	}
 
@@ -212,7 +211,7 @@ public class RecepissesResourceIT extends ItBase {
 
 		RecepisseUpdateTO update = buildRecepisseUpdateTO();
 
-		given().contentType(ContentType.JSON).body(update)
+		preLoadedGiven.contentType(ContentType.JSON).body(update)
 				.put(ApiConstants.RECEPISSE_ITEM, requerant.getId(), requete.getId(), recepisse1.getId()).then().log()
 				.body().statusCode(200);
 
@@ -228,7 +227,7 @@ public class RecepissesResourceIT extends ItBase {
 
 		RecepisseUpdateTO update = buildRecepisseUpdateTO().numero(null);
 
-		given().contentType(ContentType.JSON).body(update)
+		preLoadedGiven.contentType(ContentType.JSON).body(update)
 				.put(ApiConstants.RECEPISSE_ITEM, requerant.getId(), requete.getId(), recepisse1.getId()).then().log()
 				.body().statusCode(400);
 	}

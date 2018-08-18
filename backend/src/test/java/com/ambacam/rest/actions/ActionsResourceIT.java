@@ -1,6 +1,5 @@
 package com.ambacam.rest.actions;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
@@ -50,7 +49,7 @@ public class ActionsResourceIT extends ItBase {
 	@Test
 	public void create() {
 		Action create = buildAction();
-		int id = given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ACTION_COLLECTION)
+		int id = preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ACTION_COLLECTION)
 				.then().log().body().statusCode(200).extract().body().path("id");
 
 		// check that the action has been saved
@@ -64,7 +63,7 @@ public class ActionsResourceIT extends ItBase {
 	public void createNomNull() {
 		Action create = buildAction();
 		create.setNom(null);
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ACTION_COLLECTION).then()
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ACTION_COLLECTION).then()
 				.log().body().statusCode(400);
 	}
 
@@ -72,7 +71,7 @@ public class ActionsResourceIT extends ItBase {
 	public void createNomVide() {
 		Action create = buildAction();
 		create.setNom("");
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ACTION_COLLECTION).then()
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ACTION_COLLECTION).then()
 				.log().body().statusCode(400);
 	}
 
@@ -80,19 +79,19 @@ public class ActionsResourceIT extends ItBase {
 	public void createMemeNom() {
 		Action create = buildAction();
 		create.setNom(action1.getNom());
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ACTION_COLLECTION).then()
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.ACTION_COLLECTION).then()
 				.log().body().statusCode(400);
 	}
 
 	@Test
 	public void list() {
-		given().get(ApiConstants.ACTION_COLLECTION).then().log().body().statusCode(200).body("size()", is(equalTo(2)))
+		preLoadedGiven.get(ApiConstants.ACTION_COLLECTION).then().log().body().statusCode(200).body("size()", is(equalTo(2)))
 				.body("id", containsInAnyOrder(action1.getId().intValue(), action2.getId().intValue()));
 	}
 
 	@Test
 	public void get() {
-		given().get(ApiConstants.ACTION_ITEM, action2.getId()).then().log().body().statusCode(200)
+		preLoadedGiven.get(ApiConstants.ACTION_ITEM, action2.getId()).then().log().body().statusCode(200)
 				.body("id", is(equalTo(action2.getId().intValue()))).body("nom", is(equalTo(action2.getNom())))
 				.body("description", is(equalTo(action2.getDescription())));
 		;
@@ -100,12 +99,12 @@ public class ActionsResourceIT extends ItBase {
 
 	@Test
 	public void getNotFound() {
-		given().get(ApiConstants.ACTION_ITEM, random.nextLong()).then().statusCode(404);
+		preLoadedGiven.get(ApiConstants.ACTION_ITEM, random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
 	public void delete() {
-		given().delete(ApiConstants.ACTION_ITEM, action1.getId()).then().statusCode(200);
+		preLoadedGiven.delete(ApiConstants.ACTION_ITEM, action1.getId()).then().statusCode(200);
 
 		// check that the action has been deleted
 		Action actual = repository.findOne(action1.getId());
@@ -115,13 +114,13 @@ public class ActionsResourceIT extends ItBase {
 
 	@Test
 	public void deleteNotFound() {
-		given().delete(ApiConstants.ACTION_ITEM, random.nextLong()).then().statusCode(404);
+		preLoadedGiven.delete(ApiConstants.ACTION_ITEM, random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
 	public void update() {
 		Action update = buildAction();
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.ACTION_ITEM, action2.getId()).then().log()
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.ACTION_ITEM, action2.getId()).then().log()
 				.body().statusCode(200);
 
 		// check that the action has been saved
@@ -135,7 +134,7 @@ public class ActionsResourceIT extends ItBase {
 	@Test
 	public void updateNotFound() {
 		Action update = buildAction();
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.ACTION_ITEM, random.nextLong()).then().log()
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.ACTION_ITEM, random.nextLong()).then().log()
 				.body().statusCode(404);
 	}
 
@@ -143,7 +142,7 @@ public class ActionsResourceIT extends ItBase {
 	public void updateMemeNom() {
 		Action update = buildAction();
 		update.setNom(action1.getNom());
-		given().contentType(ContentType.JSON).body(update).log().body().put(ApiConstants.ACTION_ITEM, action1.getId())
+		preLoadedGiven.contentType(ContentType.JSON).body(update).log().body().put(ApiConstants.ACTION_ITEM, action1.getId())
 				.then().log().body().statusCode(200);
 
 		// check that the action has been saved
@@ -155,7 +154,7 @@ public class ActionsResourceIT extends ItBase {
 	public void updateNomExists() {
 		Action update = buildAction();
 		update.setNom(action2.getNom());
-		given().contentType(ContentType.JSON).body(update).log().body().put(ApiConstants.ACTION_ITEM, action1.getId())
+		preLoadedGiven.contentType(ContentType.JSON).body(update).log().body().put(ApiConstants.ACTION_ITEM, action1.getId())
 				.then().log().body().statusCode(400);
 	}
 

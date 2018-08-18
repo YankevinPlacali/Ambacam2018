@@ -1,6 +1,5 @@
 package com.ambacam.rest.requerants.requetes;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -162,7 +161,7 @@ public class RequerantRequetesResourceIT extends ItBase {
 
 	@Test
 	public void get() {
-		given().get(ApiConstants.REQUERANT_REQUETE_ITEM, requerant1.getId(), requete1.getId()).then().log().body()
+		preLoadedGiven.get(ApiConstants.REQUERANT_REQUETE_ITEM, requerant1.getId(), requete1.getId()).then().log().body()
 				.statusCode(200).body("id", is(equalTo(requete1.getId().intValue())))
 				.body("type.id", is(equalTo(typeRequete.getId().intValue())))
 				.body("status.id", is(equalTo(statusRequete.getId().intValue())))
@@ -173,12 +172,12 @@ public class RequerantRequetesResourceIT extends ItBase {
 
 	@Test
 	public void getNotFound() {
-		given().get(ApiConstants.REQUERANT_REQUETE_ITEM, requerant1.getId(), random.nextLong()).then().statusCode(404);
+		preLoadedGiven.get(ApiConstants.REQUERANT_REQUETE_ITEM, requerant1.getId(), random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
 	public void listByRequerantFirstPageDefaultLimit() {
-		given().queryParam("page", 0).get(ApiConstants.REQUERANT_REQUETE_COLLECTION, requerant1.getId()).then().log()
+		preLoadedGiven.queryParam("page", 0).get(ApiConstants.REQUERANT_REQUETE_COLLECTION, requerant1.getId()).then().log()
 				.body().statusCode(200).body("size()", is(equalTo(1)))
 				.body("id", containsInAnyOrder(requete1.getId().intValue()))
 				.body("find{it.id==" + requete1.getId().intValue() + "}.type.id",
@@ -196,7 +195,7 @@ public class RequerantRequetesResourceIT extends ItBase {
 
 	@Test
 	public void listByRequerantLastPageDefaultLimit() {
-		given().queryParam("page", 2).get(ApiConstants.REQUERANT_REQUETE_COLLECTION, requerant1.getId()).then().log()
+		preLoadedGiven.queryParam("page", 2).get(ApiConstants.REQUERANT_REQUETE_COLLECTION, requerant1.getId()).then().log()
 				.body().statusCode(200).body("size()", is(equalTo(1)))
 				.body("id", containsInAnyOrder(requete3.getId().intValue()));
 		verify(appSettings, times(1)).getSearchDefaultPageSize();
@@ -204,7 +203,7 @@ public class RequerantRequetesResourceIT extends ItBase {
 
 	@Test
 	public void listByRequerant() {
-		given().queryParam("limit", 3).get(ApiConstants.REQUERANT_REQUETE_COLLECTION, requerant1.getId()).then().log()
+		preLoadedGiven.queryParam("limit", 3).get(ApiConstants.REQUERANT_REQUETE_COLLECTION, requerant1.getId()).then().log()
 				.body().statusCode(200).body("size()", is(equalTo(3)))
 				.body("id",
 						containsInAnyOrder(requete1.getId().intValue(), requete2.getId().intValue(),

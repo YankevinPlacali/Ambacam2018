@@ -2,6 +2,12 @@ package com.ambacam.rest;
 
 public class ApiConstants {
 
+	// revoke token
+	public static final String REVOKE_TOKEN = "/tokens/revoke";
+
+	// access token suffix
+	public static final String ACCESS_TOKEN_SUFFIX = "access_token=";
+
 	// roles
 	public static final String ROLE_COLLECTION = "/roles";
 

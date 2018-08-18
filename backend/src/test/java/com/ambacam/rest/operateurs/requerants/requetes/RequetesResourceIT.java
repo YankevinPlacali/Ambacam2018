@@ -1,6 +1,5 @@
 package com.ambacam.rest.operateurs.requerants.requetes;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
@@ -120,7 +119,7 @@ public class RequetesResourceIT extends ItBase {
 		requete1.setOperateur(operateur1);
 		requete1 = requeteRepository.save(requete1);
 
-		Thread.sleep(100);
+		Thread.sleep(1000);
 
 		requete2 = buildRequete();
 		requete2.setRequeteGroupe(requeteGroupe);
@@ -130,7 +129,7 @@ public class RequetesResourceIT extends ItBase {
 		requete2.setOperateur(operateur1);
 		requete2 = requeteRepository.save(requete2);
 
-		Thread.sleep(100);
+		Thread.sleep(1000);
 
 		requete3 = buildRequete();
 		requete3.setRequeteGroupe(requeteGroupe);
@@ -140,7 +139,7 @@ public class RequetesResourceIT extends ItBase {
 		requete3.setOperateur(operateur2);
 		requete3 = requeteRepository.save(requete3);
 
-		Thread.sleep(100);
+		Thread.sleep(1000);
 
 		requete4 = buildRequete();
 		requete4.setRequeteGroupe(requeteGroupe);
@@ -176,7 +175,7 @@ public class RequetesResourceIT extends ItBase {
 
 		DateTime before = new DateTime();
 
-		int id = given().contentType(ContentType.JSON).body(createTO).log().body()
+		int id = preLoadedGiven.contentType(ContentType.JSON).body(createTO).log().body()
 				.post(ApiConstants.OPERATEUR_REQUERANT_REQUETE_COLLECTION, operateur2.getId(), requerant1.getId())
 				.then().log().body().statusCode(200).extract().body().path("id");
 
@@ -202,7 +201,7 @@ public class RequetesResourceIT extends ItBase {
 
 		statusRequete = statusRequeteRepository.save(buildStatusRequete().nom(StatusRequeteValues.DRAFT));
 
-		int id = given().contentType(ContentType.JSON).body(createTO).log().body()
+		int id = preLoadedGiven.contentType(ContentType.JSON).body(createTO).log().body()
 				.post(ApiConstants.OPERATEUR_REQUERANT_REQUETE_COLLECTION, operateur2.getId(), requerant1.getId())
 				.then().log().body().statusCode(200).extract().body().path("id");
 		// check the requete status
@@ -217,7 +216,7 @@ public class RequetesResourceIT extends ItBase {
 
 		RequeteTO createTO = new RequeteTO(random.nextLong());
 
-		given().contentType(ContentType.JSON).body(createTO).log().body()
+		preLoadedGiven.contentType(ContentType.JSON).body(createTO).log().body()
 				.post(ApiConstants.OPERATEUR_REQUERANT_REQUETE_COLLECTION, operateur2.getId(), requerant1.getId())
 				.then().log().body().statusCode(400);
 	}
@@ -227,7 +226,7 @@ public class RequetesResourceIT extends ItBase {
 
 		RequeteTO createTO = new RequeteTO(null);
 
-		given().contentType(ContentType.JSON).body(createTO).log().body()
+		preLoadedGiven.contentType(ContentType.JSON).body(createTO).log().body()
 				.post(ApiConstants.OPERATEUR_REQUERANT_REQUETE_COLLECTION, operateur2.getId(), requerant1.getId())
 				.then().log().body().statusCode(400);
 	}
@@ -237,7 +236,7 @@ public class RequetesResourceIT extends ItBase {
 
 		RequeteTO createTO = new RequeteTO(typeRequete.getId());
 
-		given().contentType(ContentType.JSON).body(createTO).log().body()
+		preLoadedGiven.contentType(ContentType.JSON).body(createTO).log().body()
 				.post(ApiConstants.OPERATEUR_REQUERANT_REQUETE_COLLECTION, operateur2.getId(), random.nextLong()).then()
 				.log().body().statusCode(404);
 	}
@@ -247,16 +246,17 @@ public class RequetesResourceIT extends ItBase {
 
 		RequeteTO createTO = new RequeteTO(typeRequete.getId());
 
-		given().contentType(ContentType.JSON).body(createTO).log().body()
+		preLoadedGiven.contentType(ContentType.JSON).body(createTO).log().body()
 				.post(ApiConstants.OPERATEUR_REQUERANT_REQUETE_COLLECTION, random.nextLong(), requerant1.getId()).then()
 				.log().body().statusCode(404);
 	}
 
 	@Test
 	public void get() {
-		given().get(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM, operateur1.getId(), requerant1.getId(),
-				requete1.getId()).then().log().body().statusCode(200)
-				.body("id", is(equalTo(requete1.getId().intValue())))
+		preLoadedGiven
+				.get(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM, operateur1.getId(), requerant1.getId(),
+						requete1.getId())
+				.then().log().body().statusCode(200).body("id", is(equalTo(requete1.getId().intValue())))
 				.body("type.id", is(equalTo(typeRequete.getId().intValue())))
 				.body("status.id", is(equalTo(statusRequete.getId().intValue())))
 				.body("date", is(equalTo(requete1.getCreeLe().getTime())))
@@ -266,14 +266,14 @@ public class RequetesResourceIT extends ItBase {
 
 	@Test
 	public void getNotFound() {
-		given().get(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM, operateur1.getId(), requerant1.getId(),
+		preLoadedGiven.get(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM, operateur1.getId(), requerant1.getId(),
 				random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
 	public void delete() {
 
-		given().delete(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM, operateur1.getId(), requerant1.getId(),
+		preLoadedGiven.delete(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM, operateur1.getId(), requerant1.getId(),
 				requete1.getId()).then().statusCode(200);
 
 		// check that the requete has been deleted
@@ -284,7 +284,7 @@ public class RequetesResourceIT extends ItBase {
 
 	@Test
 	public void deleteNotFound() {
-		given().delete(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM, operateur1.getId(), requerant1.getId(),
+		preLoadedGiven.delete(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM, operateur1.getId(), requerant1.getId(),
 				random.nextLong()).then().statusCode(404);
 	}
 
@@ -299,7 +299,7 @@ public class RequetesResourceIT extends ItBase {
 		assertThat(requete1.getType().getId(), is(equalTo(typeRequete.getId())));
 		assertThat(requete1.getType().getNom(), is(equalTo("type1")));
 
-		given().contentType(ContentType.JSON).body(updateTO).put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM,
+		preLoadedGiven.contentType(ContentType.JSON).body(updateTO).put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM,
 				operateur1.getId(), requerant1.getId(), requete1.getId()).then().log().body().statusCode(200);
 
 		// check that the requete has been saved
@@ -321,7 +321,7 @@ public class RequetesResourceIT extends ItBase {
 
 		RequeteTO updateTO = new RequeteTO(random.nextLong());
 
-		given().contentType(ContentType.JSON).body(updateTO).put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM,
+		preLoadedGiven.contentType(ContentType.JSON).body(updateTO).put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM,
 				operateur1.getId(), requerant1.getId(), requete1.getId()).then().log().body().statusCode(400);
 	}
 
@@ -330,7 +330,7 @@ public class RequetesResourceIT extends ItBase {
 
 		RequeteTO updateTO = new RequeteTO(null);
 
-		given().contentType(ContentType.JSON).body(updateTO).put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM,
+		preLoadedGiven.contentType(ContentType.JSON).body(updateTO).put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM,
 				operateur1.getId(), requerant1.getId(), requete1.getId()).then().log().body().statusCode(400);
 	}
 
@@ -339,7 +339,7 @@ public class RequetesResourceIT extends ItBase {
 
 		RequeteTO updateTO = new RequeteTO(typeRequete.getId());
 
-		given().contentType(ContentType.JSON).body(updateTO).put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM,
+		preLoadedGiven.contentType(ContentType.JSON).body(updateTO).put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM,
 				operateur1.getId(), requerant1.getId(), random.nextLong()).then().log().body().statusCode(404);
 	}
 
@@ -354,7 +354,7 @@ public class RequetesResourceIT extends ItBase {
 		assertThat(requete1.getStatus().getId(), is(equalTo(statusRequete.getId())));
 		assertThat(requete1.getStatus().getNom(), is(equalTo("status1")));
 
-		given().contentType(ContentType.JSON).body(updateStatusTO)
+		preLoadedGiven.contentType(ContentType.JSON).body(updateStatusTO)
 				.put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM_STATUS, operateur1.getId(), requerant1.getId(),
 						requete1.getId())
 				.then().log().body().statusCode(200);
@@ -377,7 +377,7 @@ public class RequetesResourceIT extends ItBase {
 
 		RequeteStatusTO updateStatusTO = new RequeteStatusTO(random.nextLong());
 
-		given().contentType(ContentType.JSON).body(updateStatusTO)
+		preLoadedGiven.contentType(ContentType.JSON).body(updateStatusTO)
 				.put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM_STATUS, operateur1.getId(), requerant1.getId(),
 						requete1.getId())
 				.then().log().body().statusCode(400);
@@ -388,7 +388,7 @@ public class RequetesResourceIT extends ItBase {
 
 		RequeteStatusTO updateStatusTO = new RequeteStatusTO(null);
 
-		given().contentType(ContentType.JSON).body(updateStatusTO)
+		preLoadedGiven.contentType(ContentType.JSON).body(updateStatusTO)
 				.put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM_STATUS, operateur1.getId(), requerant1.getId(),
 						requete1.getId())
 				.then().log().body().statusCode(400);
@@ -399,7 +399,7 @@ public class RequetesResourceIT extends ItBase {
 
 		RequeteStatusTO updateStatusTO = new RequeteStatusTO(statusRequete.getId());
 
-		given().contentType(ContentType.JSON).body(updateStatusTO)
+		preLoadedGiven.contentType(ContentType.JSON).body(updateStatusTO)
 				.put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM_STATUS, operateur1.getId(), requerant1.getId(),
 						random.nextLong())
 				.then().log().body().statusCode(404);
@@ -407,7 +407,7 @@ public class RequetesResourceIT extends ItBase {
 
 	@Test
 	public void listByOperateurAndRequerantFirstPageDefaultLimit() {
-		given().queryParam("page", 0)
+		preLoadedGiven.queryParam("page", 0)
 				.get(ApiConstants.OPERATEUR_REQUERANT_REQUETE_COLLECTION, operateur1.getId(), requerant1.getId()).then()
 				.log().body().statusCode(200).body("size()", is(equalTo(1)))
 				.body("id", containsInAnyOrder(requete1.getId().intValue()))
@@ -426,7 +426,7 @@ public class RequetesResourceIT extends ItBase {
 
 	@Test
 	public void listByOperateurAndRequerantLastPageDefaultLimit() {
-		given().queryParam("page", 1)
+		preLoadedGiven.queryParam("page", 1)
 				.get(ApiConstants.OPERATEUR_REQUERANT_REQUETE_COLLECTION, operateur1.getId(), requerant1.getId()).then()
 				.log().body().statusCode(200).body("size()", is(equalTo(1)))
 				.body("id", containsInAnyOrder(requete2.getId().intValue()));
@@ -435,7 +435,7 @@ public class RequetesResourceIT extends ItBase {
 
 	@Test
 	public void listByOperateurAndRequerant() {
-		given().queryParam("limit", 2)
+		preLoadedGiven.queryParam("limit", 2)
 				.get(ApiConstants.OPERATEUR_REQUERANT_REQUETE_COLLECTION, operateur1.getId(), requerant1.getId()).then()
 				.log().body().statusCode(200).body("size()", is(equalTo(2)))
 				.body("id", containsInAnyOrder(requete1.getId().intValue(), requete2.getId().intValue()))

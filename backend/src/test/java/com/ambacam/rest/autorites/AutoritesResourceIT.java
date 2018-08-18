@@ -1,6 +1,5 @@
 package com.ambacam.rest.autorites;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
@@ -50,7 +49,7 @@ public class AutoritesResourceIT extends ItBase {
 	@Test
 	public void create() {
 		Autorite create = buildAutorite();
-		int id = given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.AUTORITE_COLLECTION)
+		int id = preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.AUTORITE_COLLECTION)
 				.then().log().body().statusCode(200).extract().body().path("id");
 
 		// check that the autorite has been saved
@@ -65,7 +64,7 @@ public class AutoritesResourceIT extends ItBase {
 	public void createNomNull() {
 		Autorite create = buildAutorite();
 		create.setNom(null);
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.AUTORITE_COLLECTION).then()
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.AUTORITE_COLLECTION).then()
 				.log().body().statusCode(400);
 	}
 
@@ -73,7 +72,7 @@ public class AutoritesResourceIT extends ItBase {
 	public void createNomVide() {
 		Autorite create = buildAutorite();
 		create.setNom("");
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.AUTORITE_COLLECTION).then()
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.AUTORITE_COLLECTION).then()
 				.log().body().statusCode(400);
 	}
 
@@ -81,7 +80,7 @@ public class AutoritesResourceIT extends ItBase {
 	public void createPosteVide() {
 		Autorite create = buildAutorite();
 		create.setPoste("");
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.AUTORITE_COLLECTION).then()
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.AUTORITE_COLLECTION).then()
 				.log().body().statusCode(400);
 	}
 
@@ -89,13 +88,13 @@ public class AutoritesResourceIT extends ItBase {
 	public void createPosteNull() {
 		Autorite create = buildAutorite();
 		create.setPoste(null);
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.AUTORITE_COLLECTION).then()
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.AUTORITE_COLLECTION).then()
 				.log().body().statusCode(400);
 	}
 
 	@Test
 	public void list() {
-		given().get(ApiConstants.AUTORITE_COLLECTION).then().log().body().statusCode(200).body("size()", is(equalTo(2)))
+		preLoadedGiven.get(ApiConstants.AUTORITE_COLLECTION).then().log().body().statusCode(200).body("size()", is(equalTo(2)))
 				.body("id", containsInAnyOrder(autorite1.getId().intValue(), autorite2.getId().intValue()))
 				.body("nom", containsInAnyOrder(autorite1.getNom(), autorite2.getNom()))
 				.body("prenom", containsInAnyOrder(autorite1.getPrenom(), autorite2.getPrenom()))
@@ -104,19 +103,19 @@ public class AutoritesResourceIT extends ItBase {
 
 	@Test
 	public void get() {
-		given().get(ApiConstants.AUTORITE_ITEM, autorite2.getId()).then().log().body().statusCode(200)
+		preLoadedGiven.get(ApiConstants.AUTORITE_ITEM, autorite2.getId()).then().log().body().statusCode(200)
 				.body("id", is(equalTo(autorite2.getId().intValue()))).body("nom", is(equalTo(autorite2.getNom())))
 				.body("prenom", is(equalTo(autorite2.getPrenom()))).body("poste", is(equalTo(autorite2.getPoste())));
 	}
 
 	@Test
 	public void getNotFound() {
-		given().get(ApiConstants.AUTORITE_ITEM, random.nextLong()).then().statusCode(404);
+		preLoadedGiven.get(ApiConstants.AUTORITE_ITEM, random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
 	public void delete() {
-		given().delete(ApiConstants.AUTORITE_ITEM, autorite1.getId()).then().statusCode(200);
+		preLoadedGiven.delete(ApiConstants.AUTORITE_ITEM, autorite1.getId()).then().statusCode(200);
 
 		// check that the autorite has been deleted
 		Autorite actual = repository.findOne(autorite1.getId());
@@ -126,13 +125,13 @@ public class AutoritesResourceIT extends ItBase {
 
 	@Test
 	public void deleteNotFound() {
-		given().delete(ApiConstants.AUTORITE_ITEM, random.nextLong()).then().statusCode(404);
+		preLoadedGiven.delete(ApiConstants.AUTORITE_ITEM, random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
 	public void update() {
 		Autorite update = buildAutorite();
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.AUTORITE_ITEM, autorite2.getId()).then()
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.AUTORITE_ITEM, autorite2.getId()).then()
 				.log().body().statusCode(200);
 
 		// check that the autorite has been saved
@@ -146,7 +145,7 @@ public class AutoritesResourceIT extends ItBase {
 	@Test
 	public void updateNotFound() {
 		Autorite update = buildAutorite();
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.AUTORITE_ITEM, random.nextLong()).then()
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.AUTORITE_ITEM, random.nextLong()).then()
 				.log().body().statusCode(404);
 	}
 
@@ -154,7 +153,7 @@ public class AutoritesResourceIT extends ItBase {
 	public void updateMemeNom() {
 		Autorite update = buildAutorite();
 		update.setNom(autorite1.getNom());
-		given().contentType(ContentType.JSON).body(update).log().body()
+		preLoadedGiven.contentType(ContentType.JSON).body(update).log().body()
 				.put(ApiConstants.AUTORITE_ITEM, autorite1.getId()).then().log().body().statusCode(200);
 
 		// check that the autorite has been saved

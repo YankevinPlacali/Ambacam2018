@@ -1,6 +1,5 @@
 package com.ambacam.rest.requetes;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -142,7 +141,7 @@ public class RequeteBatchResourceIT extends ItBase {
 
 	@Test
 	public void listBatch() {
-		given().get(ApiConstants.REQUETE_BATCH_COLLECTION).then().log().body().statusCode(200)
+		preLoadedGiven.get(ApiConstants.REQUETE_BATCH_COLLECTION).then().log().body().statusCode(200)
 				.body("size()", is(equalTo(4)))
 				.body("id",
 						contains(requete1.getId().intValue(), requete2.getId().intValue(), requete3.getId().intValue(),

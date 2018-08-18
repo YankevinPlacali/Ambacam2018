@@ -1,6 +1,5 @@
 package com.ambacam.rest.motifssuppressions;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
@@ -50,7 +49,7 @@ public class MotifsuppressionsResourceIT extends ItBase {
 	@Test
 	public void create() {
 		MotifSuppression create = buildMotifSuppression();
-		int id = given().contentType(ContentType.JSON).body(create).log().body()
+		int id = preLoadedGiven.contentType(ContentType.JSON).body(create).log().body()
 				.post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION).then().log().body().statusCode(200).extract().body()
 				.path("id");
 
@@ -65,7 +64,7 @@ public class MotifsuppressionsResourceIT extends ItBase {
 	public void createNomNull() {
 		MotifSuppression create = buildMotifSuppression();
 		create.setNom(null);
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION)
 				.then().log().body().statusCode(400);
 	}
 
@@ -73,7 +72,7 @@ public class MotifsuppressionsResourceIT extends ItBase {
 	public void createNomVide() {
 		MotifSuppression create = buildMotifSuppression();
 		create.setNom("");
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION)
 				.then().log().body().statusCode(400);
 	}
 
@@ -81,20 +80,20 @@ public class MotifsuppressionsResourceIT extends ItBase {
 	public void createMemeNom() {
 		MotifSuppression create = buildMotifSuppression();
 		create.setNom(motifSuppression1.getNom());
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.MOTIF_SUPPRESSION_COLLECTION)
 				.then().log().body().statusCode(400);
 	}
 
 	@Test
 	public void list() {
-		given().get(ApiConstants.MOTIF_SUPPRESSION_COLLECTION).then().log().body().statusCode(200)
+		preLoadedGiven.get(ApiConstants.MOTIF_SUPPRESSION_COLLECTION).then().log().body().statusCode(200)
 				.body("size()", is(equalTo(2))).body("id",
 						containsInAnyOrder(motifSuppression1.getId().intValue(), motifSuppression2.getId().intValue()));
 	}
 
 	@Test
 	public void get() {
-		given().get(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression2.getId()).then().log().body().statusCode(200)
+		preLoadedGiven.get(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression2.getId()).then().log().body().statusCode(200)
 				.body("id", is(equalTo(motifSuppression2.getId().intValue())))
 				.body("nom", is(equalTo(motifSuppression2.getNom())))
 				.body("description", is(equalTo(motifSuppression2.getDescription())));
@@ -102,12 +101,12 @@ public class MotifsuppressionsResourceIT extends ItBase {
 
 	@Test
 	public void getNotFound() {
-		given().get(ApiConstants.MOTIF_SUPPRESSION_ITEM, random.nextLong()).then().statusCode(404);
+		preLoadedGiven.get(ApiConstants.MOTIF_SUPPRESSION_ITEM, random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
 	public void delete() {
-		given().delete(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression1.getId()).then().statusCode(200);
+		preLoadedGiven.delete(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression1.getId()).then().statusCode(200);
 
 		// check that the motifSuppression has been deleted
 		MotifSuppression actual = repository.findOne(motifSuppression1.getId());
@@ -117,13 +116,13 @@ public class MotifsuppressionsResourceIT extends ItBase {
 
 	@Test
 	public void deleteNotFound() {
-		given().delete(ApiConstants.MOTIF_SUPPRESSION_ITEM, random.nextLong()).then().statusCode(404);
+		preLoadedGiven.delete(ApiConstants.MOTIF_SUPPRESSION_ITEM, random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
 	public void update() {
 		MotifSuppression update = buildMotifSuppression();
-		given().contentType(ContentType.JSON).body(update)
+		preLoadedGiven.contentType(ContentType.JSON).body(update)
 				.put(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression2.getId()).then().log().body()
 				.statusCode(200);
 
@@ -138,7 +137,7 @@ public class MotifsuppressionsResourceIT extends ItBase {
 	@Test
 	public void updateNotFound() {
 		MotifSuppression update = buildMotifSuppression();
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.MOTIF_SUPPRESSION_ITEM, random.nextLong())
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.MOTIF_SUPPRESSION_ITEM, random.nextLong())
 				.then().log().body().statusCode(404);
 	}
 
@@ -146,7 +145,7 @@ public class MotifsuppressionsResourceIT extends ItBase {
 	public void updateMemeNom() {
 		MotifSuppression update = buildMotifSuppression();
 		update.setNom(motifSuppression1.getNom());
-		given().contentType(ContentType.JSON).body(update).log().body()
+		preLoadedGiven.contentType(ContentType.JSON).body(update).log().body()
 				.put(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression1.getId()).then().log().body()
 				.statusCode(200);
 
@@ -160,7 +159,7 @@ public class MotifsuppressionsResourceIT extends ItBase {
 	public void updateNomExists() {
 		MotifSuppression update = buildMotifSuppression();
 		update.setNom(motifSuppression2.getNom());
-		given().contentType(ContentType.JSON).body(update).log().body()
+		preLoadedGiven.contentType(ContentType.JSON).body(update).log().body()
 				.put(ApiConstants.MOTIF_SUPPRESSION_ITEM, motifSuppression1.getId()).then().log().body()
 				.statusCode(400);
 	}

@@ -1,6 +1,5 @@
 package com.ambacam.rest.operateurs.requetegroupes;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -158,7 +157,7 @@ public class RequeteGroupesResourceIT extends ItBase {
             DateTime before = new DateTime();
             Date date = new Date();
 
-            int id = given().contentType(ContentType.JSON).body(requeteGroupeCreateTO).log().body()
+            int id = preLoadedGiven.contentType(ContentType.JSON).body(requeteGroupeCreateTO).log().body()
                             .post(ApiConstants.OPERATEUR_REQUETE_GROUPE_COLLECTION, operateur.getId()).then().log().body()
                             .statusCode(200).extract().body().path("id");
 
@@ -188,14 +187,14 @@ public class RequeteGroupesResourceIT extends ItBase {
 
             RequeteGroupeCreateTO requeteGroupeCreateTO = buildRequeteGroupeCreateTO();
 
-            given().contentType(ContentType.JSON).body(requeteGroupeCreateTO).log().body()
+            preLoadedGiven.contentType(ContentType.JSON).body(requeteGroupeCreateTO).log().body()
                             .post(ApiConstants.OPERATEUR_REQUETE_GROUPE_COLLECTION, random.nextLong()).then().log().body()
                             .statusCode(404);
     }
 
     @Test
     public void list() {
-            given().get(ApiConstants.OPERATEUR_REQUETE_GROUPE_COLLECTION, operateur.getId()).then().log().body()
+            preLoadedGiven.get(ApiConstants.OPERATEUR_REQUETE_GROUPE_COLLECTION, operateur.getId()).then().log().body()
                             .statusCode(200).body("size()", is(equalTo(2)))
                             .body("id", containsInAnyOrder(requeteGroupe1.getId().intValue(), requeteGroupe2.getId().intValue()))
                             .body("find{it.id==" + requeteGroupe1.getId().intValue() + "}.nom",
@@ -212,7 +211,7 @@ public class RequeteGroupesResourceIT extends ItBase {
 
     @Test
     public void get() {
-            given().get(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), requeteGroupe1.getId()).then().log()
+            preLoadedGiven.get(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), requeteGroupe1.getId()).then().log()
                             .body().statusCode(200).body("id", is(equalTo(requeteGroupe1.getId().intValue())))
                             .body("nom", is(equalTo(requeteGroupe1.getNom())))
                             .body("description", is(equalTo(requeteGroupe1.getDescription())))
@@ -224,7 +223,7 @@ public class RequeteGroupesResourceIT extends ItBase {
     @Test
     public void getWithStatusDraft() {
         requeteRepository.save(requete2.requeteGroupe(requeteGroupe2));
-            given().get(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), requeteGroupe1.getId()).then().log()
+            preLoadedGiven.get(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), requeteGroupe1.getId()).then().log()
                             .body().statusCode(200).body("id", is(equalTo(requeteGroupe1.getId().intValue())))
                             .body("nom", is(equalTo(requeteGroupe1.getNom())))
                             .body("description", is(equalTo(requeteGroupe1.getDescription())))
@@ -238,7 +237,7 @@ public class RequeteGroupesResourceIT extends ItBase {
         
         requeteRepository.save(requete1.requeteGroupe(requeteGroupe1));
         
-            given().get(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), requeteGroupe1.getId()).then().log()
+            preLoadedGiven.get(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), requeteGroupe1.getId()).then().log()
                             .body().statusCode(200).body("id", is(equalTo(requeteGroupe1.getId().intValue())))
                             .body("nom", is(equalTo(requeteGroupe1.getNom())))
                             .body("description", is(equalTo(requeteGroupe1.getDescription())))
@@ -249,14 +248,14 @@ public class RequeteGroupesResourceIT extends ItBase {
 
     @Test
     public void getNotFound() {
-            given().get(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), random.nextLong()).then()
+            preLoadedGiven.get(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), random.nextLong()).then()
                             .statusCode(404);
     }
 
     @Test
     public void delete() {
 
-            given().delete(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), requeteGroupe1.getId()).then()
+            preLoadedGiven.delete(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), requeteGroupe1.getId()).then()
                             .statusCode(200);
 
             // check that the requete groupe has been deleted
@@ -266,7 +265,7 @@ public class RequeteGroupesResourceIT extends ItBase {
 
     @Test
     public void deleteNotFound() {
-            given().delete(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), random.nextLong()).then()
+            preLoadedGiven.delete(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), random.nextLong()).then()
                             .statusCode(404);
     }
 
@@ -277,7 +276,7 @@ public class RequeteGroupesResourceIT extends ItBase {
 
             RequeteGroupe requeteGroupe = requeteGroupeRepository.findOne(requeteGroupe1.getId());
 
-            given().contentType(ContentType.JSON).body(update)
+            preLoadedGiven.contentType(ContentType.JSON).body(update)
                             .put(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId().intValue(), requeteGroupe1.getId())
                             .then().log().body().statusCode(200);
 
@@ -297,7 +296,7 @@ public class RequeteGroupesResourceIT extends ItBase {
 
             RequeteGroupeUpdateTO update = buildRequeteGroupeUpdateTO();
 
-            given().contentType(ContentType.JSON).body(update)
+            preLoadedGiven.contentType(ContentType.JSON).body(update)
                             .put(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), random.nextLong()).then().log()
                             .body().statusCode(404);
     }
@@ -311,7 +310,7 @@ public class RequeteGroupesResourceIT extends ItBase {
             
             assertThat(requeteGroupe1.getStatus(), is(equalTo(statusRequete2.getNom())));
 
-            given().contentType(ContentType.JSON).body(update)
+            preLoadedGiven.contentType(ContentType.JSON).body(update)
                             .put(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM_STATUS, operateur.getId().intValue(), requeteGroupe1.getId())
                             .then().log().body().statusCode(200);
 
@@ -333,7 +332,7 @@ public class RequeteGroupesResourceIT extends ItBase {
 
         IdTO<Long> update = new IdTO<Long>(statusRequete1.getId());
 
-            given().contentType(ContentType.JSON).body(update)
+            preLoadedGiven.contentType(ContentType.JSON).body(update)
                             .put(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM_STATUS, operateur.getId(), random.nextLong()).then().log()
                             .body().statusCode(404);
     }
@@ -343,7 +342,7 @@ public class RequeteGroupesResourceIT extends ItBase {
 
             IdTO<Long> update = new IdTO<Long>(new Random().nextLong());
 
-            given().contentType(ContentType.JSON)
+            preLoadedGiven.contentType(ContentType.JSON)
                             .body(update)
                             .put(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM_STATUS, operateur.getId(), requeteGroupe1.getId())
                             .then()

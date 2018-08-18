@@ -1,18 +1,23 @@
 package com.ambacam.rest.typerequetes;
 
-import com.ambacam.ItBase;
-import com.ambacam.model.TypeRequete;
-import com.ambacam.repository.TypeRequeteRepository;
-import com.ambacam.rest.ApiConstants;
-import io.restassured.http.ContentType;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import com.ambacam.ItBase;
+import com.ambacam.model.TypeRequete;
+import com.ambacam.repository.TypeRequeteRepository;
+import com.ambacam.rest.ApiConstants;
+
+import io.restassured.http.ContentType;
 
 public class TypeRequetesResourceIT extends ItBase {
 
@@ -44,7 +49,7 @@ public class TypeRequetesResourceIT extends ItBase {
 	@Test
 	public void create() {
 		TypeRequete create = buildTypeRequete();
-		int id = given().contentType(ContentType.JSON).body(create).log().body()
+		int id = preLoadedGiven.contentType(ContentType.JSON).body(create).log().body()
 				.post(ApiConstants.TYPE_REQUETE_COLLECTION).then().log().body().statusCode(200).extract().body()
 				.path("id");
 
@@ -59,7 +64,7 @@ public class TypeRequetesResourceIT extends ItBase {
 	public void createNomNull() {
 		TypeRequete create = buildTypeRequete();
 		create.setNom(null);
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.TYPE_REQUETE_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.TYPE_REQUETE_COLLECTION)
 				.then().log().body().statusCode(400);
 	}
 
@@ -67,7 +72,7 @@ public class TypeRequetesResourceIT extends ItBase {
 	public void createNomVide() {
 		TypeRequete create = buildTypeRequete();
 		create.setNom("");
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.TYPE_REQUETE_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.TYPE_REQUETE_COLLECTION)
 				.then().log().body().statusCode(400);
 	}
 
@@ -75,13 +80,13 @@ public class TypeRequetesResourceIT extends ItBase {
 	public void createMemeNom() {
 		TypeRequete create = buildTypeRequete();
 		create.setNom(typeRequete1.getNom());
-		given().contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.TYPE_REQUETE_COLLECTION)
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.TYPE_REQUETE_COLLECTION)
 				.then().log().body().statusCode(400);
 	}
 
 	@Test
 	public void list() {
-		given().get(ApiConstants.TYPE_REQUETE_COLLECTION).then().log().body().statusCode(200)
+		preLoadedGiven.get(ApiConstants.TYPE_REQUETE_COLLECTION).then().log().body().statusCode(200)
 				.body("size()", is(equalTo(2)))
 				.body("id", containsInAnyOrder(typeRequete1.getId().intValue(), typeRequete2.getId().intValue()))
 				.body("nom", containsInAnyOrder(typeRequete1.getNom(), typeRequete2.getNom()))
@@ -90,7 +95,7 @@ public class TypeRequetesResourceIT extends ItBase {
 
 	@Test
 	public void get() {
-		given().get(ApiConstants.TYPE_REQUETE_ITEM, typeRequete2.getId()).then().log().body().statusCode(200)
+		preLoadedGiven.get(ApiConstants.TYPE_REQUETE_ITEM, typeRequete2.getId()).then().log().body().statusCode(200)
 				.body("id", is(equalTo(typeRequete2.getId().intValue())))
 				.body("nom", is(equalTo(typeRequete2.getNom())))
 				.body("description", is(equalTo(typeRequete2.getDescription())));
@@ -98,12 +103,12 @@ public class TypeRequetesResourceIT extends ItBase {
 
 	@Test
 	public void getNotFound() {
-		given().get(ApiConstants.TYPE_REQUETE_ITEM, random.nextLong()).then().statusCode(404);
+		preLoadedGiven.get(ApiConstants.TYPE_REQUETE_ITEM, random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
 	public void delete() {
-		given().delete(ApiConstants.TYPE_REQUETE_ITEM, typeRequete1.getId()).then().statusCode(200);
+		preLoadedGiven.delete(ApiConstants.TYPE_REQUETE_ITEM, typeRequete1.getId()).then().statusCode(200);
 
 		// check that the typeRequete has been deleted
 		TypeRequete actual = repository.findOne(typeRequete1.getId());
@@ -113,13 +118,13 @@ public class TypeRequetesResourceIT extends ItBase {
 
 	@Test
 	public void deleteNotFound() {
-		given().delete(ApiConstants.TYPE_REQUETE_ITEM, random.nextLong()).then().statusCode(404);
+		preLoadedGiven.delete(ApiConstants.TYPE_REQUETE_ITEM, random.nextLong()).then().statusCode(404);
 	}
 
 	@Test
 	public void update() {
 		TypeRequete update = buildTypeRequete();
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.TYPE_REQUETE_ITEM, typeRequete2.getId())
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.TYPE_REQUETE_ITEM, typeRequete2.getId())
 				.then().log().body().statusCode(200);
 
 		// check that the typeRequete has been saved
@@ -133,7 +138,7 @@ public class TypeRequetesResourceIT extends ItBase {
 	@Test
 	public void updateNotFound() {
 		TypeRequete update = buildTypeRequete();
-		given().contentType(ContentType.JSON).body(update).put(ApiConstants.TYPE_REQUETE_ITEM, random.nextLong())
+		preLoadedGiven.contentType(ContentType.JSON).body(update).put(ApiConstants.TYPE_REQUETE_ITEM, random.nextLong())
 				.then().log().body().statusCode(404);
 	}
 
@@ -141,7 +146,7 @@ public class TypeRequetesResourceIT extends ItBase {
 	public void updateMemeNom() {
 		TypeRequete update = buildTypeRequete();
 		update.setNom(typeRequete1.getNom());
-		given().contentType(ContentType.JSON).body(update).log().body()
+		preLoadedGiven.contentType(ContentType.JSON).body(update).log().body()
 				.put(ApiConstants.TYPE_REQUETE_ITEM, typeRequete1.getId()).then().log().body().statusCode(200);
 
 		// check that the typeRequete has been saved
@@ -154,7 +159,7 @@ public class TypeRequetesResourceIT extends ItBase {
 	public void updateNomExists() {
 		TypeRequete update = buildTypeRequete();
 		update.setNom(typeRequete2.getNom());
-		given().contentType(ContentType.JSON).body(update).log().body()
+		preLoadedGiven.contentType(ContentType.JSON).body(update).log().body()
 				.put(ApiConstants.TYPE_REQUETE_ITEM, typeRequete1.getId()).then().log().body().statusCode(400);
 	}
 
