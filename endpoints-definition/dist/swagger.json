@@ -8,7 +8,7 @@
       "email": "hervalnganya@yahoo.fr"
     }
   },
-  "host": "18.222.141.21:8080",
+  "host": "127.0.0.1:8080",
   "tags": [
     {
       "name": "Requerant",
@@ -94,15 +94,13 @@
           "400": {
             "description": "Invalid status value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "requerant_auth": [
-              "read:requerant"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -136,15 +134,13 @@
           "400": {
             "description": "Invalid status value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "requerant_auth": [
-              "read:requerant"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -178,7 +174,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -187,9 +183,7 @@
         },
         "security": [
           {
-            "requerant_auth": [
-              "read:requerant"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -223,7 +217,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -232,9 +226,7 @@
         },
         "security": [
           {
-            "requerant_auth": [
-              "write:requerant"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -263,7 +255,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -272,9 +264,7 @@
         },
         "security": [
           {
-            "requerant_auth": [
-              "delete:requerant"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -326,15 +316,13 @@
           "400": {
             "description": "Invalid parameter"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "requerant_auth": [
-              "read:requerant"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -362,15 +350,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "operateur_auth": [
-              "read:operateur"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -390,7 +376,7 @@
             "description": "Operateur information",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Operateur"
+              "$ref": "#/definitions/OperateurCreate"
             }
           }
         ],
@@ -407,15 +393,13 @@
           "400": {
             "description": "Invalid parameter"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "requerant_auth": [
-              "read:requerant"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -449,7 +433,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -458,9 +442,7 @@
         },
         "security": [
           {
-            "operateur_auth": [
-              "read:operateur"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -494,7 +476,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -503,9 +485,7 @@
         },
         "security": [
           {
-            "operateur_auth": [
-              "write:operateur"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -527,7 +507,7 @@
           "200": {
             "description": "successful operation"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -536,9 +516,7 @@
         },
         "security": [
           {
-            "operateur_auth": [
-              "delete:operateur"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -590,15 +568,13 @@
           "400": {
             "description": "Invalid parameter"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "operateur_auth": [
-              "read:operateur"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -651,15 +627,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "requete_auth": [
-              "read:requete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -707,7 +681,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -716,9 +690,7 @@
         },
         "security": [
           {
-            "requete_auth": [
-              "read:requete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -746,15 +718,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "requete_auth": [
-              "read:requete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -807,7 +777,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -816,9 +786,7 @@
         },
         "security": [
           {
-            "requete_auth": [
-              "read:requete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -878,7 +846,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -887,9 +855,7 @@
         },
         "security": [
           {
-            "requete_auth": [
-              "read:requete"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -937,7 +903,7 @@
           "400": {
             "description": "Invalid parameter"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -946,9 +912,7 @@
         },
         "security": [
           {
-            "requete_auth": [
-              "read:requete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -996,7 +960,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1005,9 +969,7 @@
         },
         "security": [
           {
-            "requete_auth": [
-              "read:requete"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -1055,7 +1017,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1064,9 +1026,7 @@
         },
         "security": [
           {
-            "requete_auth": [
-              "write:requete"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -1102,7 +1062,7 @@
           "200": {
             "description": "successful operation"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1111,9 +1071,7 @@
         },
         "security": [
           {
-            "requete_auth": [
-              "delete:requete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -1167,7 +1125,7 @@
           "400": {
             "description": "Invalid parameter"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1176,9 +1134,7 @@
         },
         "security": [
           {
-            "requete_auth": [
-              "write:requete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -1222,7 +1178,7 @@
           "400": {
             "description": "Invalid status value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1231,9 +1187,7 @@
         },
         "security": [
           {
-            "recepisse_auth": [
-              "read:recepisse"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -1281,7 +1235,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1290,9 +1244,7 @@
         },
         "security": [
           {
-            "recepisse_auth": [
-              "write:recepisse"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -1340,7 +1292,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1349,9 +1301,7 @@
         },
         "security": [
           {
-            "recepisse_auth": [
-              "read:recepisse"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -1399,7 +1349,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1408,9 +1358,7 @@
         },
         "security": [
           {
-            "recepisse_auth": [
-              "write:recepisse"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -1453,7 +1401,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1462,9 +1410,7 @@
         },
         "security": [
           {
-            "recepisse_auth": [
-              "delete:recepisse"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -1511,7 +1457,7 @@
           "400": {
             "description": "Invalid parameter"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1520,9 +1466,7 @@
         },
         "security": [
           {
-            "requete_auth": [
-              "read:requete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -1559,7 +1503,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1568,9 +1512,7 @@
         },
         "security": [
           {
-            "requeteGroupe_auth": [
-              "read:requeteGroupe"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -1611,7 +1553,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1620,9 +1562,7 @@
         },
         "security": [
           {
-            "requeteGroupe_auth": [
-              "write:requeteGroupe"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -1663,7 +1603,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1672,9 +1612,7 @@
         },
         "security": [
           {
-            "requeteGroupe_auth": [
-              "read:requeteGroupe"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -1719,7 +1657,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1728,9 +1666,7 @@
         },
         "security": [
           {
-            "requeteGroupe_auth": [
-              "write:requeteGroupe"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -1766,7 +1702,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1775,9 +1711,7 @@
         },
         "security": [
           {
-            "requeteGroupe_auth": [
-              "delete:requeteGroupe"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -1824,7 +1758,7 @@
           "400": {
             "description": "Invalid parameter"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1833,9 +1767,7 @@
         },
         "security": [
           {
-            "requete_auth": [
-              "read:requete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -1882,7 +1814,7 @@
           "400": {
             "description": "Invalid parameter (If a requete id does not exist or if a requete in add is already assign to another requete groupe)"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1891,9 +1823,7 @@
         },
         "security": [
           {
-            "requete_auth": [
-              "read:requete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -1944,7 +1874,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -1953,9 +1883,7 @@
         },
         "security": [
           {
-            "passport_auth": [
-              "read:passport"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2010,7 +1938,7 @@
           "400": {
             "description": "Invalid parameter"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2019,9 +1947,7 @@
         },
         "security": [
           {
-            "passport_auth": [
-              "read:passport"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -2076,7 +2002,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2085,9 +2011,7 @@
         },
         "security": [
           {
-            "passport_auth": [
-              "read:passport"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2142,7 +2066,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2151,9 +2075,7 @@
         },
         "security": [
           {
-            "passport_auth": [
-              "write:passport"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2203,7 +2125,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2212,9 +2134,77 @@
         },
         "security": [
           {
-            "passport_auth": [
-              "delete:passport"
-            ]
+            "basicAuth": []
+          }
+        ]
+      }
+    },
+    "/operateurs/{operateurId}/requerants/{requerantId}/requetes/{requeteId}/passports/{passportId}/photo": {
+      "put": {
+        "tags": [
+          "Passport"
+        ],
+        "summary": "Upload a passport photo",
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requerantId",
+            "in": "path",
+            "description": "Requerant id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteId",
+            "in": "path",
+            "description": "Requete id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "passportId",
+            "in": "path",
+            "description": "Passport id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "photo",
+            "type": "file",
+            "required": true,
+            "description": "Photo to upload"
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
           }
         ]
       }
@@ -2242,15 +2232,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "role_auth": [
-              "read:role"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2284,15 +2272,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "role_auth": [
-              "write:role"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -2326,7 +2312,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2335,9 +2321,7 @@
         },
         "security": [
           {
-            "role_auth": [
-              "read:role"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2371,7 +2355,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2380,9 +2364,7 @@
         },
         "security": [
           {
-            "role_auth": [
-              "write:role"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2411,7 +2393,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2420,9 +2402,7 @@
         },
         "security": [
           {
-            "role_auth": [
-              "delete:role"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -2450,15 +2430,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "autorite_auth": [
-              "read:autorite"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2492,15 +2470,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "autorite_auth": [
-              "write:autorite"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -2534,7 +2510,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2543,9 +2519,7 @@
         },
         "security": [
           {
-            "autorite_auth": [
-              "read:autorite"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2579,7 +2553,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2588,9 +2562,7 @@
         },
         "security": [
           {
-            "autorite_auth": [
-              "write:autorite"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2619,7 +2591,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2628,9 +2600,7 @@
         },
         "security": [
           {
-            "autorite_auth": [
-              "delete:autorite"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -2658,15 +2628,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "pays_auth": [
-              "read:pays"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2700,15 +2668,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "pays_auth": [
-              "write:pays"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -2742,7 +2708,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2751,9 +2717,7 @@
         },
         "security": [
           {
-            "pays_auth": [
-              "read:pays"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2787,7 +2751,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2796,9 +2760,7 @@
         },
         "security": [
           {
-            "pays_auth": [
-              "write:pays"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2827,7 +2789,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2836,9 +2798,7 @@
         },
         "security": [
           {
-            "pays_auth": [
-              "delete:pays"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -2866,15 +2826,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "action_auth": [
-              "read:action"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2908,15 +2866,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "action_auth": [
-              "write:action"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -2950,7 +2906,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -2959,9 +2915,7 @@
         },
         "security": [
           {
-            "action_auth": [
-              "read:action"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -2995,7 +2949,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -3004,9 +2958,7 @@
         },
         "security": [
           {
-            "action_auth": [
-              "write:action"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -3035,7 +2987,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -3044,9 +2996,7 @@
         },
         "security": [
           {
-            "action_auth": [
-              "delete:action"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -3074,15 +3024,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "motifSuppression_auth": [
-              "read:motifSuppression"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -3116,15 +3064,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "motifSuppression_auth": [
-              "write:motifSuppression"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -3158,7 +3104,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -3167,9 +3113,7 @@
         },
         "security": [
           {
-            "motifSuppression_auth": [
-              "read:motifSuppression"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -3203,7 +3147,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -3212,9 +3156,7 @@
         },
         "security": [
           {
-            "motifSuppression_auth": [
-              "write:motifSuppression"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -3243,7 +3185,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -3252,9 +3194,7 @@
         },
         "security": [
           {
-            "motifSuppression_auth": [
-              "delete:motifSuppression"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -3282,15 +3222,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "typeRequete_auth": [
-              "read:typeRequete"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -3324,15 +3262,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "typeRequete_auth": [
-              "write:typeRequete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -3366,7 +3302,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -3375,9 +3311,7 @@
         },
         "security": [
           {
-            "typeRequete_auth": [
-              "read:typeRequete"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -3411,7 +3345,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -3420,9 +3354,7 @@
         },
         "security": [
           {
-            "typeRequete_auth": [
-              "write:typeRequete"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -3451,7 +3383,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -3460,9 +3392,7 @@
         },
         "security": [
           {
-            "typeRequete_auth": [
-              "delete:typeRequete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -3490,15 +3420,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "statusRequete_auth": [
-              "read:statusRequete"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -3532,15 +3460,13 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "statusRequete_auth": [
-              "write:statusRequete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -3574,7 +3500,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -3583,9 +3509,7 @@
         },
         "security": [
           {
-            "statusRequete_auth": [
-              "read:statusRequete"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -3619,7 +3543,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -3628,9 +3552,7 @@
         },
         "security": [
           {
-            "statusRequete_auth": [
-              "write:statusRequete"
-            ]
+            "basicAuth": []
           }
         ]
       },
@@ -3659,7 +3581,7 @@
           "400": {
             "description": "Invalid value"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           },
           "404": {
@@ -3668,9 +3590,7 @@
         },
         "security": [
           {
-            "statusRequete_auth": [
-              "delete:statusRequete"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -3720,20 +3640,18 @@
           "400": {
             "description": "Invalid parameter"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "operateur_auth": [
-              "read:operateur"
-            ]
+            "basicAuth": []
           }
         ]
       }
     },
-    "/login": {
+    "/oauth/token": {
       "post": {
         "tags": [
           "Authentication"
@@ -3745,13 +3663,23 @@
         ],
         "parameters": [
           {
-            "in": "body",
-            "name": "credentials",
-            "description": "Operator credentials",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Credentials"
-            }
+            "name": "grant_type",
+            "in": "query",
+            "description": "the grant type of the user",
+            "type": "string",
+            "default": "password"
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "description": "username",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "password",
+            "type": "string"
           }
         ],
         "responses": {
@@ -3761,26 +3689,33 @@
           "400": {
             "description": "Invalid parameter"
           },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "operateur_auth": [
-              "write:operateur"
-            ]
+            "basicAuth": []
           }
         ]
       }
     },
-    "/logout": {
+    "/tokens/revoke": {
       "delete": {
         "tags": [
           "Authentication"
         ],
         "summary": "Sign out from the system",
         "description": "Sign out from the system",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "The authentication should be in the form 'Bearer a5f71d26-0b5c-4839-9cc9-4aa6fa0734ab'"
+          }
+        ],
         "produces": [
           "application/json"
         ],
@@ -3788,18 +3723,13 @@
           "200": {
             "description": "successful operation"
           },
-          "400": {
-            "description": "Invalid parameter"
-          },
-          "403": {
+          "401": {
             "description": "Not authorized"
           }
         },
         "security": [
           {
-            "operateur_auth": [
-              "write:operateur"
-            ]
+            "basicAuth": []
           }
         ]
       }
@@ -4631,6 +4561,7 @@
       "required": [
         "numero",
         "dateDelivrance",
+        "dateExpiration",
         "lieuDelivrance",
         "autoriteId"
       ],
@@ -4639,6 +4570,10 @@
           "type": "string"
         },
         "dateDelivrance": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dateExpiration": {
           "type": "string",
           "format": "date-time"
         },
@@ -4685,6 +4620,7 @@
       "required": [
         "numero",
         "dateDelivrance",
+        "dateExpiration",
         "lieuDelivrance",
         "autoriteId"
       ],
@@ -4696,15 +4632,16 @@
           "type": "string",
           "format": "date-time"
         },
+        "dateExpiration": {
+          "type": "string",
+          "format": "date-time"
+        },
         "lieuDelivrance": {
           "type": "string"
         },
         "autoriteId": {
           "type": "integer",
           "format": "int64"
-        },
-        "urlPhoto": {
-          "type": "string"
         }
       }
     },
@@ -4783,192 +4720,11 @@
           "type": "string"
         }
       }
-    },
-    "Credentials": {
-      "type": "object",
-      "required": [
-        "username",
-        "password"
-      ],
-      "properties": {
-        "username": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        }
-      }
-    },
-    "ApiResponse": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "type": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
-        }
-      }
     }
   },
   "securityDefinitions": {
-    "requerant_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:requerant": "modify a requent",
-        "delete:requerant": "delete a requent",
-        "read:requerant": "read some requerants"
-      }
-    },
-    "operateur_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:operateur": "modify a operateur",
-        "delete:operateur": "delete a operateur",
-        "read:operateur": "read some operateurs"
-      }
-    },
-    "role_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:role": "modify a role",
-        "delete:role": "delete a role",
-        "read:role": "read some roles"
-      }
-    },
-    "autorite_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:autorite": "modify a autorite",
-        "delete:autorite": "delete a autorite",
-        "read:autorite": "read some autorites"
-      }
-    },
-    "action_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:action": "modify a action",
-        "delete:action": "delete a action",
-        "read:action": "read some actions"
-      }
-    },
-    "recepisse_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:recepisse": "modify a action",
-        "delete:recepisse": "delete a action",
-        "read:recepisse": "read some recepisses"
-      }
-    },
-    "typeRequete_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:typeRequete": "modify a action",
-        "delete:typeRequete": "delete a action",
-        "read:typeRequete": "read some typeRequetes"
-      }
-    },
-    "statusRequete_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:statusRequete": "modify a action",
-        "delete:statusRequete": "delete a action",
-        "read:statusRequete": "read some statusRequetes"
-      }
-    },
-    "log_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:log": "modify a log",
-        "delete:log": "delete a log",
-        "read:log": "read some logs"
-      }
-    },
-    "motifSuppression_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:motifSuppression": "modify a motifSuppression",
-        "delete:motifSuppression": "delete a motifSuppression",
-        "read:motifSuppression": "read some motifSuppressions"
-      }
-    },
-    "pays_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:pays": "modify a pays",
-        "delete:pays": "delete a pays",
-        "read:pays": "read some pays"
-      }
-    },
-    "requete_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:requete": "modify a requete",
-        "delete:requete": "delete a requete",
-        "read:requete": "read some requetes"
-      }
-    },
-    "passport_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:passport": "modify a passport",
-        "delete:passport": "delete a passport",
-        "read:passport": "read some passports"
-      }
-    },
-    "recipisse_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:recepisse": "modify a recepisse",
-        "delete:recepisse": "delete a recepisse"
-      }
-    },
-    "requeteGroupe_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:requeteGroupe": "modify a requeteGroupe",
-        "delete:requeteGroupe": "delete a requeteGroupe",
-        "read:requeteGroupe": "read some requeteGroupe"
-      }
-    },
-    "api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
+    "basicAuth": {
+      "type": "basic"
     }
   },
   "externalDocs": {

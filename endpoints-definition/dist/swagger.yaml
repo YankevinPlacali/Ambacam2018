@@ -9,7 +9,7 @@ info:
   title: Ambacam 2018
   contact:
     email: hervalnganya@yahoo.fr
-host: 18.222.141.21:8080
+host: '127.0.0.1:8080'
 tags:
   - name: Requerant
     description: Interfaces related to operations on the models Requerant and Recepisse
@@ -59,11 +59,10 @@ paths:
               $ref: '#/definitions/RequerantRead'
         '400':
           description: Invalid status value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - requerant_auth:
-            - 'read:requerant'
+        - basicAuth: []
     post:
       tags:
         - Requerant
@@ -85,11 +84,10 @@ paths:
             $ref: '#/definitions/RequerantRead'
         '400':
           description: Invalid status value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - requerant_auth:
-            - 'read:requerant'
+        - basicAuth: []
   '/requerants/{requerantId}':
     get:
       tags:
@@ -111,13 +109,12 @@ paths:
             $ref: '#/definitions/RequerantRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requerant_auth:
-            - 'read:requerant'
+        - basicAuth: []
     put:
       tags:
         - Requerant
@@ -139,13 +136,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requerant_auth:
-            - 'write:requerant'
+        - basicAuth: []
     delete:
       tags:
         - Requerant
@@ -164,13 +160,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requerant_auth:
-            - 'delete:requerant'
+        - basicAuth: []
   /requerants/search:
     post:
       tags:
@@ -205,11 +200,10 @@ paths:
           description: successful operation
         '400':
           description: Invalid parameter
-        '403':
+        '401':
           description: Not authorized
       security:
-        - requerant_auth:
-            - 'read:requerant'
+        - basicAuth: []
   /operateurs:
     get:
       tags:
@@ -227,11 +221,10 @@ paths:
               $ref: '#/definitions/OperateurRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - operateur_auth:
-            - 'read:operateur'
+        - basicAuth: []
     post:
       tags:
         - Operateur
@@ -245,7 +238,7 @@ paths:
           description: Operateur information
           required: true
           schema:
-            $ref: '#/definitions/Operateur'
+            $ref: '#/definitions/OperateurCreate'
       responses:
         '200':
           schema:
@@ -255,11 +248,10 @@ paths:
           description: successful operation
         '400':
           description: Invalid parameter
-        '403':
+        '401':
           description: Not authorized
       security:
-        - requerant_auth:
-            - 'read:requerant'
+        - basicAuth: []
   '/operateurs/{operateurId}':
     get:
       tags:
@@ -281,13 +273,12 @@ paths:
             $ref: '#/definitions/OperateurRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - operateur_auth:
-            - 'read:operateur'
+        - basicAuth: []
     put:
       tags:
         - Operateur
@@ -309,13 +300,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - operateur_auth:
-            - 'write:operateur'
+        - basicAuth: []
     delete:
       tags:
         - Operateur
@@ -329,13 +319,12 @@ paths:
       responses:
         '200':
           description: successful operation
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - operateur_auth:
-            - 'delete:operateur'
+        - basicAuth: []
   /operateurs/search:
     post:
       tags:
@@ -370,11 +359,10 @@ paths:
           description: successful operation
         '400':
           description: Invalid parameter
-        '403':
+        '401':
           description: Not authorized
       security:
-        - operateur_auth:
-            - 'read:operateur'
+        - basicAuth: []
   '/requerants/{requerantId}/requetes':
     get:
       tags:
@@ -410,11 +398,10 @@ paths:
               $ref: '#/definitions/RequeteRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - requete_auth:
-            - 'read:requete'
+        - basicAuth: []
   '/requerants/{requerantId}/requetes/{requeteId}':
     get:
       tags:
@@ -446,14 +433,13 @@ paths:
             $ref: '#/definitions/RequeteRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requete_auth:
-            - 'read:requete'
-  '/requetes':
+        - basicAuth: []
+  /requetes:
     get:
       tags:
         - Requete
@@ -470,11 +456,10 @@ paths:
               $ref: '#/definitions/RequeteRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - requete_auth:
-            - 'read:requete'
+        - basicAuth: []
   '/operateurs/{operateurId}/requetes':
     get:
       tags:
@@ -510,13 +495,12 @@ paths:
               $ref: '#/definitions/RequeteRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requete_auth:
-            - 'read:requete'
+        - basicAuth: []
   '/operateurs/{operateurId}/requerants/{requerantId}/requetes':
     get:
       tags:
@@ -557,13 +541,12 @@ paths:
               $ref: '#/definitions/RequeteRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requete_auth:
-            - 'read:requete'
+        - basicAuth: []
     post:
       tags:
         - Requete
@@ -595,13 +578,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid parameter
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requete_auth:
-            - 'read:requete'
+        - basicAuth: []
   '/operateurs/{operateurId}/requerants/{requerantId}/requetes/{requeteId}':
     get:
       tags:
@@ -633,13 +615,12 @@ paths:
             $ref: '#/definitions/RequeteRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requete_auth:
-            - 'read:requete'
+        - basicAuth: []
     put:
       tags:
         - Requete
@@ -671,13 +652,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requete_auth:
-            - 'write:requete'
+        - basicAuth: []
     delete:
       tags:
         - Requete
@@ -701,13 +681,12 @@ paths:
       responses:
         '200':
           description: successful operation
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requete_auth:
-            - 'delete:requete'
+        - basicAuth: []
   '/operateurs/{operateurId}/requerants/{requerantId}/requetes/{requeteId}/status':
     put:
       tags:
@@ -743,13 +722,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid parameter
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requete_auth:
-            - 'write:requete'
+        - basicAuth: []
   '/requerants/{requerantId}/requetes/{requeteId}/recepisses':
     get:
       tags:
@@ -778,13 +756,12 @@ paths:
               $ref: '#/definitions/RecepisseRead'
         '400':
           description: Invalid status value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - recepisse_auth:
-            - 'read:recepisse'
+        - basicAuth: []
     post:
       tags:
         - Requete
@@ -816,13 +793,12 @@ paths:
             $ref: '#/definitions/RecepisseRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - recepisse_auth:
-            - 'write:recepisse'
+        - basicAuth: []
   '/requerants/{requerantId}/requetes/{requeteId}/recepisses/{recepisseId}':
     get:
       tags:
@@ -854,13 +830,12 @@ paths:
             $ref: '#/definitions/RecepisseRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - recepisse_auth:
-            - 'read:recepisse'
+        - basicAuth: []
     put:
       tags:
         - Requete
@@ -892,13 +867,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - recepisse_auth:
-            - 'write:recepisse'
+        - basicAuth: []
     delete:
       tags:
         - Requete
@@ -927,13 +901,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - recepisse_auth:
-            - 'delete:recepisse'
+        - basicAuth: []
   '/operateurs/{operateurId}/requete-groupes/{requeteGroupeId}/requetes/status':
     put:
       tags:
@@ -964,13 +937,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid parameter
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requete_auth:
-            - 'read:requete'
+        - basicAuth: []
   '/operateurs/{operateurId}/requete-groupes':
     get:
       tags:
@@ -994,20 +966,19 @@ paths:
               $ref: '#/definitions/RequeteGroupeRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requeteGroupe_auth:
-            - 'read:requeteGroupe'
+        - basicAuth: []
     post:
       tags:
         - RequeteGroupe
       summary: Create a RequeteGroupe
-      description: Create a RequeteGroupe;
-                  the field name is automatically generated Group-YYYY-MM-DD-HH-MM-SS-RandomUUID;
-                  this field is not updatable
+      description: >-
+        Create a RequeteGroupe; the field name is automatically generated
+        Group-YYYY-MM-DD-HH-MM-SS-RandomUUID; this field is not updatable
       produces:
         - application/json
       parameters:
@@ -1029,13 +1000,12 @@ paths:
             $ref: '#/definitions/RequeteGroupeRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requeteGroupe_auth:
-            - 'write:requeteGroupe'
+        - basicAuth: []
   '/operateurs/{operateurId}/requete-groupes/{requeteGroupeId}':
     get:
       tags:
@@ -1062,13 +1032,12 @@ paths:
             $ref: '#/definitions/RequeteGroupeRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requeteGroupe_auth:
-            - 'read:requeteGroupe'
+        - basicAuth: []
     put:
       tags:
         - RequeteGroupe
@@ -1098,13 +1067,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requeteGroupe_auth:
-            - 'write:requeteGroupe'
+        - basicAuth: []
     delete:
       tags:
         - RequeteGroupe
@@ -1128,13 +1096,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requeteGroupe_auth:
-            - 'delete:requeteGroupe'
+        - basicAuth: []
   '/operateurs/{operateurId}/requete-groupes/{requeteGroupeId}/status':
     put:
       tags:
@@ -1167,13 +1134,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid parameter
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - requete_auth:
-            - 'read:requete'
+        - basicAuth: []
   '/operateurs/{operateurId}/requete-groupes/{requeteGroupeId}/assign':
     put:
       tags:
@@ -1203,14 +1169,15 @@ paths:
         '200':
           description: successful operation
         '400':
-          description: Invalid parameter (If a requete id does not exist or if a requete in add is already assign to another requete groupe)
-        '403':
+          description: >-
+            Invalid parameter (If a requete id does not exist or if a requete in
+            add is already assign to another requete groupe)
+        '401':
           description: Not authorized
         '404':
           description: Object not found (If the requete groupe does not exist)
       security:
-        - requete_auth:
-            - 'read:requete'
+        - basicAuth: []
   '/operateurs/{operateurId}/requerants/{requerantId}/requetes/{requeteId}/passports':
     get:
       tags:
@@ -1244,13 +1211,12 @@ paths:
               $ref: '#/definitions/PassportRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - passport_auth:
-            - 'read:passport'
+        - basicAuth: []
     post:
       tags:
         - Passport
@@ -1287,13 +1253,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid parameter
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - passport_auth:
-            - 'read:passport'
+        - basicAuth: []
   '/operateurs/{operateurId}/requerants/{requerantId}/requetes/{requeteId}/passports/{passportId}':
     get:
       tags:
@@ -1330,13 +1295,12 @@ paths:
             $ref: '#/definitions/PassportRead'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - passport_auth:
-            - 'read:passport'
+        - basicAuth: []
     put:
       tags:
         - Passport
@@ -1373,13 +1337,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - passport_auth:
-            - 'write:passport'
+        - basicAuth: []
     delete:
       tags:
         - Passport
@@ -1413,13 +1376,58 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - passport_auth:
-            - 'delete:passport'
+        - basicAuth: []
+  '/operateurs/{operateurId}/requerants/{requerantId}/requetes/{requeteId}/passports/{passportId}/photo':
+    put:
+      tags:
+        - Passport
+      summary: Upload a passport photo
+      parameters:
+        - name: operateurId
+          in: path
+          description: Operateur id
+          required: true
+          type: integer
+        - name: requerantId
+          in: path
+          description: Requerant id
+          required: true
+          type: integer
+        - name: requeteId
+          in: path
+          description: Requete id
+          required: true
+          type: integer
+        - name: passportId
+          in: path
+          description: Passport id
+          required: true
+          type: integer
+        - in: formData
+          name: photo
+          type: file
+          required: true
+          description: Photo to upload
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid value
+        '401':
+          description: Not authorized
+        '404':
+          description: Object not found
+      security:
+        - basicAuth: []
   /roles:
     get:
       tags:
@@ -1437,11 +1445,10 @@ paths:
               $ref: '#/definitions/Role'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - role_auth:
-            - 'read:role'
+        - basicAuth: []
     post:
       tags:
         - Role
@@ -1463,11 +1470,10 @@ paths:
             $ref: '#/definitions/Role'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - role_auth:
-            - 'write:role'
+        - basicAuth: []
   '/roles/{roleId}':
     get:
       tags:
@@ -1489,13 +1495,12 @@ paths:
             $ref: '#/definitions/Role'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - role_auth:
-            - 'read:role'
+        - basicAuth: []
     put:
       tags:
         - Role
@@ -1517,13 +1522,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - role_auth:
-            - 'write:role'
+        - basicAuth: []
     delete:
       tags:
         - Role
@@ -1542,13 +1546,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - role_auth:
-            - 'delete:role'
+        - basicAuth: []
   /autorites:
     get:
       tags:
@@ -1566,11 +1569,10 @@ paths:
               $ref: '#/definitions/Autorite'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - autorite_auth:
-            - 'read:autorite'
+        - basicAuth: []
     post:
       tags:
         - Autorite
@@ -1592,11 +1594,10 @@ paths:
             $ref: '#/definitions/Autorite'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - autorite_auth:
-            - 'write:autorite'
+        - basicAuth: []
   '/autorites/{autoriteId}':
     get:
       tags:
@@ -1618,13 +1619,12 @@ paths:
             $ref: '#/definitions/Autorite'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - autorite_auth:
-            - 'read:autorite'
+        - basicAuth: []
     put:
       tags:
         - Autorite
@@ -1646,13 +1646,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - autorite_auth:
-            - 'write:autorite'
+        - basicAuth: []
     delete:
       tags:
         - Autorite
@@ -1671,13 +1670,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - autorite_auth:
-            - 'delete:autorite'
+        - basicAuth: []
   /pays:
     get:
       tags:
@@ -1695,11 +1693,10 @@ paths:
               $ref: '#/definitions/Pays'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - pays_auth:
-            - 'read:pays'
+        - basicAuth: []
     post:
       tags:
         - Pays
@@ -1721,11 +1718,10 @@ paths:
             $ref: '#/definitions/Pays'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - pays_auth:
-            - 'write:pays'
+        - basicAuth: []
   '/pays/{paysId}':
     get:
       tags:
@@ -1747,13 +1743,12 @@ paths:
             $ref: '#/definitions/Pays'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - pays_auth:
-            - 'read:pays'
+        - basicAuth: []
     put:
       tags:
         - Pays
@@ -1775,13 +1770,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - pays_auth:
-            - 'write:pays'
+        - basicAuth: []
     delete:
       tags:
         - Pays
@@ -1800,13 +1794,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - pays_auth:
-            - 'delete:pays'
+        - basicAuth: []
   /actions:
     get:
       tags:
@@ -1824,11 +1817,10 @@ paths:
               $ref: '#/definitions/Action'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - action_auth:
-            - 'read:action'
+        - basicAuth: []
     post:
       tags:
         - Action
@@ -1850,11 +1842,10 @@ paths:
             $ref: '#/definitions/Action'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - action_auth:
-            - 'write:action'
+        - basicAuth: []
   '/actions/{actionId}':
     get:
       tags:
@@ -1876,13 +1867,12 @@ paths:
             $ref: '#/definitions/Action'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - action_auth:
-            - 'read:action'
+        - basicAuth: []
     put:
       tags:
         - Action
@@ -1904,13 +1894,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - action_auth:
-            - 'write:action'
+        - basicAuth: []
     delete:
       tags:
         - Action
@@ -1929,13 +1918,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - action_auth:
-            - 'delete:action'
+        - basicAuth: []
   /motif-suppressions:
     get:
       tags:
@@ -1953,11 +1941,10 @@ paths:
               $ref: '#/definitions/MotifSuppression'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - motifSuppression_auth:
-            - 'read:motifSuppression'
+        - basicAuth: []
     post:
       tags:
         - MotifSuppression
@@ -1979,11 +1966,10 @@ paths:
             $ref: '#/definitions/MotifSuppression'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - motifSuppression_auth:
-            - 'write:motifSuppression'
+        - basicAuth: []
   '/motif-suppressions/{motifSuppressionId}':
     get:
       tags:
@@ -2005,13 +1991,12 @@ paths:
             $ref: '#/definitions/MotifSuppression'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - motifSuppression_auth:
-            - 'read:motifSuppression'
+        - basicAuth: []
     put:
       tags:
         - MotifSuppression
@@ -2033,13 +2018,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - motifSuppression_auth:
-            - 'write:motifSuppression'
+        - basicAuth: []
     delete:
       tags:
         - MotifSuppression
@@ -2058,13 +2042,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - motifSuppression_auth:
-            - 'delete:motifSuppression'
+        - basicAuth: []
   /type-requetes:
     get:
       tags:
@@ -2082,11 +2065,10 @@ paths:
               $ref: '#/definitions/TypeRequete'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - typeRequete_auth:
-            - 'read:typeRequete'
+        - basicAuth: []
     post:
       tags:
         - TypeRequete
@@ -2108,11 +2090,10 @@ paths:
             $ref: '#/definitions/TypeRequete'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - typeRequete_auth:
-            - 'write:typeRequete'
+        - basicAuth: []
   '/type-requetes/{typeRequeteId}':
     get:
       tags:
@@ -2134,13 +2115,12 @@ paths:
             $ref: '#/definitions/TypeRequete'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - typeRequete_auth:
-            - 'read:typeRequete'
+        - basicAuth: []
     put:
       tags:
         - TypeRequete
@@ -2162,13 +2142,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - typeRequete_auth:
-            - 'write:typeRequete'
+        - basicAuth: []
     delete:
       tags:
         - TypeRequete
@@ -2187,13 +2166,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - typeRequete_auth:
-            - 'delete:typeRequete'
+        - basicAuth: []
   /status-requetes:
     get:
       tags:
@@ -2211,11 +2189,10 @@ paths:
               $ref: '#/definitions/StatusRequete'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - statusRequete_auth:
-            - 'read:statusRequete'
+        - basicAuth: []
     post:
       tags:
         - StatusRequete
@@ -2237,11 +2214,10 @@ paths:
             $ref: '#/definitions/StatusRequete'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
       security:
-        - statusRequete_auth:
-            - 'write:statusRequete'
+        - basicAuth: []
   '/status-requetes/{statusRequeteId}':
     get:
       tags:
@@ -2263,13 +2239,12 @@ paths:
             $ref: '#/definitions/StatusRequete'
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - statusRequete_auth:
-            - 'read:statusRequete'
+        - basicAuth: []
     put:
       tags:
         - StatusRequete
@@ -2291,13 +2266,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - statusRequete_auth:
-            - 'write:statusRequete'
+        - basicAuth: []
     delete:
       tags:
         - StatusRequete
@@ -2316,13 +2290,12 @@ paths:
           description: successful operation
         '400':
           description: Invalid value
-        '403':
+        '401':
           description: Not authorized
         '404':
           description: Object not found
       security:
-        - statusRequete_auth:
-            - 'delete:statusRequete'
+        - basicAuth: []
   /logs/search:
     post:
       tags:
@@ -2355,12 +2328,11 @@ paths:
           description: successful operation
         '400':
           description: Invalid parameter
-        '403':
+        '401':
           description: Not authorized
       security:
-        - operateur_auth:
-            - 'read:operateur'
-  /login:
+        - basicAuth: []
+  /oauth/token:
     post:
       tags:
         - Authentication
@@ -2369,40 +2341,50 @@ paths:
       produces:
         - application/json
       parameters:
-        - in: body
-          name: credentials
-          description: Operator credentials
-          required: true
-          schema:
-            $ref: '#/definitions/Credentials'
+        - name: grant_type
+          in: query
+          description: the grant type of the user
+          type: string
+          default: password
+        - name: username
+          in: query
+          description: username
+          type: string
+        - name: password
+          in: query
+          description: password
+          type: string
       responses:
         '200':
           description: successful operation
         '400':
           description: Invalid parameter
-        '403':
+        '401':
           description: Not authorized
       security:
-        - operateur_auth:
-            - 'write:operateur'
-  /logout:
+        - basicAuth: []
+  /tokens/revoke:
     delete:
       tags:
         - Authentication
       summary: Sign out from the system
       description: Sign out from the system
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: The authentication should be in the form 'Bearer a5f71d26-0b5c-4839-9cc9-4aa6fa0734ab'
       produces:
         - application/json
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Invalid parameter
-        '403':
+        '401':
           description: Not authorized
       security:
-        - operateur_auth:
-            - 'write:operateur'
+        - basicAuth: []
+        
 definitions:
   Requerant:
     type: object
@@ -2983,12 +2965,16 @@ definitions:
     required:
       - numero
       - dateDelivrance
+      - dateExpiration
       - lieuDelivrance
       - autoriteId
     properties:
       numero:
         type: string
       dateDelivrance:
+        type: string
+        format: date-time
+      dateExpiration:
         type: string
         format: date-time
       lieuDelivrance:
@@ -3021,6 +3007,7 @@ definitions:
     required:
       - numero
       - dateDelivrance
+      - dateExpiration
       - lieuDelivrance
       - autoriteId
     properties:
@@ -3029,13 +3016,14 @@ definitions:
       dateDelivrance:
         type: string
         format: date-time
+      dateExpiration:
+        type: string
+        format: date-time
       lieuDelivrance:
         type: string
       autoriteId:
         type: integer
         format: int64
-      urlPhoto:
-        type: string
   RequeteGroupe:
     type: object
     required:
@@ -3075,7 +3063,11 @@ definitions:
         type: string
         format: date-time
       status:
-        description: is \"draft\" if the requete groupe has no requete. It is \"mixed\" if the the requete groupe contains requete with different status. It is the status name of one requete if all requetes of the requete groupe are the same.
+        description: >-
+          is \"draft\" if the requete groupe has no requete. It is \"mixed\" if
+          the the requete groupe contains requete with different status. It is
+          the status name of one requete if all requetes of the requete groupe
+          are the same.
         type: string
       creePar:
         $ref: '#/definitions/OperateurRead'
@@ -3089,150 +3081,9 @@ definitions:
     properties:
       description:
         type: string
-  Credentials:
-    type: object
-    required:
-      - username
-      - password
-    properties:
-      username:
-        type: string
-      password:
-        type: string
-  ApiResponse:
-    type: object
-    properties:
-      code:
-        type: integer
-        format: int32
-      type:
-        type: string
-      message:
-        type: string
 securityDefinitions:
-  requerant_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:requerant': modify a requent
-      'delete:requerant': delete a requent
-      'read:requerant': read some requerants
-  operateur_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:operateur': modify a operateur
-      'delete:operateur': delete a operateur
-      'read:operateur': read some operateurs
-  role_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:role': modify a role
-      'delete:role': delete a role
-      'read:role': read some roles
-  autorite_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:autorite': modify a autorite
-      'delete:autorite': delete a autorite
-      'read:autorite': read some autorites
-  action_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:action': modify a action
-      'delete:action': delete a action
-      'read:action': read some actions
-  recepisse_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:recepisse': modify a action
-      'delete:recepisse': delete a action
-      'read:recepisse': read some recepisses
-  typeRequete_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:typeRequete': modify a action
-      'delete:typeRequete': delete a action
-      'read:typeRequete': read some typeRequetes
-  statusRequete_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:statusRequete': modify a action
-      'delete:statusRequete': delete a action
-      'read:statusRequete': read some statusRequetes
-  log_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:log': modify a log
-      'delete:log': delete a log
-      'read:log': read some logs
-  motifSuppression_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:motifSuppression': modify a motifSuppression
-      'delete:motifSuppression': delete a motifSuppression
-      'read:motifSuppression': read some motifSuppressions
-  pays_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:pays': modify a pays
-      'delete:pays': delete a pays
-      'read:pays': read some pays
-  requete_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:requete': modify a requete
-      'delete:requete': delete a requete
-      'read:requete': read some requetes
-  passport_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:passport': modify a passport
-      'delete:passport': delete a passport
-      'read:passport': read some passports
-  recipisse_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:recepisse': modify a recepisse
-      'delete:recepisse': delete a recepisse
-  requeteGroupe_auth:
-    type: oauth2
-    authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
-    flow: implicit
-    scopes:
-      'write:requeteGroupe': modify a requeteGroupe
-      'delete:requeteGroupe': delete a requeteGroupe
-      'read:requeteGroupe': read some requeteGroupe
-  api_key:
-    type: apiKey
-    name: api_key
-    in: header
+  basicAuth:
+    type: basic
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
