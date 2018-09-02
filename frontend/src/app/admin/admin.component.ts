@@ -1,16 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import {LockComponent} from './components/lock/lock.component';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit, OnDestroy {
+export class AdminComponent extends LockComponent implements OnInit, OnDestroy {
 
-  bodyClasses = 'skin-blue sidebar-mini';
   body: HTMLBodyElement = document.getElementsByTagName('body')[0];
 
-  constructor() { }
+  constructor(public route: ActivatedRoute, public router: Router) {
+    super(route, router);
+  }
 
   ngOnInit() {
     // add the the body classes

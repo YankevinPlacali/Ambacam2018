@@ -1,12 +1,13 @@
 import { StarterComponent } from './../starter/starter.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {AuthFormComponent} from '../auth-form/auth-form.component';
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
       { path: '', redirectTo: 'starter', pathMatch: 'full' },
-      { path: 'starter', component: StarterComponent },
+      { path: 'starter', component: AuthFormComponent },
     ])
   ],
   declarations: [],

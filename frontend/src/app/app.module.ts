@@ -10,7 +10,11 @@ import {StarterLeftSideComponent} from './starter/starter-left-side/starter-left
 import {StarterContentComponent} from './starter/starter-content/starter-content.component';
 import {StarterFooterComponent} from './starter/starter-footer/starter-footer.component';
 import {StarterControlSidebarComponent} from './starter/starter-control-sidebar/starter-control-sidebar.component';
-import {YesNoDialogComponent} from './components/yes-no-dialog/yes-no-dialog.component';
+import {AuthFormComponent} from './auth-form/auth-form.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AuthServiceService} from './admin/services/auth/auth-service.service';
+import {GlobalVariablesService} from './admin/services/global-variables/global-variables.service';
+import {GlobalConstantsService} from './admin/services/variables/global-constants.service';
 
 @NgModule({
   declarations: [
@@ -20,14 +24,17 @@ import {YesNoDialogComponent} from './components/yes-no-dialog/yes-no-dialog.com
     StarterLeftSideComponent,
     StarterContentComponent,
     StarterFooterComponent,
-    StarterControlSidebarComponent
+    StarterControlSidebarComponent,
+    AuthFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AdminModule
+    AdminModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AuthServiceService, GlobalVariablesService, GlobalConstantsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
