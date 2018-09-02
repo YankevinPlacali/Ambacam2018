@@ -9,9 +9,9 @@ import {RequestType} from '../admin/models/request/requestType';
 import {RequestMessage} from '../admin/models/request/requestMessage';
 import {Strings} from '../admin/utils/strings';
 import {Auth} from '../admin/utils/auth/auth';
-import {Object2Operateur} from '../admin/utils/object2Operateur';
+import {Object2OperateurStd} from '../admin/utils/object2OperateurStd';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Operateur} from '../admin/models/operateur/operateur';
+import {OperateurStd} from '../admin/models/operateur/operateurStd';
 
 @Component({
   selector: 'app-auth-form',
@@ -34,11 +34,11 @@ export class AuthFormComponent implements OnInit {
 
   public requestMessage: RequestMessage = new RequestMessage('', RequestType.DEFAULT, '', RequestVisibility.INVISIBLE);
 
-  public operateur: Operateur;
+  public operateur: OperateurStd;
 
   public AUTH_SUCCESS_MESSAGE = 'Operation successful';
 
-  public GET_OPERATEUR_ERROR_MESSAGE = 'Get Operateur failure';
+  public GET_OPERATEUR_ERROR_MESSAGE = 'Get OperateurStd failure';
 
   constructor(public _formBuilder: FormBuilder, public _authService: AuthServiceService, public _route: ActivatedRoute,
               public _router: Router) {
@@ -76,7 +76,7 @@ export class AuthFormComponent implements OnInit {
             Strings.format(this.AUTH_SUCCESS_MESSAGE + ', Expires in: {0}', this.authResponseSuccess.expiresIn),
             RequestVisibility.VISIBLE);
 
-          // save the operateur token
+          // save the operateurCreate token
           Auth.store('operateur.token', this.authResponseSuccess.accessToken);
 
           const valueTO = {
@@ -85,8 +85,8 @@ export class AuthFormComponent implements OnInit {
 
           this._authService.findOperateurByUsername(valueTO).subscribe(responseFindOperateur => {
 
-              // save the operateur
-              Auth.storeOperateur(Object2Operateur.apply(responseFindOperateur));
+              // save the operateurCreate
+              Auth.storeOperateur(Object2OperateurStd.apply(responseFindOperateur));
               this._router.navigate(['admin']);
             },
             errorFindOperateur => {

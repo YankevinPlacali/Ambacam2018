@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LockComponent} from '../../lock/lock.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Operateur} from '../../../models/operateur/operateur';
+import {OperateurStd} from '../../../models/operateur/operateurStd';
 import {Auth} from '../../../utils/auth/auth';
 import {AuthServiceService} from '../../../services/auth/auth-service.service';
 

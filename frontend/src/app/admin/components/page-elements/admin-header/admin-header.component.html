@@ -27,7 +27,8 @@
               <img src="assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
               <p>
-                {{operateur.nom}} {{operateur.prenom}} - [The roles come here]
+                {{(operateur.nom + ' ' + operateur.prenom) | slice:0:30}}<br/>
+                [The roles come here]
                 <small>Operateur since {{operateur.creeLe | date}}</small>
               </p>
             </li>

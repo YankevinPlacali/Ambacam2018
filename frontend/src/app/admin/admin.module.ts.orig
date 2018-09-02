@@ -19,17 +19,21 @@ import {LockComponent} from './components/lock/lock.component';
 import {AdminLogoutComponent} from './components/admin-content/admin-logout/admin-logout.component';
 import {AdminProfileComponent} from './components/admin-content/admin-profile/admin-profile.component';
 import {OperateurService} from './services/operateurs/operateur.service';
+<<<<<<< 0293acf9df84b132dab926d468cf57c894f23f73
 import {AdminTypeRequetesComponent} from './components/admin-content/admin-type-requetes/admin-type-requetes.component';
 import {AdminTypeRequetesFormComponent} from './components/admin-content/admin-type-requetes-form/admin-type-requetes-form.component';
 import {TypeRequeteService} from './services/type-requetes/type-requete.service';
-import {AdminOperateursComponent} from './components/admin-content/admin-operateurs/admin-operateurs.component';
-import {AdminOperateursFormComponent} from './components/admin-content/admin-operateurs-form/admin-operateurs-form.component';
 import {PaysService} from './services/pays/pays.service';
 import {AdminPaysComponent} from './components/admin-content/admin-pays/admin-pays.component';
 import {AdminPaysFormComponent} from './components/admin-content/admin-pays-form/admin-pays-form.component';
 import {AdminAutoritesComponent} from './components/admin-content/admin-autorites/admin-autorites.component';
 import {AdminAutoritesFormComponent} from './components/admin-content/admin-autorites-form/admin-autorites-form.component';
 import {AutoriteService} from './services/autorites/autorite.service';
+=======
+import { AdminOperateursComponent } from './components/admin-content/admin-operateurs/admin-operateurs.component';
+import { AdminOperateursFormComponent } from './components/admin-content/admin-operateurs-form/admin-operateurs-form.component';
+import {PaysService} from './services/pays/pays.service';
+>>>>>>>  #71 Implement Operateur in a similar way as for Role
 
 @NgModule({
   imports: [
@@ -54,10 +58,9 @@ import {AutoriteService} from './services/autorites/autorite.service';
     LockComponent,
     AdminLogoutComponent,
     AdminProfileComponent,
+<<<<<<< 0293acf9df84b132dab926d468cf57c894f23f73
     AdminTypeRequetesComponent,
     AdminTypeRequetesFormComponent,
-    AdminOperateursComponent,
-    AdminOperateursFormComponent,
     AdminPaysComponent,
     AdminPaysFormComponent,
     AdminAutoritesComponent,
@@ -65,6 +68,13 @@ import {AutoriteService} from './services/autorites/autorite.service';
   ],
   exports: [AdminComponent],
   providers: [RoleService, OperateurService, TypeRequeteService, PaysService, AutoriteService]
+=======
+    AdminOperateursComponent,
+    AdminOperateursFormComponent
+  ],
+  exports: [AdminComponent],
+  providers: [RoleService, OperateurService, PaysService]
+>>>>>>>  #71 Implement Operateur in a similar way as for Role
 })
 export class AdminModule {
 }
