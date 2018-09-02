@@ -1,8 +1,8 @@
-import {Operateur} from '../../models/operateur/operateur';
+import {OperateurStd} from '../../models/operateur/operateurStd';
 
 export class Auth {
 
-  public static operateur: Operateur;
+  public static operateur: OperateurStd;
 
   constructor() {
 
@@ -31,7 +31,7 @@ export class Auth {
     sessionStorage.removeItem(key);
   }
 
-  public static storeOperateur(operateur: Operateur) {
+  public static storeOperateur(operateur: OperateurStd) {
     sessionStorage.setItem('operateur.id', String(operateur.id));
     sessionStorage.setItem('operateur.nom', operateur.nom);
     sessionStorage.setItem('operateur.prenom', operateur.prenom);

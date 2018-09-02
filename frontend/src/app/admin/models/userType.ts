@@ -1,4 +1,4 @@
 export class UserType {
-  public static OPERATEUR = 'operateur';
+  public static OPERATEUR = 'operateurCreate';
   public static REQUERANT = 'requerant';
 }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GlobalConstantsService} from '../../../services/variables/global-constants.service';
-import {Operateur} from '../../../models/operateur/operateur';
+import {OperateurStd} from '../../../models/operateur/operateurStd';
 
 @Component({
   selector: 'app-admin-left-side',
@@ -9,7 +9,7 @@ import {Operateur} from '../../../models/operateur/operateur';
 })
 export class AdminLeftSideComponent implements OnInit {
 
-  public operateur: Operateur;
+  public operateur: OperateurStd;
 
   constructor(private _globalConstants: GlobalConstantsService) {
     this.operateur = this._globalConstants.getConnectedOperateur();

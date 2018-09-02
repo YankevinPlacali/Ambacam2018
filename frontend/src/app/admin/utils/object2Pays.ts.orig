@@ -1,0 +1,56 @@
+import {Pays} from '../models/pays/pays';
+
+export class Object2Pays {
+<<<<<<< 0293acf9df84b132dab926d468cf57c894f23f73
+  public static p: Pays;
+  public static pays: Pays[] = [];
+=======
+  public static pays: Pays;
+  public static _pays: Pays[] = [];
+>>>>>>>  #71 Implement Operateur in a similar way as for Role
+
+  constructor() {
+
+  }
+
+  public static apply(object): Pays {
+<<<<<<< 0293acf9df84b132dab926d468cf57c894f23f73
+    this.p = {
+=======
+    this.pays = {
+>>>>>>>  #71 Implement Operateur in a similar way as for Role
+      id: object.id,
+      nom: object.nom,
+      description: object.description
+    };
+
+<<<<<<< 0293acf9df84b132dab926d468cf57c894f23f73
+    return this.p;
+  }
+
+  public static applyOnArray(objects): Pays[] {
+    this.pays = [];
+    objects.forEach(object => {
+      this.pays.push({
+=======
+    return this.pays;
+  }
+
+  public static applyOnArray(objects): Pays[] {
+    this._pays = [];
+    objects.forEach(object => {
+      this._pays.push({
+>>>>>>>  #71 Implement Operateur in a similar way as for Role
+        id: object.id,
+        nom: object.nom,
+        description: object.description
+      });
+    });
+
+<<<<<<< 0293acf9df84b132dab926d468cf57c894f23f73
+    return this.pays;
+=======
+    return this._pays;
+>>>>>>>  #71 Implement Operateur in a similar way as for Role
+  }
+}
