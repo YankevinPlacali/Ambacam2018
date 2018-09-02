@@ -1,9 +1,11 @@
-import {AdminDashboardComponent} from '../components/admin-dashboard/admin-dashboard.component';
+import {AdminDashboardComponent} from '../components/admin-content/admin-dashboard/admin-dashboard.component';
 import {AdminComponent} from './../admin.component';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {AdminRolesComponent} from '../components/admin-roles/admin-roles.component';
-import {AdminRolesFormComponent} from '../components/admin-roles-form/admin-roles-form.component';
+import {AdminRolesComponent} from '../components/admin-content/admin-roles/admin-roles.component';
+import {AdminRolesFormComponent} from '../components/admin-content/admin-roles-form/admin-roles-form.component';
+import {AdminLogoutComponent} from '../components/admin-content/admin-logout/admin-logout.component';
+import {AdminProfileComponent} from '../components/admin-content/admin-profile/admin-profile.component';
 
 @NgModule({
   imports: [
@@ -22,6 +24,10 @@ import {AdminRolesFormComponent} from '../components/admin-roles-form/admin-role
             component: AdminDashboardComponent
           },
           {
+            path: 'profile',
+            component: AdminProfileComponent
+          },
+          {
             path: 'roles',
             children: [
               {
@@ -33,6 +39,10 @@ import {AdminRolesFormComponent} from '../components/admin-roles-form/admin-role
                 component: AdminRolesFormComponent
               }
             ]
+          },
+          {
+            path: 'logout',
+            component: AdminLogoutComponent
           }
         ]
       }

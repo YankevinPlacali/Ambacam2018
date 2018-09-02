@@ -1,14 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {RoleService} from '../../services/roles/role.service';
-import {Object2Role} from '../../utils/object2Role';
-import {Role} from '../../models/role/role';
+import {RoleService} from '../../../services/roles/role.service';
+import {Object2Role} from '../../../utils/object2Role';
+import {Role} from '../../../models/role/role';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {RequestType} from '../../models/request/requestType';
-import {RequestMessage} from '../../models/request/requestMessage';
-import {RequestVisibility} from '../../models/request/requestVisibility';
-import {AppConstantMessages} from '../../../appConstantMessages';
-import {Strings} from '../../utils/strings';
-import {Location} from '@angular/common';
+import {RequestType} from '../../../models/request/requestType';
+import {RequestMessage} from '../../../models/request/requestMessage';
+import {RequestVisibility} from '../../../models/request/requestVisibility';
+import {AppConstantMessages} from '../../../../appConstantMessages';
+import {Strings} from '../../../utils/strings';
+import {Router} from '@angular/router';
+import {LockComponent} from '../../lock/lock.component';
 // Variable in assets/js/scripts.js file
 declare var AdminLTE: any;
 
@@ -17,7 +18,7 @@ declare var AdminLTE: any;
   templateUrl: './admin-roles.component.html',
   styleUrls: ['./admin-roles.component.css']
 })
-export class AdminRolesComponent implements OnInit {
+export class AdminRolesComponent extends LockComponent implements OnInit {
 
   public roles: Role[] = [];
 
@@ -51,8 +52,8 @@ export class AdminRolesComponent implements OnInit {
 
   public allChecked = false;
 
-  constructor(public _formBuilder: FormBuilder, public _roleService: RoleService, private _location: Location) {
-
+  constructor(public _formBuilder: FormBuilder, public _roleService: RoleService, public _router: Router) {
+    super(_router);
   }
 
   ngOnInit() {

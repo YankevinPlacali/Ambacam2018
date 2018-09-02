@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {RoleService} from '../../services/roles/role.service';
-import {Role} from '../../models/role/role';
-import {RequestMessage} from '../../models/request/requestMessage';
-import {RequestType} from '../../models/request/requestType';
-import {Object2Role} from '../../utils/object2Role';
-import {RequestVisibility} from '../../models/request/requestVisibility';
+import {RoleService} from '../../../services/roles/role.service';
+import {Role} from '../../../models/role/role';
+import {RequestMessage} from '../../../models/request/requestMessage';
+import {RequestType} from '../../../models/request/requestType';
+import {Object2Role} from '../../../utils/object2Role';
+import {RequestVisibility} from '../../../models/request/requestVisibility';
+import {LockComponent} from '../../lock/lock.component';
+import {Router} from '@angular/router';
 // Variable in assets/js/scripts.js file
 declare var AdminLTE: any;
 
@@ -15,7 +17,7 @@ declare var AdminLTE: any;
   templateUrl: './admin-roles-form.component.html',
   styleUrls: ['./admin-roles-form.component.css']
 })
-export class AdminRolesFormComponent implements OnInit {
+export class AdminRolesFormComponent extends LockComponent implements OnInit {
 
   public roleCreateForm: FormGroup;
 
@@ -25,7 +27,8 @@ export class AdminRolesFormComponent implements OnInit {
 
   public nomPattern = '^([A-Z_]*)$';
 
-  constructor(public _formBuilder: FormBuilder, public _roleService: RoleService) {
+  constructor(public _router: Router, public _formBuilder: FormBuilder, public _roleService: RoleService) {
+    super(_router);
     this.roleCreateForm = this._formBuilder.group({
       nom: ['', [Validators.required, Validators.required, Validators.pattern(this.nomPattern)]],
       description: ['']
