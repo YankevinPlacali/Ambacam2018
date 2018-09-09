@@ -23,6 +23,20 @@ public class AppSettings {
 
 	private int accessTokenValidity;
 
+	private String defaultOperateurUsername;
+
+	private String defaultOperateurPassword;
+
+	private String defaultOperateurFirstname;
+
+	private String defaultOperateurLastname;
+
+	private String defaultOperateurGender;
+
+	private String defaultCountryName;
+
+	private String defaultCountryDescription;
+
 	public String getProjectName() {
 		return projectName;
 	}
@@ -85,6 +99,62 @@ public class AppSettings {
 
 	public void setAccessTokenValidity(int accessTokenValidity) {
 		this.accessTokenValidity = accessTokenValidity;
+	}
+
+	public String getDefaultOperateurUsername() {
+		return defaultOperateurUsername;
+	}
+
+	public void setDefaultOperateurUsername(String defaultOperateurUsername) {
+		this.defaultOperateurUsername = defaultOperateurUsername;
+	}
+
+	public String getDefaultOperateurPassword() {
+		return defaultOperateurPassword;
+	}
+
+	public void setDefaultOperateurPassword(String defaultOperateurPassword) {
+		this.defaultOperateurPassword = defaultOperateurPassword;
+	}
+
+	public String getDefaultOperateurFirstname() {
+		return defaultOperateurFirstname;
+	}
+
+	public void setDefaultOperateurFirstname(String defaultOperateurFirstname) {
+		this.defaultOperateurFirstname = defaultOperateurFirstname;
+	}
+
+	public String getDefaultOperateurLastname() {
+		return defaultOperateurLastname;
+	}
+
+	public void setDefaultOperateurLastname(String defaultOperateurLastname) {
+		this.defaultOperateurLastname = defaultOperateurLastname;
+	}
+
+	public String getDefaultOperateurGender() {
+		return defaultOperateurGender;
+	}
+
+	public void setDefaultOperateurGender(String defaultOperateurGender) {
+		this.defaultOperateurGender = defaultOperateurGender;
+	}
+
+	public String getDefaultCountryName() {
+		return defaultCountryName;
+	}
+
+	public void setDefaultCountryName(String defaultCountryName) {
+		this.defaultCountryName = defaultCountryName;
+	}
+
+	public String getDefaultCountryDescription() {
+		return defaultCountryDescription;
+	}
+
+	public void setDefaultCountryDescription(String defaultCountryDescription) {
+		this.defaultCountryDescription = defaultCountryDescription;
 	}
 
 }
