@@ -41,11 +41,14 @@ public class OperateurService {
 	/**
 	 * Create an operateur
 	 * 
-	 * @param operateurCreateTO The new operateur to create
+	 * @param operateurCreateTO
+	 *            The new operateur to create
 	 * 
 	 * @return The new operateur read created
-	 * @throws ResourceBadRequestException if the given paysId does not exist
-	 * @throws ResourceBadRequestException if the given creatorId does not exist
+	 * @throws ResourceBadRequestException
+	 *             if the given paysId does not exist
+	 * @throws ResourceBadRequestException
+	 *             if the given creatorId does not exist
 	 */
 	public OperateurReadTO create(OperateurCreateTO operateurCreateTO) {
 
@@ -69,11 +72,13 @@ public class OperateurService {
 	/**
 	 * Get an operateur
 	 * 
-	 * @param id The id of the Operateur you want to get
+	 * @param id
+	 *            The id of the Operateur you want to get
 	 * 
 	 * @return The operateur read found
 	 * 
-	 * @throws ResourceNotFoundException if the operateur does not exist
+	 * @throws ResourceNotFoundException
+	 *             if the operateur does not exist
 	 */
 	public OperateurReadTO get(Long id) {
 		return Operateur2OperateurReadTO.apply(findOperateur(id));
@@ -88,6 +93,24 @@ public class OperateurService {
 
 		return operateurRepository.findAll().stream().map(operateur -> Operateur2OperateurReadTO.apply(operateur))
 				.collect(Collectors.toList());
+	}
+
+	/**
+	 * Find by username
+	 * 
+	 * @return The operateur found
+	 */
+	public OperateurReadTO findByUsername(String username) {
+
+		Operateur operateur = operateurRepository.findOneByUsername(username);
+
+		if (operateur == null) {
+			throw new ResourceNotFoundException(
+					String.format("The operateur with the username %s does not exist", username));
+		}
+
+		return Operateur2OperateurReadTO.apply(operateur);
+
 	}
 
 	/**
@@ -129,14 +152,18 @@ public class OperateurService {
 	/**
 	 * Update an operateur
 	 * 
-	 * @param id The id of the operateur to update
+	 * @param id
+	 *            The id of the operateur to update
 	 * 
-	 * @param operateurUpdateTO The new operateur modifications
+	 * @param operateurUpdateTO
+	 *            The new operateur modifications
 	 * 
 	 * @return The operateur updated
 	 * 
-	 * @throws ResourceNotFoundException if the operateur is not found
-	 * @throws ResourceBadRequestException if the given paysId does not exist
+	 * @throws ResourceNotFoundException
+	 *             if the operateur is not found
+	 * @throws ResourceBadRequestException
+	 *             if the given paysId does not exist
 	 */
 	public Operateur update(Long id, OperateurUpdateTO operateurUpdateTO) {
 
@@ -159,9 +186,11 @@ public class OperateurService {
 	/**
 	 * Delete an operateur
 	 * 
-	 * @param id The id of the operateur to delete
+	 * @param id
+	 *            The id of the operateur to delete
 	 * 
-	 * @throws ResourceNotFoundException if the operateur is not found
+	 * @throws ResourceNotFoundException
+	 *             if the operateur is not found
 	 */
 	public void delete(Long id) {
 		// find operateur

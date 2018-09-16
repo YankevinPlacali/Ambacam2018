@@ -50,6 +50,8 @@ public class ApiConstants {
 
 	public static final String OPERATEUR_ITEM = OPERATEUR_COLLECTION + "/{operateurId}";
 
+	public static final String OPERATEUR_ITEM_BY_USERNAME = OPERATEUR_COLLECTION + "/by_username";
+
 	// operateur requete-groupes
 	public static final String OPERATEUR_REQUETE_GROUPE_COLLECTION = OPERATEUR_ITEM + "/requete-groupes";
 

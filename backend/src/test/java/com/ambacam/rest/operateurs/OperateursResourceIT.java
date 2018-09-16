@@ -23,6 +23,7 @@ import com.ambacam.model.Pays;
 import com.ambacam.repository.OperateurRepository;
 import com.ambacam.repository.PaysRepository;
 import com.ambacam.rest.ApiConstants;
+import com.ambacam.transfert.ValueTO;
 import com.ambacam.transfert.operateurs.OperateurCreateTO;
 import com.ambacam.transfert.operateurs.OperateurUpdateTO;
 
@@ -292,6 +293,47 @@ public class OperateursResourceIT extends ItBase {
 	@Test
 	public void getNotFound() {
 		preLoadedGiven.get(ApiConstants.OPERATEUR_ITEM, random.nextLong()).then().statusCode(404);
+	}
+
+	@Test
+	public void findByUsername() {
+
+		ValueTO<String> valueTO = new ValueTO<>(operateur2.getUsername());
+
+		preLoadedGiven.contentType(ContentType.JSON).body(valueTO).log().body()
+				.post(ApiConstants.OPERATEUR_ITEM_BY_USERNAME).then().log().body().statusCode(200)
+				.body("id", is(equalTo(operateur2.getId().intValue()))).body("nom", is(equalTo(operateur2.getNom())))
+				.body("prenom", is(equalTo(operateur2.getPrenom()))).body("sexe", is(equalTo(operateur2.getSexe())))
+				.body("nationalite.id", is(equalTo(operateur2.getNationalite().getId().intValue())))
+				.body("creePar.id", is(equalTo(operateur2.getCreePar().getId().intValue())))
+				.body("creeLe", is(equalTo(operateur2.getCreeLe().getTime())));
+	}
+
+	@Test
+	public void findByUsernamePartValue() {
+
+		ValueTO<String> valueTO = new ValueTO<>(operateur2.getUsername().substring(0, 2));
+
+		preLoadedGiven.contentType(ContentType.JSON).body(valueTO).log().body()
+				.post(ApiConstants.OPERATEUR_ITEM_BY_USERNAME).then().log().body().statusCode(404);
+	}
+
+	@Test
+	public void findByUsernameCaseSensitive() {
+
+		ValueTO<String> valueTO = new ValueTO<>(operateur2.getUsername().toUpperCase());
+
+		preLoadedGiven.contentType(ContentType.JSON).body(valueTO).log().body()
+				.post(ApiConstants.OPERATEUR_ITEM_BY_USERNAME).then().log().body().statusCode(404);
+	}
+
+	@Test
+	public void findByUsernameValueNull() {
+
+		ValueTO<String> valueTO = new ValueTO<>(null);
+
+		preLoadedGiven.contentType(ContentType.JSON).body(valueTO).log().body()
+				.post(ApiConstants.OPERATEUR_ITEM_BY_USERNAME).then().log().body().statusCode(400);
 	}
 
 	@Test
