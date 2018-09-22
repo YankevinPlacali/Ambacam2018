@@ -37,6 +37,10 @@ public class AppSettings {
 
 	private String defaultCountryDescription;
 
+	private String defaultMotifSuppressionName;
+
+	private String defaultMotifSuppressionDescription;
+
 	public String getProjectName() {
 		return projectName;
 	}
@@ -155,6 +159,22 @@ public class AppSettings {
 
 	public void setDefaultCountryDescription(String defaultCountryDescription) {
 		this.defaultCountryDescription = defaultCountryDescription;
+	}
+
+	public String getDefaultMotifSuppressionName() {
+		return defaultMotifSuppressionName;
+	}
+
+	public void setDefaultMotifSuppressionName(String defaultMotifSuppressionName) {
+		this.defaultMotifSuppressionName = defaultMotifSuppressionName;
+	}
+
+	public String getDefaultMotifSuppressionDescription() {
+		return defaultMotifSuppressionDescription;
+	}
+
+	public void setDefaultMotifSuppressionDescription(String defaultMotifSuppressionDescription) {
+		this.defaultMotifSuppressionDescription = defaultMotifSuppressionDescription;
 	}
 
 }

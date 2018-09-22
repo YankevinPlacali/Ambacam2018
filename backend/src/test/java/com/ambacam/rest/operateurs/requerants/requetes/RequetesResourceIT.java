@@ -1,14 +1,16 @@
 package com.ambacam.rest.operateurs.requerants.requetes;
 
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.junit.After;
@@ -19,6 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ambacam.ItBase;
 import com.ambacam.configuration.AppSettings;
+import com.ambacam.model.Action;
+import com.ambacam.model.Log;
+import com.ambacam.model.MotifSuppression;
 import com.ambacam.model.Operateur;
 import com.ambacam.model.Pays;
 import com.ambacam.model.Requerant;
@@ -27,6 +32,9 @@ import com.ambacam.model.RequeteGroupe;
 import com.ambacam.model.StatusRequete;
 import com.ambacam.model.StatusRequeteValues;
 import com.ambacam.model.TypeRequete;
+import com.ambacam.repository.ActionRepository;
+import com.ambacam.repository.LogRepository;
+import com.ambacam.repository.MotifSuppressionRepository;
 import com.ambacam.repository.OperateurRepository;
 import com.ambacam.repository.PaysRepository;
 import com.ambacam.repository.RequerantRepository;
@@ -35,6 +43,8 @@ import com.ambacam.repository.RequeteRepository;
 import com.ambacam.repository.StatusRequeteRepository;
 import com.ambacam.repository.TypeRequeteRepository;
 import com.ambacam.rest.ApiConstants;
+import com.ambacam.service.ActionName;
+import com.ambacam.service.MotifSuppressionService;
 import com.ambacam.service.RequeteService;
 import com.ambacam.transfert.requetes.RequeteStatusTO;
 import com.ambacam.transfert.requetes.RequeteTO;
@@ -67,6 +77,15 @@ public class RequetesResourceIT extends ItBase {
 	@Autowired
 	private RequeteService requeteService;
 
+	@Autowired
+	private ActionRepository actionRepository;
+
+	@Autowired
+	private LogRepository logRepository;
+
+	@Autowired
+	private MotifSuppressionRepository motifSuppressionRepository;
+
 	@Mock
 	private AppSettings appSettings;
 
@@ -89,10 +108,15 @@ public class RequetesResourceIT extends ItBase {
 	private Requete requete3;
 	private Requete requete4;
 
+	private Action action;
+
 	@Override
 	@Before
 	public void setup() throws Exception {
 		super.setup();
+
+		// build action without saving
+		action = new Action().nom(ActionName.DELETE);
 
 		typeRequete = typeRequeteRepository.save(buildTypeRequete().nom("type1"));
 
@@ -164,6 +188,9 @@ public class RequetesResourceIT extends ItBase {
 		typeRequeteRepository.deleteAll();
 		operateurRepository.deleteAll();
 		paysRepository.deleteAll();
+		logRepository.deleteAll();
+		actionRepository.deleteAll();
+		motifSuppressionRepository.deleteAll();
 
 		super.cleanup();
 	}
@@ -279,6 +306,101 @@ public class RequetesResourceIT extends ItBase {
 		// check that the requete has been deleted
 		Requete actual = requeteRepository.findOne(requete1.getId());
 		assertThat(actual, is(nullValue()));
+
+		// check that the log has been created
+		List<Log> logs = logRepository.findAll();
+		assertThat(logs.size(), is(equalTo(1)));
+
+		// check that an action has been created
+		List<Action> actions = actionRepository.findAll();
+		assertThat(actions.size(), is(equalTo(1)));
+		assertThat(actions.iterator().next().getNom(), is(equalTo(ActionName.DELETE)));
+
+		// check that the default motif has been created
+		List<MotifSuppression> motifSuppressions = motifSuppressionRepository.findAll();
+		assertThat(motifSuppressions.size(), is(equalTo(1)));
+		assertThat(motifSuppressions.iterator().next().getNom(), is(equalTo(MotifSuppressionService.DEFAULT_MOTIF)));
+
+	}
+
+	@Test
+	public void deleteWithMotifNotExist() {
+
+		preLoadedGiven.queryParam("motifName", "cancel").delete(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM,
+				operateur1.getId(), requerant1.getId(), requete1.getId()).then().statusCode(200);
+
+		// check that the requete has been deleted
+		Requete actual = requeteRepository.findOne(requete1.getId());
+		assertThat(actual, is(nullValue()));
+
+		// check that the log has been created
+		List<Log> logs = logRepository.findAll();
+		assertThat(logs.size(), is(equalTo(1)));
+
+		// check that an action has been created
+		List<Action> actions = actionRepository.findAll();
+		assertThat(actions.size(), is(equalTo(1)));
+		assertThat(actions.iterator().next().getNom(), is(equalTo(ActionName.DELETE)));
+
+		// check that the default motif has been created
+		List<MotifSuppression> motifSuppressions = motifSuppressionRepository.findAll();
+		assertThat(motifSuppressions.size(), is(equalTo(1)));
+		assertThat(motifSuppressions.iterator().next().getNom(), is(equalTo("cancel")));
+
+	}
+
+	@Test
+	public void deleteWithMotifExist() {
+
+		motifSuppressionRepository.save(new MotifSuppression().nom("cancel"));
+		preLoadedGiven.queryParam("motifName", "cancel").delete(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM,
+				operateur1.getId(), requerant1.getId(), requete1.getId()).then().statusCode(200);
+
+		// check that the requete has been deleted
+		Requete actual = requeteRepository.findOne(requete1.getId());
+		assertThat(actual, is(nullValue()));
+
+		// check that the log has been created
+		List<Log> logs = logRepository.findAll();
+		assertThat(logs.size(), is(equalTo(1)));
+
+		// check that an action has been created
+		List<Action> actions = actionRepository.findAll();
+		assertThat(actions.size(), is(equalTo(1)));
+		assertThat(actions.iterator().next().getNom(), is(equalTo(ActionName.DELETE)));
+
+		// check that the default motif has been created
+		List<MotifSuppression> motifSuppressions = motifSuppressionRepository.findAll();
+		assertThat(motifSuppressions.size(), is(equalTo(1)));
+		assertThat(motifSuppressions.iterator().next().getNom(), is(equalTo("cancel")));
+
+	}
+
+	@Test
+	public void deleteWithMotifExistAndActionExist() {
+
+		actionRepository.save(action);
+		motifSuppressionRepository.save(new MotifSuppression().nom("cancel"));
+		preLoadedGiven.queryParam("motifName", "cancel").delete(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM,
+				operateur1.getId(), requerant1.getId(), requete1.getId()).then().statusCode(200);
+
+		// check that the requete has been deleted
+		Requete actual = requeteRepository.findOne(requete1.getId());
+		assertThat(actual, is(nullValue()));
+
+		// check that the log has been created
+		List<Log> logs = logRepository.findAll();
+		assertThat(logs.size(), is(equalTo(1)));
+
+		// check that an action has been created
+		List<Action> actions = actionRepository.findAll();
+		assertThat(actions.size(), is(equalTo(1)));
+		assertThat(actions.iterator().next().getNom(), is(equalTo(ActionName.DELETE)));
+
+		// check that the default motif has been created
+		List<MotifSuppression> motifSuppressions = motifSuppressionRepository.findAll();
+		assertThat(motifSuppressions.size(), is(equalTo(1)));
+		assertThat(motifSuppressions.iterator().next().getNom(), is(equalTo("cancel")));
 
 	}
 

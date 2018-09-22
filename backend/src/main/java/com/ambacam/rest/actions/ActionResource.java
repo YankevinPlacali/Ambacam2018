@@ -3,6 +3,7 @@ package com.ambacam.rest.actions;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
@@ -39,10 +40,11 @@ public class ActionResource {
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
-	public void delete(@PathVariable("actionId") Long actionId) {
-		log.info("Delete an action [id={}]", actionId);
+	public void delete(@PathVariable("actionId") Long actionId,
+			@QueryParam("motifSuppressionName") String motifSuppressionName) {
+		log.info("Delete an action [id={}, motifSuppressionName={}]", actionId, motifSuppressionName);
 
-		actionService.delete(actionId);
+		actionService.delete(actionId, motifSuppressionName);
 
 	}
 

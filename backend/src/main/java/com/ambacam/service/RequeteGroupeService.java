@@ -28,6 +28,7 @@ import com.ambacam.utils.RequeteGroupeUtils;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class RequeteGroupeService {
+
 	@Autowired
 	private RequeteGroupeRepository requeteGroupeRepository;
 
@@ -39,6 +40,9 @@ public class RequeteGroupeService {
 
 	@Autowired
 	private RequeteRepository requeteRepository;
+
+	@Autowired
+	private LogService logService;
 
 	/**
 	 * Create a requeteGroupe
@@ -126,15 +130,20 @@ public class RequeteGroupeService {
 	/**
 	 * Delete a requeteGroupe
 	 * 
+	 * @param operateurId
 	 * @param id
 	 *            The requeteGroupe id to delete
+	 * @param motifName
 	 * 
 	 * @throws ResourceNotFoundException
 	 *             if the requeteGroupe is not found
 	 */
-	public void delete(Long id) {
+	public void delete(Long operateurId, Long id, String motifName) {
 		// find requeteGroupe
 		RequeteGroupe found = findRequeteGroupe(id);
+
+		// find operateur
+		Operateur operateur = operateurRepository.findOne(operateurId);
 
 		// find all queries associated with this group
 		List<Requete> requetes = requeteRepository.findAllByRequeteGroupe(found);
@@ -145,6 +154,10 @@ public class RequeteGroupeService {
 		requeteRepository.save(requetes);
 
 		requeteGroupeRepository.delete(id);
+
+		// create log
+		logService.create(operateur, found, ActionName.DELETE, motifName);
+
 	}
 
 	private RequeteGroupe findRequeteGroupe(Long id) {
@@ -273,4 +286,5 @@ public class RequeteGroupeService {
 		}
 		return requete;
 	}
+
 }

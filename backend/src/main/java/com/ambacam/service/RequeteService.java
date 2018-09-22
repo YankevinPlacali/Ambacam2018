@@ -52,9 +52,12 @@ public class RequeteService {
 
 	@Autowired
 	private RequeteRepository requeteRepository;
-	
+
 	@Autowired
 	private RequeteGroupeRepository requeteGroupeRepository;
+
+	@Autowired
+	private LogService logService;
 
 	@Autowired
 	private AppSettings appSettings;
@@ -226,17 +229,26 @@ public class RequeteService {
 	/**
 	 * Delete a requete
 	 * 
+	 * @param operateurId
 	 * @param id
 	 *            The id of the requete to delete
+	 * @param motifName
 	 * @throws ResourceNotFoundException
 	 *             if the requete is not found
 	 */
-	public void delete(Long id) {
+	public void delete(Long operateurId, Long id, String motifName) {
 		// find requete
-		findRequete(id);
+		Requete found = findRequete(id);
+
+		// build operateur
+		Operateur operateur = operateurRepository.findOne(operateurId);
 
 		// delete requete
 		requeteRepository.delete(id);
+
+		// create log
+		logService.create(operateur, found, ActionName.DELETE, motifName);
+
 	}
 
 	/**
@@ -304,46 +316,46 @@ public class RequeteService {
 	 * @param assignStatusTO
 	 * 
 	 * @throws ResourceNotFoundException
-         *             if the requeteGroupe is not found
-         * @throws ResourceBadRequestException
-         *             if the given statusId does not exist
-         * @throws ResourceBadRequestException
-         *             if the requete groupe does not contains a requete
-         * @throws ResourceBadRequestException
-         *             if a requete to update does not exist       
-         * @throws ResourceBadRequestException
-         *             if a requete already has the given status    
+	 *             if the requeteGroupe is not found
+	 * @throws ResourceBadRequestException
+	 *             if the given statusId does not exist
+	 * @throws ResourceBadRequestException
+	 *             if the requete groupe does not contains a requete
+	 * @throws ResourceBadRequestException
+	 *             if a requete to update does not exist
+	 * @throws ResourceBadRequestException
+	 *             if a requete already has the given status
 	 */
 	public void assignStatus(Long requeteGroupeId, AssignStatusTO assignStatusTO) {
-	    // find requete groupe
-	    RequeteGroupe requeteGroupe = findRequeteGroupe(requeteGroupeId);
-	    
-	    // find status
-	    StatusRequete status = findStatusRequete(assignStatusTO.getStatusId());
-	    
-	    // find requetes
-	    List<Requete> requetes = requeteRepository.findAllByRequeteGroupe(requeteGroupe);
-	    
-	    assignStatusTO.getRequeteIds().forEach(requeteId -> {
-	        Requete requete=requeteRepository.findOne(requeteId);
-	        if(requete == null) {
-	            throw new ResourceBadRequestException("The requete " + requeteId + " does not exist");
-	        }
-	        if (!requetes.contains(requete)) {
-	            throw new ResourceBadRequestException("The requete groupe " + requeteGroupe.getId() + 
-	                    " does not contains the requete " + requeteId);
-	        }
-	        if (requete.getStatus().getId() == status.getId()) {
-                    throw new ResourceBadRequestException("The requete " + requeteId + " already has the status "
-                            + status.getId());
-                }
-	        
-	        // update status
-	        requete.setStatus(status);
-	        requeteRepository.save(requete);
-	    });
+		// find requete groupe
+		RequeteGroupe requeteGroupe = findRequeteGroupe(requeteGroupeId);
+
+		// find status
+		StatusRequete status = findStatusRequete(assignStatusTO.getStatusId());
+
+		// find requetes
+		List<Requete> requetes = requeteRepository.findAllByRequeteGroupe(requeteGroupe);
+
+		assignStatusTO.getRequeteIds().forEach(requeteId -> {
+			Requete requete = requeteRepository.findOne(requeteId);
+			if (requete == null) {
+				throw new ResourceBadRequestException("The requete " + requeteId + " does not exist");
+			}
+			if (!requetes.contains(requete)) {
+				throw new ResourceBadRequestException(
+						"The requete groupe " + requeteGroupe.getId() + " does not contains the requete " + requeteId);
+			}
+			if (requete.getStatus().getId() == status.getId()) {
+				throw new ResourceBadRequestException(
+						"The requete " + requeteId + " already has the status " + status.getId());
+			}
+
+			// update status
+			requete.setStatus(status);
+			requeteRepository.save(requete);
+		});
 	}
-	
+
 	private Requete findRequete(Long id) {
 		Requete requete = requeteRepository.findOne(id);
 		if (requete == null) {
@@ -393,16 +405,16 @@ public class RequeteService {
 
 		return found;
 	}
-	
-	private RequeteGroupe findRequeteGroupe(Long id) {
-	        // find requeteGroupe
-	        RequeteGroupe found = requeteGroupeRepository.findOne(id);
-	        if (found == null) {
-	            throw new ResourceNotFoundException("The requeteGroupe " + id.toString() + " does not exist");
-	        }
 
-	        return found;
-	    }
+	private RequeteGroupe findRequeteGroupe(Long id) {
+		// find requeteGroupe
+		RequeteGroupe found = requeteGroupeRepository.findOne(id);
+		if (found == null) {
+			throw new ResourceNotFoundException("The requeteGroupe " + id.toString() + " does not exist");
+		}
+
+		return found;
+	}
 
 	public AppSettings getAppSettings() {
 		return appSettings;

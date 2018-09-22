@@ -23,6 +23,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ambacam.ItBase;
+import com.ambacam.model.Action;
+import com.ambacam.model.Log;
+import com.ambacam.model.MotifSuppression;
 import com.ambacam.model.Operateur;
 import com.ambacam.model.Pays;
 import com.ambacam.model.Requerant;
@@ -31,6 +34,9 @@ import com.ambacam.model.RequeteGroupe;
 import com.ambacam.model.StatusRequete;
 import com.ambacam.model.StatusRequeteValues;
 import com.ambacam.model.TypeRequete;
+import com.ambacam.repository.ActionRepository;
+import com.ambacam.repository.LogRepository;
+import com.ambacam.repository.MotifSuppressionRepository;
 import com.ambacam.repository.OperateurRepository;
 import com.ambacam.repository.PaysRepository;
 import com.ambacam.repository.RequerantRepository;
@@ -39,6 +45,8 @@ import com.ambacam.repository.RequeteRepository;
 import com.ambacam.repository.StatusRequeteRepository;
 import com.ambacam.repository.TypeRequeteRepository;
 import com.ambacam.rest.ApiConstants;
+import com.ambacam.service.ActionName;
+import com.ambacam.service.MotifSuppressionService;
 import com.ambacam.transfert.AddRemoveTO;
 import com.ambacam.transfert.IdTO;
 import com.ambacam.transfert.requetegroupes.RequeteGroupeCreateTO;
@@ -70,6 +78,15 @@ public class RequeteGroupesResourceIT extends ItBase {
 	@Autowired
 	private PaysRepository paysRepository;
 
+	@Autowired
+	private ActionRepository actionRepository;
+
+	@Autowired
+	private LogRepository logRepository;
+
+	@Autowired
+	private MotifSuppressionRepository motifSuppressionRepository;
+
 	private Operateur operateur;
 
 	private TypeRequete typeRequete;
@@ -89,10 +106,15 @@ public class RequeteGroupesResourceIT extends ItBase {
 
 	private Pays pays;
 
+	private Action action;
+
 	@Override
 	@Before
 	public void setup() throws Exception {
 		super.setup();
+
+		// build action without saving
+		action = new Action().nom(ActionName.DELETE);
 
 		// create pays
 		pays = paysRepository.save(buildPays());
@@ -140,6 +162,10 @@ public class RequeteGroupesResourceIT extends ItBase {
 		typeRequeteRepository.deleteAll();
 		operateurRepository.deleteAll();
 		paysRepository.deleteAll();
+		logRepository.deleteAll();
+		actionRepository.deleteAll();
+		motifSuppressionRepository.deleteAll();
+
 		super.cleanup();
 	}
 
@@ -256,6 +282,105 @@ public class RequeteGroupesResourceIT extends ItBase {
 		// check that the requete groupe has been deleted
 		RequeteGroupe actual = requeteGroupeRepository.findOne(requeteGroupe1.getId());
 		assertThat(actual, is(nullValue()));
+
+		// check that the log has been created
+		List<Log> logs = logRepository.findAll();
+		assertThat(logs.size(), is(equalTo(1)));
+
+		// check that an action has been created
+		List<Action> actions = actionRepository.findAll();
+		assertThat(actions.size(), is(equalTo(1)));
+		assertThat(actions.iterator().next().getNom(), is(equalTo(ActionName.DELETE)));
+
+		// check that the default motif has been created
+		List<MotifSuppression> motifSuppressions = motifSuppressionRepository.findAll();
+		assertThat(motifSuppressions.size(), is(equalTo(1)));
+		assertThat(motifSuppressions.iterator().next().getNom(), is(equalTo(MotifSuppressionService.DEFAULT_MOTIF)));
+
+	}
+
+	@Test
+	public void deleteWithMotifNotExist() {
+
+		preLoadedGiven.queryParam("motifName", "cancel")
+				.delete(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), requeteGroupe1.getId()).then()
+				.statusCode(200);
+
+		// check that the requete groupe has been deleted
+		RequeteGroupe actual = requeteGroupeRepository.findOne(requeteGroupe1.getId());
+		assertThat(actual, is(nullValue()));
+
+		// check that the log has been created
+		List<Log> logs = logRepository.findAll();
+		assertThat(logs.size(), is(equalTo(1)));
+
+		// check that an action has been created
+		List<Action> actions = actionRepository.findAll();
+		assertThat(actions.size(), is(equalTo(1)));
+		assertThat(actions.iterator().next().getNom(), is(equalTo(ActionName.DELETE)));
+
+		// check that the default motif has been created
+		List<MotifSuppression> motifSuppressions = motifSuppressionRepository.findAll();
+		assertThat(motifSuppressions.size(), is(equalTo(1)));
+		assertThat(motifSuppressions.iterator().next().getNom(), is(equalTo("cancel")));
+
+	}
+
+	@Test
+	public void deleteWithMotifExist() {
+
+		motifSuppressionRepository.save(new MotifSuppression().nom("cancel"));
+		preLoadedGiven.queryParam("motifName", "cancel")
+				.delete(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), requeteGroupe1.getId()).then()
+				.statusCode(200);
+
+		// check that the requete groupe has been deleted
+		RequeteGroupe actual = requeteGroupeRepository.findOne(requeteGroupe1.getId());
+		assertThat(actual, is(nullValue()));
+
+		// check that the log has been created
+		List<Log> logs = logRepository.findAll();
+		assertThat(logs.size(), is(equalTo(1)));
+
+		// check that an action has been created
+		List<Action> actions = actionRepository.findAll();
+		assertThat(actions.size(), is(equalTo(1)));
+		assertThat(actions.iterator().next().getNom(), is(equalTo(ActionName.DELETE)));
+
+		// check that the default motif has been created
+		List<MotifSuppression> motifSuppressions = motifSuppressionRepository.findAll();
+		assertThat(motifSuppressions.size(), is(equalTo(1)));
+		assertThat(motifSuppressions.iterator().next().getNom(), is(equalTo("cancel")));
+
+	}
+
+	@Test
+	public void deleteWithMotifExistAndActionExist() {
+
+		actionRepository.save(action);
+		motifSuppressionRepository.save(new MotifSuppression().nom("cancel"));
+		preLoadedGiven.queryParam("motifName", "cancel")
+				.delete(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM, operateur.getId(), requeteGroupe1.getId()).then()
+				.statusCode(200);
+
+		// check that the requete groupe has been deleted
+		RequeteGroupe actual = requeteGroupeRepository.findOne(requeteGroupe1.getId());
+		assertThat(actual, is(nullValue()));
+
+		// check that the log has been created
+		List<Log> logs = logRepository.findAll();
+		assertThat(logs.size(), is(equalTo(1)));
+
+		// check that an action has been created
+		List<Action> actions = actionRepository.findAll();
+		assertThat(actions.size(), is(equalTo(1)));
+		assertThat(actions.iterator().next().getNom(), is(equalTo(ActionName.DELETE)));
+
+		// check that the default motif has been created
+		List<MotifSuppression> motifSuppressions = motifSuppressionRepository.findAll();
+		assertThat(motifSuppressions.size(), is(equalTo(1)));
+		assertThat(motifSuppressions.iterator().next().getNom(), is(equalTo("cancel")));
+
 	}
 
 	@Test

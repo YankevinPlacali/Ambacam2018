@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ambacam.exception.ResourceBadRequestException;
 import com.ambacam.model.Autorite;
+import com.ambacam.model.Operateur;
 import com.ambacam.model.Passport;
 import com.ambacam.model.Requete;
 import com.ambacam.repository.AutoriteRepository;
+import com.ambacam.repository.OperateurRepository;
 import com.ambacam.repository.PassportRepository;
 import com.ambacam.repository.RequeteRepository;
 import com.ambacam.transfert.passports.Passport2PassportReadTO;
@@ -30,6 +32,12 @@ public class PassportService {
 
 	@Autowired
 	private PassportRepository passportRepository;
+
+	@Autowired
+	private OperateurRepository operateurRepository;
+
+	@Autowired
+	private LogService logService;
 
 	/**
 	 * Create a passport
@@ -91,17 +99,25 @@ public class PassportService {
 	/**
 	 * Delete a passport
 	 * 
+	 * @param operateurId
 	 * @param id
+	 * @param motifName
 	 * 
 	 * @throws ResourceNotFoundException
 	 *             if the passport is not found
 	 */
-	public void delete(Long id) {
+	public void delete(Long operateurId, Long id, String motifName) {
 		// find passport
-		findPassport(id);
+		Passport found = findPassport(id);
+
+		// find operateur
+		Operateur operateur = operateurRepository.findOne(operateurId);
 
 		// delete passport
 		passportRepository.delete(id);
+
+		// create log
+		logService.create(operateur, found, ActionName.DELETE, motifName);
 	}
 
 	/**
@@ -158,4 +174,5 @@ public class PassportService {
 		}
 		return found;
 	}
+
 }

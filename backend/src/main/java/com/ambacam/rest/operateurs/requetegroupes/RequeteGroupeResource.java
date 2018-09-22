@@ -3,6 +3,7 @@ package com.ambacam.rest.operateurs.requetegroupes;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
@@ -44,10 +45,11 @@ public class RequeteGroupeResource {
 
 	@RequestMapping(method = RequestMethod.DELETE)
 	public void delete(@PathVariable("operateurId") Long operateurId,
-			@PathVariable("requeteGroupeId") Long requeteGroupeId) {
-		log.info("Delete a requeteGroupe [operateurId={}, requeteGroupeId={}]", operateurId, requeteGroupeId);
+			@PathVariable("requeteGroupeId") Long requeteGroupeId, @QueryParam("motifName") String motifName) {
+		log.info("Delete a requeteGroupe [operateurId={}, requeteGroupeId={}, motifName={}]", operateurId,
+				requeteGroupeId, motifName);
 
-		requeteGroupeService.delete(requeteGroupeId);
+		requeteGroupeService.delete(operateurId, requeteGroupeId, motifName);
 
 	}
 

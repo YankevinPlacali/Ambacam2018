@@ -3,6 +3,7 @@ package com.ambacam.rest.operateurs.requerants.requetes;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
@@ -43,11 +44,11 @@ public class RequeteResource {
 
 	@RequestMapping(method = RequestMethod.DELETE)
 	public void delete(@PathVariable("operateurId") Long operateurId, @PathVariable("requerantId") Long requerantId,
-			@PathVariable("requeteId") Long requeteId) {
-		log.info("Delete a requete [operateurId={}, requerantId={}, requeteId={}]", operateurId, requerantId,
-				requeteId);
+			@PathVariable("requeteId") Long requeteId, @QueryParam("motifName") String motifName) {
+		log.info("Delete a requete [operateurId={}, requerantId={}, requeteId={}, motifName={}]", operateurId,
+				requerantId, requeteId, motifName);
 
-		requeteService.delete(requeteId);
+		requeteService.delete(operateurId, requeteId, motifName);
 
 	}
 
