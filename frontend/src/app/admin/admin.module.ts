@@ -19,6 +19,9 @@ import { LockComponent } from './components/lock/lock.component';
 import { AdminLogoutComponent } from './components/admin-content/admin-logout/admin-logout.component';
 import { AdminProfileComponent } from './components/admin-content/admin-profile/admin-profile.component';
 import {OperateurService} from './services/operateurs/operateur.service';
+import { AdminTypeRequetesComponent } from './components/admin-content/admin-type-requetes/admin-type-requetes.component';
+import { AdminTypeRequetesFormComponent } from './components/admin-content/admin-type-requetes-form/admin-type-requetes-form.component';
+import {TypeRequeteService} from "./services/type-requetes/type-requete.service";
 
 @NgModule({
   imports: [
@@ -42,10 +45,12 @@ import {OperateurService} from './services/operateurs/operateur.service';
     YesNoDialogComponent,
     LockComponent,
     AdminLogoutComponent,
-    AdminProfileComponent
+    AdminProfileComponent,
+    AdminTypeRequetesComponent,
+    AdminTypeRequetesFormComponent
   ],
   exports: [AdminComponent],
-  providers: [RoleService, OperateurService]
+  providers: [RoleService, OperateurService, TypeRequeteService]
 })
 export class AdminModule {
 }

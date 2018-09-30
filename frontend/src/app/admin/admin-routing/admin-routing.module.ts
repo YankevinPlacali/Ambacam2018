@@ -6,6 +6,8 @@ import {AdminRolesComponent} from '../components/admin-content/admin-roles/admin
 import {AdminRolesFormComponent} from '../components/admin-content/admin-roles-form/admin-roles-form.component';
 import {AdminLogoutComponent} from '../components/admin-content/admin-logout/admin-logout.component';
 import {AdminProfileComponent} from '../components/admin-content/admin-profile/admin-profile.component';
+import {AdminTypeRequetesComponent} from "../components/admin-content/admin-type-requetes/admin-type-requetes.component";
+import {AdminTypeRequetesFormComponent} from "../components/admin-content/admin-type-requetes-form/admin-type-requetes-form.component";
 
 @NgModule({
   imports: [
@@ -37,6 +39,19 @@ import {AdminProfileComponent} from '../components/admin-content/admin-profile/a
               {
                 path: 'form',
                 component: AdminRolesFormComponent
+              }
+            ]
+          },
+          {
+            path: 'type-requetes',
+            children: [
+              {
+                path: '',
+                component: AdminTypeRequetesComponent
+              },
+              {
+                path: 'form',
+                component: AdminTypeRequetesFormComponent
               }
             ]
           },
