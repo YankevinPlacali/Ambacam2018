@@ -15,13 +15,16 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {YesNoDialogComponent} from '../components/yes-no-dialog/yes-no-dialog.component';
-import { LockComponent } from './components/lock/lock.component';
-import { AdminLogoutComponent } from './components/admin-content/admin-logout/admin-logout.component';
-import { AdminProfileComponent } from './components/admin-content/admin-profile/admin-profile.component';
+import {LockComponent} from './components/lock/lock.component';
+import {AdminLogoutComponent} from './components/admin-content/admin-logout/admin-logout.component';
+import {AdminProfileComponent} from './components/admin-content/admin-profile/admin-profile.component';
 import {OperateurService} from './services/operateurs/operateur.service';
-import { AdminTypeRequetesComponent } from './components/admin-content/admin-type-requetes/admin-type-requetes.component';
-import { AdminTypeRequetesFormComponent } from './components/admin-content/admin-type-requetes-form/admin-type-requetes-form.component';
-import {TypeRequeteService} from "./services/type-requetes/type-requete.service";
+import {AdminTypeRequetesComponent} from './components/admin-content/admin-type-requetes/admin-type-requetes.component';
+import {AdminTypeRequetesFormComponent} from './components/admin-content/admin-type-requetes-form/admin-type-requetes-form.component';
+import {TypeRequeteService} from './services/type-requetes/type-requete.service';
+import {PaysService} from './services/pays/pays.service';
+import {AdminPaysComponent} from './components/admin-content/admin-pays/admin-pays.component';
+import {AdminPaysFormComponent} from './components/admin-content/admin-pays-form/admin-pays-form.component';
 
 @NgModule({
   imports: [
@@ -47,10 +50,12 @@ import {TypeRequeteService} from "./services/type-requetes/type-requete.service"
     AdminLogoutComponent,
     AdminProfileComponent,
     AdminTypeRequetesComponent,
-    AdminTypeRequetesFormComponent
+    AdminTypeRequetesFormComponent,
+    AdminPaysComponent,
+    AdminPaysFormComponent
   ],
   exports: [AdminComponent],
-  providers: [RoleService, OperateurService, TypeRequeteService]
+  providers: [RoleService, OperateurService, TypeRequeteService, PaysService]
 })
 export class AdminModule {
 }

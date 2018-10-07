@@ -8,6 +8,8 @@ import {AdminLogoutComponent} from '../components/admin-content/admin-logout/adm
 import {AdminProfileComponent} from '../components/admin-content/admin-profile/admin-profile.component';
 import {AdminTypeRequetesComponent} from "../components/admin-content/admin-type-requetes/admin-type-requetes.component";
 import {AdminTypeRequetesFormComponent} from "../components/admin-content/admin-type-requetes-form/admin-type-requetes-form.component";
+import {AdminPaysComponent} from '../components/admin-content/admin-pays/admin-pays.component';
+import {AdminPaysFormComponent} from '../components/admin-content/admin-pays-form/admin-pays-form.component';
 
 @NgModule({
   imports: [
@@ -52,6 +54,19 @@ import {AdminTypeRequetesFormComponent} from "../components/admin-content/admin-
               {
                 path: 'form',
                 component: AdminTypeRequetesFormComponent
+              }
+            ]
+          },
+          {
+            path: 'pays',
+            children: [
+              {
+                path: '',
+                component: AdminPaysComponent
+              },
+              {
+                path: 'form',
+                component: AdminPaysFormComponent
               }
             ]
           },
