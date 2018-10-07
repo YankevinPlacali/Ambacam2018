@@ -14,6 +14,10 @@ export class AppConstant {
   public static TYPE_REQUETES_COLLECTION_PATH = Server.URL + '/type-requetes';
   public static TYPE_REQUETES_ITEM_PATH = AppConstant.TYPE_REQUETES_COLLECTION_PATH + '/{0}';
 
+  // Autorites urls
+  public static AUTORITE_COLLECTION_PATH = Server.URL + '/autorites';
+  public static AUTORITE_ITEM_PATH = AppConstant.AUTORITE_COLLECTION_PATH + '/{0}';
+
   // Operateur urls
   public static OPERATEUR_COLLECTION = Server.URL + '/operateurs';
   public static OPERATEUR_ITEM_PATH = AppConstant.OPERATEUR_COLLECTION + '/{0}';
