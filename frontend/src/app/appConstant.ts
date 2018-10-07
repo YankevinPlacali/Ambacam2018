@@ -10,6 +10,10 @@ export class AppConstant {
   public static PAYS_COLLECTION_PATH = Server.URL + '/pays';
   public static PAYS_ITEM_PATH = AppConstant.PAYS_COLLECTION_PATH + '/{0}';
 
+  // Action urls
+  public static ACTION_COLLECTION_PATH = Server.URL + '/roles';
+  public static ACTION_ITEM_PATH = AppConstant.ACTION_COLLECTION_PATH + '/{0}';
+
   // Type Requetes urls
   public static TYPE_REQUETES_COLLECTION_PATH = Server.URL + '/type-requetes';
   public static TYPE_REQUETES_ITEM_PATH = AppConstant.TYPE_REQUETES_COLLECTION_PATH + '/{0}';

@@ -1,0 +1,146 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Actions
+      <small>Tous</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">Actions</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div>
+      <div class="box-tools">
+        <div class="box-footer clearfix no-border tool_button">
+          <button type="button" class="btn btn-danger pull-right" data-toggle="modal"
+                  data-target="#yes_no_dialog" [disabled]="ids.length === 0"><i
+            class="fa fa-trash"></i> Suppr. Action
+          </button>
+          <button type="button" (click)="createForm()" class="btn btn-success pull-right tool_button"
+                  data-toggle="modal"
+                  data-target="#modal-action-form"><i
+            class="fa fa-plus"></i> Ajouter Action
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">
+              Tous les actions <span class="pull-right-container"><span class="label label-primary pull-right"> {{actions.length}}</span>
+            </span></h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>
+                  <input type="checkbox" (change)="checkAll(!allChecked)" [checked]="allChecked">
+                </th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th><i class="fa fa-edit"></i></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let action of actions">
+                <td>
+                  <input type="checkbox" (click)="assignId(action.id)" [checked]="allChecked">
+                </td>
+                <td>{{ action.nom }}</td>
+                <td>{{ action.description }}</td>
+                <td><a href="#" (click)="editForm(action.id)" data-toggle="modal" data-target="#modal-action-form"><i
+                  class="fa fa-edit"></i></a></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+        <div class="col-md-3 {{requestMessage.visibility}}">
+          <div class="box box-{{requestMessage.type}} box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{requestMessage.title}}</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              {{requestMessage.message}}
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <div class="col-xs-3 {{requestMessage.visibility}}">
+        <div class="box box-{{requestMessage.type}} box-solid">
+          <div class="box-header with-border">
+            <h3 class="box-title">{{requestMessage.title}}</h3>
+
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+            <!-- /.box-tools -->
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            {{requestMessage.message}}
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+    </div>
+
+    <!-- Modal edit -->
+    <div class="modal fade" id="modal-action-form" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span></button>
+            <h4 class="modal-title">{{formTitle}}</h4>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="submit(action)" [formGroup]="actionForm">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Nom*</label>
+                  <input type="text" class="form-control" formControlName="nom" placeholder="Entrer le nom"
+                         data-toggle="tooltip" data-placement="top">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea class="form-control" rows="3" formControlName="description"
+                            placeholder="Entrer la description"></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fermer</button>
+                <button type="submit" class="btn {{submitButtonStyle}}" [disabled]="!actionForm.valid">{{submitButtonTitle}}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+    </div>
+    <app-yes-no-dialog [title]="titleConfirmDeleteDialog" [message]="messageConfirmDeleteDialog"
+                       [yes]="yesConfirmDeleteDialog" [no]="noConfirmDeleteDialog"
+                       (confirmEvent)="confirm=$event;delete(confirm)"></app-yes-no-dialog>
+  </section>
+  <!-- /.content -->
+</div>
