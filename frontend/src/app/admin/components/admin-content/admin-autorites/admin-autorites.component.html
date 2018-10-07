@@ -2,12 +2,12 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Pays
+      Autorites
       <small>Tous</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Pays</li>
+      <li class="active">Autorites</li>
     </ol>
   </section>
 
@@ -18,12 +18,12 @@
         <div class="box-footer clearfix no-border tool_button">
           <button type="button" class="btn btn-danger pull-right" data-toggle="modal"
                   data-target="#yes_no_dialog" [disabled]="ids.length === 0"><i
-            class="fa fa-trash"></i> Suppr. Pays
+            class="fa fa-trash"></i> Suppr. Autorite
           </button>
           <button type="button" (click)="createForm()" class="btn btn-success pull-right tool_button"
                   data-toggle="modal"
-                  data-target="#modal-p-form"><i
-            class="fa fa-plus"></i> Ajouter Pays
+                  data-target="#modal-autorite-form"><i
+            class="fa fa-plus"></i> Ajouter Autorite
           </button>
         </div>
       </div>
@@ -33,7 +33,7 @@
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">
-              Tous les pays <span class="pull-right-container"><span class="label label-primary pull-right"> {{pays.length}}</span>
+              Toutes les autorites <span class="pull-right-container"><span class="label label-primary pull-right"> {{autorites.length}}</span>
             </span></h3>
           </div>
           <!-- /.box-header -->
@@ -45,18 +45,20 @@
                   <input type="checkbox" (change)="checkAll(!allChecked)" [checked]="allChecked">
                 </th>
                 <th>Nom</th>
-                <th>Description</th>
+                <th>Prenom</th>
+                <th>Poste</th>
                 <th><i class="fa fa-edit"></i></th>
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let p of pays">
+              <tr *ngFor="let autorite of autorites">
                 <td>
-                  <input type="checkbox" (click)="assignId(p.id)" [checked]="allChecked">
+                  <input type="checkbox" (click)="assignId(autorite.id)" [checked]="allChecked">
                 </td>
-                <td>{{ p.nom }}</td>
-                <td>{{ p.description }}</td>
-                <td><a href="#" (click)="editForm(p.id)" data-toggle="modal" data-target="#modal-p-form"><i
+                <td>{{ autorite.nom }}</td>
+                <td>{{ autorite.prenom }}</td>
+                <td>{{ autorite.poste }}</td>
+                <td><a href="#" (click)="editForm(autorite.id)" data-toggle="modal" data-target="#modal-autorite-form"><i
                   class="fa fa-edit"></i></a></td>
               </tr>
               </tbody>
@@ -105,7 +107,7 @@
     </div>
 
     <!-- Modal edit -->
-    <div class="modal fade" id="modal-p-form" style="display: none;">
+    <div class="modal fade" id="modal-autorite-form" style="display: none;">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -114,22 +116,24 @@
             <h4 class="modal-title">{{formTitle}}</h4>
           </div>
           <div class="modal-body">
-            <form (ngSubmit)="submit(p)" [formGroup]="pForm">
+            <form (ngSubmit)="submit(autorite)" [formGroup]="autoriteForm">
               <div class="box-body">
                 <div class="form-group">
                   <label>Nom*</label>
-                  <input type="text" class="form-control" formControlName="nom" placeholder="Entrer le nom"
-                         data-toggle="tooltip" data-placement="top">
+                  <input type="text" class="form-control" formControlName="nom" placeholder="Entrer le nom" data-toggle="tooltip" data-placement="top">
                 </div>
                 <div class="form-group">
-                  <label>Description</label>
-                  <textarea class="form-control" rows="3" formControlName="description"
-                            placeholder="Entrer la description"></textarea>
+                  <label>Prenom</label>
+                  <input type="text" class="form-control" formControlName="prenom" placeholder="Entrer le prenom" data-toggle="tooltip" data-placement="top">
+                </div>
+                <div class="form-group">
+                  <label>Poste*</label>
+                  <input type="text" class="form-control" formControlName="poste" placeholder="Entrer le nom du poste" data-toggle="tooltip" data-placement="top">
                 </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fermer</button>
-                <button type="submit" class="btn {{submitButtonStyle}}" [disabled]="!pForm.valid">{{submitButtonTitle}}
+                <button type="submit" class="btn {{submitButtonStyle}}" [disabled]="!autoriteForm.valid">{{submitButtonTitle}}
                 </button>
               </div>
             </form>

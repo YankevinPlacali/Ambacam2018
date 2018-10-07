@@ -25,6 +25,9 @@ import {TypeRequeteService} from './services/type-requetes/type-requete.service'
 import {PaysService} from './services/pays/pays.service';
 import {AdminPaysComponent} from './components/admin-content/admin-pays/admin-pays.component';
 import {AdminPaysFormComponent} from './components/admin-content/admin-pays-form/admin-pays-form.component';
+import {AdminAutoritesComponent} from './components/admin-content/admin-autorites/admin-autorites.component';
+import {AdminAutoritesFormComponent} from './components/admin-content/admin-autorites-form/admin-autorites-form.component';
+import {AutoriteService} from './services/autorites/autorite.service';
 
 @NgModule({
   imports: [
@@ -52,10 +55,12 @@ import {AdminPaysFormComponent} from './components/admin-content/admin-pays-form
     AdminTypeRequetesComponent,
     AdminTypeRequetesFormComponent,
     AdminPaysComponent,
-    AdminPaysFormComponent
+    AdminPaysFormComponent,
+    AdminAutoritesComponent,
+    AdminAutoritesFormComponent
   ],
   exports: [AdminComponent],
-  providers: [RoleService, OperateurService, TypeRequeteService, PaysService]
+  providers: [RoleService, OperateurService, TypeRequeteService, PaysService, AutoriteService]
 })
 export class AdminModule {
 }
