@@ -14,6 +14,8 @@ import {AdminPaysComponent} from '../components/admin-content/admin-pays/admin-p
 import {AdminPaysFormComponent} from '../components/admin-content/admin-pays-form/admin-pays-form.component';
 import {AdminAutoritesComponent} from '../components/admin-content/admin-autorites/admin-autorites.component';
 import {AdminAutoritesFormComponent} from '../components/admin-content/admin-autorites-form/admin-autorites-form.component';
+import {AdminActionsComponent} from '../components/admin-content/admin-actions/admin-actions.component';
+import {AdminActionsFormComponent} from '../components/admin-content/admin-actions-form/admin-actions-form.component';
 
 @NgModule({
   imports: [
@@ -97,6 +99,19 @@ import {AdminAutoritesFormComponent} from '../components/admin-content/admin-aut
               {
                 path: 'form',
                 component: AdminAutoritesFormComponent
+              }
+            ]
+          },
+          {
+            path: 'actions',
+            children: [
+              {
+                path: '',
+                component: AdminActionsComponent
+              },
+              {
+                path: 'form',
+                component: AdminActionsFormComponent
               }
             ]
           },

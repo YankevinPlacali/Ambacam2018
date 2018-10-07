@@ -11,6 +11,7 @@ import {CommonModule} from '@angular/common';
 import {AdminRolesComponent} from './components/admin-content/admin-roles/admin-roles.component';
 import {AdminRolesFormComponent} from './components/admin-content/admin-roles-form/admin-roles-form.component';
 import {RoleService} from './services/roles/role.service';
+import {ActionService} from './services/actions/action.service';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
@@ -26,6 +27,8 @@ import {AdminOperateursComponent} from './components/admin-content/admin-operate
 import {AdminOperateursFormComponent} from './components/admin-content/admin-operateurs-form/admin-operateurs-form.component';
 import {PaysService} from './services/pays/pays.service';
 import {AdminPaysComponent} from './components/admin-content/admin-pays/admin-pays.component';
+import {AdminActionsComponent} from './components/admin-content/admin-actions/admin-actions.component';
+import {AdminActionsFormComponent} from './components/admin-content/admin-actions-form/admin-actions-form.component';
 import {AdminPaysFormComponent} from './components/admin-content/admin-pays-form/admin-pays-form.component';
 import {AdminAutoritesComponent} from './components/admin-content/admin-autorites/admin-autorites.component';
 import {AdminAutoritesFormComponent} from './components/admin-content/admin-autorites-form/admin-autorites-form.component';
@@ -61,10 +64,13 @@ import {AutoriteService} from './services/autorites/autorite.service';
     AdminPaysComponent,
     AdminPaysFormComponent,
     AdminAutoritesComponent,
-    AdminAutoritesFormComponent
+    AdminAutoritesFormComponent,
+    AdminActionsComponent,
+    AdminActionsFormComponent
   ],
   exports: [AdminComponent],
-  providers: [RoleService, OperateurService, TypeRequeteService, PaysService, AutoriteService]
+  providers: [RoleService, OperateurService, TypeRequeteService, PaysService, AutoriteService, ActionService]
 })
+
 export class AdminModule {
 }
