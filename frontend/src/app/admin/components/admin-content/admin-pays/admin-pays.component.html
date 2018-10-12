@@ -2,12 +2,12 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Type Requetes
+      Pays
       <small>Tous</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Type Requetes</li>
+      <li class="active">Pays</li>
     </ol>
   </section>
 
@@ -18,12 +18,12 @@
         <div class="box-footer clearfix no-border tool_button">
           <button type="button" class="btn btn-danger pull-right" data-toggle="modal"
                   data-target="#yes_no_dialog" [disabled]="ids.length === 0"><i
-            class="fa fa-trash"></i> Suppr. Type Requete
+            class="fa fa-trash"></i> Suppr. Role
           </button>
           <button type="button" (click)="createForm()" class="btn btn-success pull-right tool_button"
                   data-toggle="modal"
-                  data-target="#modal-type-requete-form"><i
-            class="fa fa-plus"></i> Ajouter Type Requete
+                  data-target="#modal-p-form"><i
+            class="fa fa-plus"></i> Ajouter Role
           </button>
         </div>
       </div>
@@ -33,7 +33,7 @@
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">
-              Tous les types de requetes <span class="pull-right-container"><span class="label label-primary pull-right"> {{typeRequetes.length}}</span>
+              Tous les pays <span class="pull-right-container"><span class="label label-primary pull-right"> {{pays.length}}</span>
             </span></h3>
           </div>
           <!-- /.box-header -->
@@ -50,13 +50,13 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let typeRequete of typeRequetes">
+              <tr *ngFor="let p of pays">
                 <td>
-                  <input type="checkbox" (click)="assignId(typeRequete.id)" [checked]="allChecked">
+                  <input type="checkbox" (click)="assignId(p.id)" [checked]="allChecked">
                 </td>
-                <td>{{ typeRequete.nom }}</td>
-                <td>{{ typeRequete.description }}</td>
-                <td><a href="#" (click)="editForm(typeRequete.id)" data-toggle="modal" data-target="#modal-type-requete-form"><i
+                <td>{{ p.nom }}</td>
+                <td>{{ p.description }}</td>
+                <td><a href="#" (click)="editForm(p.id)" data-toggle="modal" data-target="#modal-p-form"><i
                   class="fa fa-edit"></i></a></td>
               </tr>
               </tbody>
@@ -105,7 +105,7 @@
     </div>
 
     <!-- Modal edit -->
-    <div class="modal fade" id="modal-type-requete-form" style="display: none;">
+    <div class="modal fade" id="modal-p-form" style="display: none;">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -114,7 +114,7 @@
             <h4 class="modal-title">{{formTitle}}</h4>
           </div>
           <div class="modal-body">
-            <form (ngSubmit)="submit(typeRequete)" [formGroup]="typeRequeteForm">
+            <form (ngSubmit)="submit(p)" [formGroup]="pForm">
               <div class="box-body">
                 <div class="form-group">
                   <label>Nom*</label>
@@ -127,15 +127,11 @@
                             placeholder="Entrer la description"></textarea>
                 </div>
               </div>
-              <div class="box-footer">
-                <button type="submit" class="btn {{submitButtonStyle}}" [disabled]="!typeRequeteForm.valid">{{submitButtonTitle}}
-                </button>
-              </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fermer</button>
-            <button type="button" class="btn {{submitButtonStyle}}" (click)="submit(typeRequete.id)" [disabled]="!typeRequeteForm.valid">{{submitButtonTitle}}</button>
+            <button type="button" class="btn {{submitButtonStyle}}" (click)="submit(p.id)" [disabled]="!pForm.valid">{{submitButtonTitle}}</button>
           </div>
         </div>
         <!-- /.modal-content -->
