@@ -26,6 +26,9 @@ import {TypeRequeteService} from './services/type-requetes/type-requete.service'
 import {AdminOperateursComponent} from './components/admin-content/admin-operateurs/admin-operateurs.component';
 import {AdminOperateursFormComponent} from './components/admin-content/admin-operateurs-form/admin-operateurs-form.component';
 import {PaysService} from './services/pays/pays.service';
+import {AdminMotifSuppressionComponent} from './components/admin-content/admin-motif-suppression/admin-motif-suppression.component';
+import {MotifSuppressionService} from './services/motif-suppression/motif-suppression.service';
+import {AdminMotifSuppressionFormComponent} from './components/admin-content/admin-motif-suppression-form/admin-motif-suppression-form.component';
 import {AdminPaysComponent} from './components/admin-content/admin-pays/admin-pays.component';
 import {AdminActionsComponent} from './components/admin-content/admin-actions/admin-actions.component';
 import {AdminActionsFormComponent} from './components/admin-content/admin-actions-form/admin-actions-form.component';
@@ -33,9 +36,9 @@ import {AdminPaysFormComponent} from './components/admin-content/admin-pays-form
 import {AdminAutoritesComponent} from './components/admin-content/admin-autorites/admin-autorites.component';
 import {AdminAutoritesFormComponent} from './components/admin-content/admin-autorites-form/admin-autorites-form.component';
 import {AutoriteService} from './services/autorites/autorite.service';
-import { AdminRequerantsComponent } from './components/admin-content/admin-requerants/admin-requerants.component';
-import { AdminRequerantsFormComponent } from './components/admin-content/admin-requerants-form/admin-requerants-form.component';
-import {RequerantService} from "./services/requerants/requerant.service";
+import {AdminRequerantsComponent} from './components/admin-content/admin-requerants/admin-requerants.component';
+import {AdminRequerantsFormComponent} from './components/admin-content/admin-requerants-form/admin-requerants-form.component';
+import {RequerantService} from './services/requerants/requerant.service';
 
 @NgModule({
   imports: [
@@ -64,6 +67,8 @@ import {RequerantService} from "./services/requerants/requerant.service";
     AdminTypeRequetesFormComponent,
     AdminOperateursComponent,
     AdminOperateursFormComponent,
+    AdminMotifSuppressionComponent,
+    AdminMotifSuppressionFormComponent,
     AdminPaysComponent,
     AdminPaysFormComponent,
     AdminAutoritesComponent,
@@ -81,7 +86,8 @@ import {RequerantService} from "./services/requerants/requerant.service";
     PaysService,
     AutoriteService,
     ActionService,
-    RequerantService
+    RequerantService,
+    MotifSuppressionService
   ]
 })
 

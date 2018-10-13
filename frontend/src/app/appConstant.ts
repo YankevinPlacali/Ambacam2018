@@ -31,6 +31,10 @@ export class AppConstant {
   public static AUTH_AS_OPERATEUR_PATH = Server.URL + '/oauth/token?grant_type=password&username={0}&password={1}';
   public static AUTH_REVOKE_PATH = Server.URL + '/tokens/revoke';
 
+  // Motifs urls
+  public static MOTIF_COLLECTION_PATH = Server.URL + '/motif-suppressions';
+  public static MOTIF_ITEM_PATH = AppConstant.MOTIF_COLLECTION_PATH + '/{0}';
+
   // Auth credentials
   public static AUTH_USERNAME = 'ambacam2018';
   public static AUTH_SECRET = 'ambacam-2018-secret';
