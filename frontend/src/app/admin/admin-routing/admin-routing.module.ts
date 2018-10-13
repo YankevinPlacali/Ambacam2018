@@ -11,6 +11,9 @@ import {AdminTypeRequetesFormComponent} from '../components/admin-content/admin-
 import {AdminOperateursComponent} from '../components/admin-content/admin-operateurs/admin-operateurs.component';
 import {AdminOperateursFormComponent} from '../components/admin-content/admin-operateurs-form/admin-operateurs-form.component';
 import {AdminPaysComponent} from '../components/admin-content/admin-pays/admin-pays.component';
+import {AdminMotifSuppressionComponent} from '../components/admin-content/admin-motif-suppression/admin-motif-suppression.component';
+import {AdminMotifSuppressionFormComponent} from '../components/admin-content/admin-motif-suppression-form/admin-motif-suppression-form.component';
+
 import {AdminPaysFormComponent} from '../components/admin-content/admin-pays-form/admin-pays-form.component';
 import {AdminAutoritesComponent} from '../components/admin-content/admin-autorites/admin-autorites.component';
 import {AdminAutoritesFormComponent} from '../components/admin-content/admin-autorites-form/admin-autorites-form.component';
@@ -131,6 +134,19 @@ import {AdminRequerantsFormComponent} from '../components/admin-content/admin-re
             ]
           },
           {
+            path: 'motif-suppressions',
+            children: [
+              {
+                path: '',
+                component: AdminMotifSuppressionComponent
+              },
+              {
+                path: 'form',
+                component: AdminMotifSuppressionFormComponent
+              }
+            ]
+          }
+          , {
             path: 'logout',
             component: AdminLogoutComponent
           }
