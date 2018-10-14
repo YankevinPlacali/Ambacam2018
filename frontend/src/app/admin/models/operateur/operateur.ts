@@ -1,6 +1,5 @@
 export class Operateur {
   public id: number;
-
   public nom: string;
   public prenom: string;
   public sexe: string;

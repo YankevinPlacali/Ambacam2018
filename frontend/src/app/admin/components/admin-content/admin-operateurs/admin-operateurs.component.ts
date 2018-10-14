@@ -15,7 +15,7 @@ import {Object2OperateurCreate} from '../../../utils/object2OperateurCreate';
 import {Auth} from '../../../utils/auth/auth';
 import {OperateurStd} from '../../../models/operateur/operateurStd';
 import {Object2Pays} from '../../../utils/object2Pays';
-import {Pays} from '../../../models/pays';
+import {Pays} from '../../../models/pays/pays';
 import {PaysService} from '../../../services/pays/pays.service';
 // Variable in assets/js/scripts.js file
 declare var AdminLTE: any;

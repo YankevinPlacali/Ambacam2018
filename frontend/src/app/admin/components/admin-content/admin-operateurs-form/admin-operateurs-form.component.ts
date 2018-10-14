@@ -10,7 +10,7 @@ import {OperateurStd} from '../../../models/operateur/operateurStd';
 import {LockComponent} from '../../lock/lock.component';
 import {OperateurCreate} from '../../../models/operateur/operateurCreate';
 import {Auth} from '../../../utils/auth/auth';
-import {Pays} from '../../../models/pays';
+import {Pays} from '../../../models/pays/pays';
 import {PaysService} from '../../../services/pays/pays.service';
 import {Object2Pays} from '../../../utils/object2Pays';
 // Variable in assets/js/scripts.js file
