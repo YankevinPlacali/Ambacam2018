@@ -195,6 +195,18 @@ public class OperateursResourceIT extends ItBase {
 	}
 
 	@Test
+	public void createUserNameAlreadyExist() {
+
+		OperateurCreateTO create = buildOperateurCreateTO();
+		create.setCreatorId(creator1.getId());
+		create.setPaysId(pays1.getId());
+		create.setUsername(operateur1.getUsername());
+
+		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
+				.then().log().body().statusCode(400).extract().body();
+	}
+
+	@Test
 	public void createPasswordNull() {
 
 		OperateurCreateTO create = buildOperateurCreateTO();
