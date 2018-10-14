@@ -15,7 +15,9 @@ import {AdminPaysFormComponent} from '../components/admin-content/admin-pays-for
 import {AdminAutoritesComponent} from '../components/admin-content/admin-autorites/admin-autorites.component';
 import {AdminAutoritesFormComponent} from '../components/admin-content/admin-autorites-form/admin-autorites-form.component';
 import {AdminActionsComponent} from '../components/admin-content/admin-actions/admin-actions.component';
+import {AdminRequerantsComponent} from '../components/admin-content/admin-requerants/admin-requerants.component';
 import {AdminActionsFormComponent} from '../components/admin-content/admin-actions-form/admin-actions-form.component';
+import {AdminRequerantsFormComponent} from '../components/admin-content/admin-requerants-form/admin-requerants-form.component';
 
 @NgModule({
   imports: [
@@ -112,6 +114,19 @@ import {AdminActionsFormComponent} from '../components/admin-content/admin-actio
               {
                 path: 'form',
                 component: AdminActionsFormComponent
+              }
+            ]
+          },
+          {
+            path: 'requerants',
+            children: [
+              {
+                path: '',
+                component: AdminRequerantsComponent
+              },
+              {
+                path: 'form',
+                component: AdminRequerantsFormComponent
               }
             ]
           },

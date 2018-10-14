@@ -34,4 +34,8 @@ export class AppConstant {
   // Auth credentials
   public static AUTH_USERNAME = 'ambacam2018';
   public static AUTH_SECRET = 'ambacam-2018-secret';
+
+  // Requerant urls
+  public static REQUERANT_COLLECTION_PATH = Server.URL + '/requerants';
+  public static REQUERANT_ITEM_PATH = AppConstant.REQUERANT_COLLECTION_PATH + '/{0}';
 }
