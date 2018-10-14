@@ -12,4 +12,6 @@ public interface OperateurRepository extends JpaRepository<Operateur, Long>, Jpa
 	List<Operateur> findByCreeParId(Long id);
 
 	Operateur findOneByUsername(String username);
+
+	int countByUsername(String username);
 }

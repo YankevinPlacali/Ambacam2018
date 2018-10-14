@@ -49,6 +49,8 @@ public class OperateurService {
 	 *             if the given paysId does not exist
 	 * @throws ResourceBadRequestException
 	 *             if the given creatorId does not exist
+	 * @throws ResourceBadRequestException
+	 *             if an operateur with the given username already exist
 	 */
 	public OperateurReadTO create(OperateurCreateTO operateurCreateTO) {
 
@@ -61,6 +63,8 @@ public class OperateurService {
 		// create the new operateur
 		Operateur operateur = OperateurCreateTO2Operateur.apply(operateurCreateTO);
 
+		// check username uniqueness
+		checkUsernameUniqueness(operateur);
 		// set properties
 		operateur.setCreePar(creator);
 		operateur.setNationalite(pays);
@@ -246,6 +250,13 @@ public class OperateurService {
 
 	public void setAppSettings(AppSettings appSettings) {
 		this.appSettings = appSettings;
+	}
+
+	private void checkUsernameUniqueness(Operateur operateur) {
+		if (operateurRepository.countByUsername(operateur.getUsername()) > 0) {
+			throw new ResourceBadRequestException(
+					String.format("An operateur with the username %s already exist", operateur.getUsername()));
+		}
 	}
 
 }
