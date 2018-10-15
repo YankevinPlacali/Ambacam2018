@@ -2296,6 +2296,30 @@ paths:
           description: Object not found
       security:
         - basicAuth: []
+  /logs:
+    post:
+      tags:
+        - Log
+      summary: Create a log
+      description: Create a log
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: logCreate
+          description: Request body of the creation
+          required: true
+          schema:
+            $ref: '#/definitions/LogCreate'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid parameter
+        '401':
+          description: Not authorized
+      security:
+        - basicAuth: []
   /logs/search:
     post:
       tags:
@@ -2813,6 +2837,18 @@ definitions:
       date:
         type: string
         format: date-time
+  LogCreate:
+    type: object
+    properties:
+      deletedObjectDescription:
+        type: string
+        format: string
+      operateurId:
+        type: integer
+        format: int64
+      motifSuppressionId:
+        type: integer
+        format: int64
   LogSearch:
     type: object
     properties:
