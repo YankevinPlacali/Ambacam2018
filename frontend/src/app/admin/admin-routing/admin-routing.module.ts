@@ -19,6 +19,8 @@ import {AdminAutoritesComponent} from '../components/admin-content/admin-autorit
 import {AdminAutoritesFormComponent} from '../components/admin-content/admin-autorites-form/admin-autorites-form.component';
 import {AdminActionsComponent} from '../components/admin-content/admin-actions/admin-actions.component';
 import {AdminRequerantsComponent} from '../components/admin-content/admin-requerants/admin-requerants.component';
+import {AdminStatutsComponent} from '../components/admin-content/admin-statuts/admin-statuts.component';
+import {AdminStatutsFormComponent} from '../components/admin-content/admin-statuts-form/admin-statuts-form.component';
 import {AdminActionsFormComponent} from '../components/admin-content/admin-actions-form/admin-actions-form.component';
 import {AdminRequerantsFormComponent} from '../components/admin-content/admin-requerants-form/admin-requerants-form.component';
 
@@ -133,6 +135,20 @@ import {AdminRequerantsFormComponent} from '../components/admin-content/admin-re
               }
             ]
           },
+          {
+            path: 'statuts',
+            children: [
+              {
+                path: '',
+                component: AdminStatutsComponent
+              },
+              {
+                path: 'form',
+                component: AdminStatutsFormComponent
+              }
+            ]
+          }
+          ,
           {
             path: 'motif-suppressions',
             children: [
