@@ -39,6 +39,9 @@ import {AutoriteService} from './services/autorites/autorite.service';
 import {AdminRequerantsComponent} from './components/admin-content/admin-requerants/admin-requerants.component';
 import {AdminRequerantsFormComponent} from './components/admin-content/admin-requerants-form/admin-requerants-form.component';
 import {RequerantService} from './services/requerants/requerant.service';
+import {AdminStatutsComponent} from './components/admin-content/admin-statuts/admin-statuts.component';
+import {StatutService} from './services/statuts/statut.service';
+import {AdminStatutsFormComponent} from './components/admin-content/admin-statuts-form/admin-statuts-form.component';
 
 @NgModule({
   imports: [
@@ -75,6 +78,8 @@ import {RequerantService} from './services/requerants/requerant.service';
     AdminAutoritesFormComponent,
     AdminActionsComponent,
     AdminActionsFormComponent,
+    AdminStatutsComponent,
+    AdminStatutsFormComponent,
     AdminRequerantsComponent,
     AdminRequerantsFormComponent
   ],
@@ -87,7 +92,8 @@ import {RequerantService} from './services/requerants/requerant.service';
     AutoriteService,
     ActionService,
     RequerantService,
-    MotifSuppressionService
+    MotifSuppressionService,
+    StatutService
   ]
 })
 
