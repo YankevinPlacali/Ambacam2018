@@ -1,0 +1,222 @@
+package com.gemini.ambacam.service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.gemini.ambacam.configuration.AppSettings;
+import com.gemini.ambacam.exception.ResourceBadRequestException;
+import com.gemini.ambacam.exception.ResourceNotFoundException;
+import com.gemini.ambacam.model.Operateur;
+import com.gemini.ambacam.model.Pays;
+import com.gemini.ambacam.model.Requerant;
+import com.gemini.ambacam.repository.OperateurRepository;
+import com.gemini.ambacam.repository.PaysRepository;
+import com.gemini.ambacam.repository.RequerantRepository;
+import com.gemini.ambacam.search.requerants.RequerantCriteria;
+import com.gemini.ambacam.search.requerants.RequerantSpecs;
+import com.gemini.ambacam.transfert.SearchResultTO;
+import com.gemini.ambacam.transfert.requerants.Requerant2RequerantReadTO;
+import com.gemini.ambacam.transfert.requerants.RequerantCreateTO;
+import com.gemini.ambacam.transfert.requerants.RequerantReadTO;
+import com.gemini.ambacam.transfert.requerants.RequerantUpdateTO;
+
+@Service
+@Transactional(rollbackFor = Exception.class)
+public class RequerantService {
+
+	@Autowired
+	private RequerantRepository requerantRepository;
+
+	@Autowired
+	private OperateurRepository operateurRepository;
+
+	@Autowired
+	private PaysRepository paysRepository;
+
+	@Autowired
+	private AppSettings appSettings;
+
+	/**
+	 * Create a requerant
+	 * 
+	 * @param requerantCreateTO The new requerant to create
+	 * 
+	 * @return The new requerant read created
+	 * @throws ResourceBadRequestException if the given paysId does not exist
+	 * @throws ResourceBadRequestException if the given creatorId does not exist
+	 */
+	public RequerantReadTO create(RequerantCreateTO requerantCreateTO) {
+
+		// find pays
+		Pays pays = findPays(requerantCreateTO.getPaysId());
+
+		// find creator operateur
+		Operateur creator = findOperateurCreator(requerantCreateTO.getCreatorId());
+
+		// create the new requerant
+		Requerant requerant = new Requerant().id(null).nom(requerantCreateTO.getNom())
+				.prenom(requerantCreateTO.getPrenom()).dateNaissance(requerantCreateTO.getDateNaissance())
+				.creePar(creator).sexe(requerantCreateTO.getSexe()).profession(requerantCreateTO.getProfession())
+				.lieuNaissance(requerantCreateTO.getLieuNaissance()).nationalite(pays);
+
+		// save requerant
+		return Requerant2RequerantReadTO.apply(requerantRepository.save(requerant));
+	}
+
+	/**
+	 * Get a requerant
+	 * 
+	 * @param id The id of the Requerant you want to get
+	 * 
+	 * @return The requerant read found
+	 * 
+	 * @throws ResourceNotFoundException if the requerant does not exist
+	 */
+	public RequerantReadTO get(Long id) {
+		return Requerant2RequerantReadTO.apply(findRequerant(id));
+	}
+
+	/**
+	 * List all requerants
+	 * 
+	 * @return The list of requerant stored
+	 */
+	public List<RequerantReadTO> list() {
+
+		return requerantRepository.findAll().stream().map(requerant -> Requerant2RequerantReadTO.apply(requerant))
+				.collect(Collectors.toList());
+	}
+
+	/**
+	 * Find requerants by parameters
+	 * 
+	 * @param limit
+	 * @param page
+	 * @param criteria
+	 * @return
+	 */
+	public SearchResultTO<RequerantReadTO> search(Integer limit, Integer page, RequerantCriteria criteria) {
+
+		Integer searchLimit = limit;
+		Integer searchPage = page;
+
+		// build specs
+		RequerantSpecs specs = new RequerantSpecs(criteria);
+
+		if (searchLimit == null || searchLimit < appSettings.getSearchDefaultPageSize()) {
+			searchLimit = appSettings.getSearchDefaultPageSize();
+		}
+
+		if (searchPage == null || searchPage < appSettings.getSearchDefaultPageNumber()) {
+			searchPage = appSettings.getSearchDefaultPageNumber();
+		}
+
+		Page<Requerant> pageRequerant = requerantRepository.findAll(specs,
+				new PageRequest(searchPage, searchLimit, new Sort(Sort.Direction.ASC, "nom")));
+
+		SearchResultTO<RequerantReadTO> requerantSearchTO = new SearchResultTO<RequerantReadTO>();
+		requerantSearchTO.setContent(pageRequerant.getContent().stream()
+				.map(requerant -> Requerant2RequerantReadTO.apply(requerant)).collect(Collectors.toList()));
+		requerantSearchTO.setPage(pageRequerant.getNumber());
+		requerantSearchTO.setTotalPages(pageRequerant.getTotalPages());
+		return requerantSearchTO;
+
+	}
+
+	/**
+	 * Update a requerant
+	 * 
+	 * @param id The id of the requerant to update
+	 * 
+	 * @param requerantUpdateTO The new requerant modifications
+	 * 
+	 * @return The requerant updated
+	 * 
+	 * @throws ResourceNotFoundException if the requerant is not found
+	 * @throws ResourceBadRequestException if the given paysId does not exist
+	 */
+	public Requerant update(Long id, RequerantUpdateTO requerantUpdateTO) {
+
+		// find existing requerant
+		Requerant found = findRequerant(id);
+
+		// find pays
+		Pays pays = findPays(requerantUpdateTO.getPaysId());
+
+		// set properties
+		found.setNom(requerantUpdateTO.getNom());
+		found.setPrenom(requerantUpdateTO.getPrenom());
+		found.setDateNaissance(requerantUpdateTO.getDateNaissance());
+		found.setSexe(requerantUpdateTO.getSexe());
+		found.setProfession(requerantUpdateTO.getProfession());
+		found.setLieuNaissance(requerantUpdateTO.getLieuNaissance());
+		found.setNationalite(pays);
+
+		// save update
+		return requerantRepository.save(found);
+	}
+
+	/**
+	 * Delete a requerant
+	 * 
+	 * @param id The id of the requerant to delete
+	 * 
+	 * @throws ResourceNotFoundException if the requerant is not found
+	 */
+	public void delete(Long id) {
+		// find requerant
+		findRequerant(id);
+
+		// delete
+		requerantRepository.delete(id);
+	}
+
+	private Requerant findRequerant(Long id) {
+		// find requerant
+		Requerant found = requerantRepository.findOne(id);
+		if (found == null) {
+			throw new ResourceNotFoundException(
+					String.format("The requerant with the id %s does not exist", id.toString()));
+		}
+		return found;
+	}
+
+	private Operateur findOperateurCreator(Long id) {
+		// find operateur
+		Operateur operateur = operateurRepository.findOne(id);
+		if (operateur == null) {
+			throw new ResourceBadRequestException(
+					String.format("The operateur with the id %s does not exist", id.toString()));
+		}
+
+		return operateur;
+	}
+
+	private Pays findPays(Long id) {
+
+		// find pays
+		Pays pays = paysRepository.findOne(id);
+
+		if (pays == null) {
+			throw new ResourceBadRequestException(
+					String.format("The pays with the id %s does not exist", id.toString()));
+		}
+		return pays;
+	}
+
+	public AppSettings getAppSettings() {
+		return appSettings;
+	}
+
+	public void setAppSettings(AppSettings appSettings) {
+		this.appSettings = appSettings;
+	}
+
+}
