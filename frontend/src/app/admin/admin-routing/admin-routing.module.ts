@@ -23,6 +23,8 @@ import {AdminStatutsComponent} from '../components/admin-content/admin-statuts/a
 import {AdminStatutsFormComponent} from '../components/admin-content/admin-statuts-form/admin-statuts-form.component';
 import {AdminActionsFormComponent} from '../components/admin-content/admin-actions-form/admin-actions-form.component';
 import {AdminRequerantsFormComponent} from '../components/admin-content/admin-requerants-form/admin-requerants-form.component';
+import {AdminRequetesComponent} from "../components/admin-content/admin-requetes/admin-requetes.component";
+import {AdminRequetesFormComponent} from "../components/admin-content/admin-requetes-form/admin-requetes-form.component";
 
 @NgModule({
   imports: [
@@ -147,8 +149,7 @@ import {AdminRequerantsFormComponent} from '../components/admin-content/admin-re
                 component: AdminStatutsFormComponent
               }
             ]
-          }
-          ,
+          },
           {
             path: 'motif-suppressions',
             children: [
@@ -161,11 +162,37 @@ import {AdminRequerantsFormComponent} from '../components/admin-content/admin-re
                 component: AdminMotifSuppressionFormComponent
               }
             ]
-          }
-          , {
+          },
+          {
             path: 'logout',
             component: AdminLogoutComponent
-          }
+          },
+          {
+            path: 'requetes',
+            children: [
+              {
+                path: '',
+                component: AdminRequetesComponent
+              },
+              {
+                path: 'form',
+                component: AdminRequetesFormComponent
+              }
+            ]
+          },
+          {
+            path: 'groupes',
+            children: [
+              {
+                path: '',
+                component: AdminRequetesComponent
+              },
+              {
+                path: 'form',
+                component: AdminRequetesFormComponent
+              }
+            ]
+          },
         ]
       }
     ])
