@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {Requerant} from "../../../models/requerant/requerant";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {RequestMessage} from "../../../models/request/requestMessage";
-import {RequestType} from "../../../models/request/requestType";
-import {RequestVisibility} from "../../../models/request/requestVisibility";
-import {AppConstantMessages} from "../../../../appConstantMessages";
-import {RequerantService} from "../../../services/requerants/requerant.service";
-import {Router} from "@angular/router";
-import {Object2Requerant} from "../../../utils/object2Requerant";
-import {Strings} from "../../../utils/strings";
-import {LockComponent} from "../../lock/lock.component";
-import {Pays} from "../../../models/pays/pays";
-import {PaysService} from "../../../services/pays/pays.service";
-import {Object2Pays} from "../../../utils/object2Pays";
+import {Requerant} from '../../../models/requerant/requerant';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {RequestMessage} from '../../../models/request/requestMessage';
+import {RequestType} from '../../../models/request/requestType';
+import {RequestVisibility} from '../../../models/request/requestVisibility';
+import {AppConstantMessages} from '../../../../appConstantMessages';
+import {RequerantService} from '../../../services/requerants/requerant.service';
+import {Router} from '@angular/router';
+import {Object2Requerant} from '../../../utils/object2Requerant';
+import {Strings} from '../../../utils/strings';
+import {LockComponent} from '../../lock/lock.component';
+import {Pays} from '../../../models/pays/pays';
+import {PaysService} from '../../../services/pays/pays.service';
+import {Object2Pays} from '../../../utils/object2Pays';
 
 // Variable in assets/js/scripts.js file
 declare var AdminLTE: any;
