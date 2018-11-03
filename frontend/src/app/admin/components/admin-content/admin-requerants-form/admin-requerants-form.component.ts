@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Requerant} from "../../../models/requerant/requerant";
-import {RequestMessage} from "../../../models/request/requestMessage";
-import {RequestVisibility} from "../../../models/request/requestVisibility";
-import {RequestType} from "../../../models/request/requestType";
-import {RequerantService} from "../../../services/requerants/requerant.service";
-import {Router} from "@angular/router";
-import {PaysService} from "../../../services/pays/pays.service";
-import {LockComponent} from "../../lock/lock.component";
-import {Object2Pays} from "../../../utils/object2Pays";
-import {Pays} from "../../../models/pays/pays";
-import {Object2Requerant} from "../../../utils/object2Requerant";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Requerant} from '../../../models/requerant/requerant';
+import {RequestMessage} from '../../../models/request/requestMessage';
+import {RequestVisibility} from '../../../models/request/requestVisibility';
+import {RequestType} from '../../../models/request/requestType';
+import {RequerantService} from '../../../services/requerants/requerant.service';
+import {Router} from '@angular/router';
+import {PaysService} from '../../../services/pays/pays.service';
+import {LockComponent} from '../../lock/lock.component';
+import {Object2Pays} from '../../../utils/object2Pays';
+import {Pays} from '../../../models/pays/pays';
+import {Object2Requerant} from '../../../utils/object2Requerant';
 
 // Variable in assets/js/scripts.js file
 declare var AdminLTE: any;
