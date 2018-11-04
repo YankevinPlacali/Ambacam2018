@@ -11,7 +11,7 @@ export class AppConstant {
   public static PAYS_ITEM_PATH = AppConstant.PAYS_COLLECTION_PATH + '/{0}';
 
   // Action urls
-  public static ACTION_COLLECTION_PATH = Server.URL + '/roles';
+  public static ACTION_COLLECTION_PATH = Server.URL + '/actions';
   public static ACTION_ITEM_PATH = AppConstant.ACTION_COLLECTION_PATH + '/{0}';
 
   // Type Requetes urls
@@ -34,7 +34,7 @@ export class AppConstant {
   // Motifs urls
   public static MOTIF_COLLECTION_PATH = Server.URL + '/motif-suppressions';
   public static MOTIF_ITEM_PATH = AppConstant.MOTIF_COLLECTION_PATH + '/{0}';
-  
+
   // Statut urls
   public static STATUT_COLLECTION_PATH = Server.URL + '/status-requetes';
   public static STATUT_ITEM_PATH = AppConstant.STATUT_COLLECTION_PATH + '/{0}';
