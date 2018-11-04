@@ -42,9 +42,10 @@ import {RequerantService} from './services/requerants/requerant.service';
 import {AdminStatutsComponent} from './components/admin-content/admin-statuts/admin-statuts.component';
 import {StatutService} from './services/statuts/statut.service';
 import {AdminStatutsFormComponent} from './components/admin-content/admin-statuts-form/admin-statuts-form.component';
-import {AdminRequetesComponent} from "./components/admin-content/admin-requetes/admin-requetes.component";
-import {AdminRequetesFormComponent} from "./components/admin-content/admin-requetes-form/admin-requetes-form.component";
-import {RequeteService} from "./services/requetes/requete.service";
+import {AdminRequetesComponent} from './components/admin-content/admin-requetes/admin-requetes.component';
+import {AdminRequetesFormComponent} from './components/admin-content/admin-requetes-form/admin-requetes-form.component';
+import {PaginationComponent} from '../components/pagination/pagination.component';
+import {RequeteService} from './services/requetes/requete.service';
 
 @NgModule({
   imports: [
@@ -86,6 +87,7 @@ import {RequeteService} from "./services/requetes/requete.service";
     AdminRequerantsComponent,
     AdminRequerantsFormComponent,
     AdminRequetesComponent,
+    PaginationComponent,
     AdminRequetesFormComponent
   ],
   exports: [AdminComponent],

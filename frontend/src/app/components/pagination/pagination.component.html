@@ -1,0 +1,7 @@
+<div class="box-tools pagination_block">
+  <div class="box-footer clearfix no-border pagination_zone">
+    <ul class="pagination justify-content-end pagination_component">
+      <li *ngFor="let page of pageSet" class="page-item" [ngClass]="{'active': page.active, 'disabled': page.disabled}"><a class="page-link" (click)="search(page.page)">{{ page.label }}</a></li>
+    </ul>
+  </div>
+</div>
