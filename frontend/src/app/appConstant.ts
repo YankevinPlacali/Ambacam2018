@@ -46,4 +46,5 @@ export class AppConstant {
   // Requerant urls
   public static REQUERANT_COLLECTION_PATH = Server.URL + '/requerants';
   public static REQUERANT_ITEM_PATH = AppConstant.REQUERANT_COLLECTION_PATH + '/{0}';
+  public static REQUERANT_SEARCH_PATH = AppConstant.REQUERANT_COLLECTION_PATH + '/search';
 }

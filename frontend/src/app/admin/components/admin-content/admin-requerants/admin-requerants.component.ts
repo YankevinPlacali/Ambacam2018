@@ -1,18 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {Requerant} from "../../../models/requerant/requerant";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {RequestMessage} from "../../../models/request/requestMessage";
-import {RequestType} from "../../../models/request/requestType";
-import {RequestVisibility} from "../../../models/request/requestVisibility";
-import {AppConstantMessages} from "../../../../appConstantMessages";
-import {RequerantService} from "../../../services/requerants/requerant.service";
-import {Router} from "@angular/router";
-import {Object2Requerant} from "../../../utils/object2Requerant";
-import {Strings} from "../../../utils/strings";
-import {LockComponent} from "../../lock/lock.component";
-import {Pays} from "../../../models/pays/pays";
-import {PaysService} from "../../../services/pays/pays.service";
-import {Object2Pays} from "../../../utils/object2Pays";
+import {Component, OnInit, SimpleChange, OnChanges} from '@angular/core';
+import {Requerant} from '../../../models/requerant/requerant';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {RequestMessage} from '../../../models/request/requestMessage';
+import {RequestType} from '../../../models/request/requestType';
+import {RequestVisibility} from '../../../models/request/requestVisibility';
+import {AppConstantMessages} from '../../../../appConstantMessages';
+import {RequerantService} from '../../../services/requerants/requerant.service';
+import {Router} from '@angular/router';
+import {Object2Requerant} from '../../../utils/object2Requerant';
+import {Strings} from '../../../utils/strings';
+import {LockComponent} from '../../lock/lock.component';
+import {Pays} from '../../../models/pays/pays';
+import {PaysService} from '../../../services/pays/pays.service';
+import {Object2Pays} from '../../../utils/object2Pays';
+import {OperateurService} from '../../../services/operateurs/operateur.service';
+import {Object2OperateurStd} from '../../../utils/object2OperateurStd';
+import {OperateurStd} from '../../../models/operateur/operateurStd';
+import {RequerantCriteria} from '../../../models/requerant/requerantCriteria';
+import {RequerantSearchResult} from '../../../models/requerant/requerantSearchResult';
+import {PaginationComponent} from '../../../../components/pagination/pagination.component';
 
 // Variable in assets/js/scripts.js file
 declare var AdminLTE: any;
@@ -20,14 +26,18 @@ declare var AdminLTE: any;
 @Component({
   selector: 'app-admin-requerants',
   templateUrl: './admin-requerants.component.html',
-  styleUrls: ['./admin-requerants.component.css']
+  styleUrls: ['./admin-requerants.component.css'],
+  entryComponents: [PaginationComponent]
 })
-export class AdminRequerantsComponent extends LockComponent implements OnInit {
+export class AdminRequerantsComponent extends LockComponent implements OnInit, OnChanges {
 
+  public operateurs: OperateurStd[] = [];
 
   public requerants: Requerant[] = [];
 
   public requerantForm: FormGroup;
+
+  public requerantSearchForm: FormGroup;
 
   public requerant: Requerant;
 
@@ -38,6 +48,8 @@ export class AdminRequerantsComponent extends LockComponent implements OnInit {
   public submitButtonStyle;
 
   public formTitle;
+
+  public searchFormTitle;
 
   public ids: number[] = [];
 
@@ -57,7 +69,19 @@ export class AdminRequerantsComponent extends LockComponent implements OnInit {
 
   public allPays: Pays[];
 
-  constructor(public _formBuilder: FormBuilder, public _requerantService: RequerantService, public _paysService: PaysService, public _router: Router) {
+  public requerantSearchResult: RequerantSearchResult;
+
+  public criteria: RequerantCriteria;
+
+  public page = 0;
+
+  public totalPages = 1;
+
+  constructor(public _formBuilder: FormBuilder,
+              public _requerantService: RequerantService,
+              public _operateurService: OperateurService,
+              public _paysService: PaysService,
+              public _router: Router) {
     super(_router);
   }
 
@@ -65,14 +89,41 @@ export class AdminRequerantsComponent extends LockComponent implements OnInit {
     // Update the AdminLTE layouts
     AdminLTE.init();
 
-    this.initRequerantList();
+    this.criteria = new RequerantCriteria('', null, null, null, null);
+
+    this.initRequerantList(null, 0, 1);
 
     this.initForm(null);
+
+    this.initSearchForm();
+
+    this.searchFormTitle = 'Rechercher un requerant';
   }
 
-  initRequerantList() {
-    this._requerantService.list().subscribe(response => {
-        this.requerants = Object2Requerant.applyOnArray(response);
+  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+
+  }
+
+  initRequerantList(requerants: Requerant[], page: number, totalPages: number) {
+    if (requerants === null) {
+      this._requerantService.list().subscribe(response => {
+          this.requerants = Object2Requerant.applyOnArray(response);
+          this.totalPages = totalPages;
+          this.page = page;
+        },
+        error => {
+          console.log(error);
+        });
+    } else {
+      this.requerants = requerants;
+      this.totalPages = totalPages;
+      this.page = page;
+    }
+  }
+
+  initOperateurList() {
+    this._operateurService.list().subscribe(response => {
+        this.operateurs = Object2OperateurStd.applyOnArray(response);
       },
       error => {
         console.log(error);
@@ -120,6 +171,49 @@ export class AdminRequerantsComponent extends LockComponent implements OnInit {
       this.formTitle = 'Editer un requerant';
       this.submitButtonStyle = 'btn-warning';
     }
+  }
+
+  initSearchForm() {
+    this.requerantSearchForm = this._formBuilder.group({
+      keyword: [this.criteria.keyword],
+      dateNaissance: [this.criteria.dateNaissance],
+      creatorId: [''],
+      creeLeBefore: [this.criteria.creeLeBefore],
+      creeLeAfter: [this.criteria.creeLeAfter]
+    });
+
+    this.initOperateurList();
+  }
+
+  search(page: number) {
+
+    this.criteria = new RequerantCriteria(
+      this.requerantSearchForm.value.keyword,
+      this.requerantSearchForm.value.dateNaissance,
+      this.requerantSearchForm.value.creatorId,
+      this.requerantSearchForm.value.creeLeBefore,
+      this.requerantSearchForm.value.creeLeAfter
+    );
+
+    if (page != null) {
+      this._requerantService.search(this.criteria, page).subscribe(response => {
+          this.requerantSearchResult = Object2Requerant.applyOnSearchResult(response);
+          this.initRequerantList(
+            this.requerantSearchResult.content,
+            this.requerantSearchResult.page,
+            this.requerantSearchResult.totalPages);
+        },
+        error => {
+          console.log(error);
+        });
+    }
+  }
+
+  clearForm() {
+
+    this.criteria = new RequerantCriteria('', null, null, null, null);
+
+    this.initSearchForm();
   }
 
   getPaysId(nationalite): number {

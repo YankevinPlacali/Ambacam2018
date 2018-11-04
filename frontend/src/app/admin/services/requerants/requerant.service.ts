@@ -3,7 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalVariablesService} from '../global-variables/global-variables.service';
 import {Strings} from '../../utils/strings';
 import {AppConstant} from '../../../appConstant';
-import {Requerant} from "../../models/requerant/requerant";
+import {Requerant} from '../../models/requerant/requerant';
+import {RequerantCriteria} from '../../models/requerant/requerantCriteria';
 
 @Injectable()
 export class RequerantService {
@@ -29,6 +30,10 @@ export class RequerantService {
 
   delete(id: number) {
     return this._http.delete(Strings.format(AppConstant.REQUERANT_ITEM_PATH, id), this._authConstants.loadHeader());
+  }
+
+  search(criteria: RequerantCriteria, page) {
+    return this._http.post(AppConstant.REQUERANT_SEARCH_PATH.toString() + '?page=' + page, criteria, this._authConstants.loadHeader());
   }
 
 }
