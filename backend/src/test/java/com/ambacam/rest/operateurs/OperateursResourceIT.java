@@ -367,6 +367,16 @@ public class OperateursResourceIT extends ItBase {
 	}
 
 	@Test
+	public void deleteConnectedOperateur() {
+
+		preLoadedGiven.delete(ApiConstants.OPERATEUR_ITEM, defaultOperateur.getId()).then().statusCode(400);
+
+		// check that the operateur has not been deleted
+		Operateur actual = repository.findOne(defaultOperateur.getId());
+		assertThat(actual, is(notNullValue()));
+	}
+
+	@Test
 	public void deleteNotFound() {
 		preLoadedGiven.delete(ApiConstants.OPERATEUR_ITEM, random.nextLong()).then().statusCode(404);
 	}
