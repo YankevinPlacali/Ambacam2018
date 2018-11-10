@@ -60,6 +60,8 @@ export class AdminMotifSuppressionComponent  extends LockComponent implements On
     // Update the AdminLTE layouts
     AdminLTE.init();
 
+    this.motif = null;
+
     this.initMotifList();
 
     this.initForm(null);
@@ -114,7 +116,7 @@ export class AdminMotifSuppressionComponent  extends LockComponent implements On
 
   submit(motif: MotifSuppression) {
 
-    if (motif === undefined) {
+    if (motif === null) {
       this.motif = new MotifSuppression(
         null,
         this.motifForm.value.nom,
