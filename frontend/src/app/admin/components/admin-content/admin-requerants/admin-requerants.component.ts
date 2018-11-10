@@ -65,6 +65,8 @@ export class AdminRequerantsComponent extends LockComponent implements OnInit {
     // Update the AdminLTE layouts
     AdminLTE.init();
 
+    this.requerant = null;
+
     this.initRequerantList();
 
     this.initForm(null);
@@ -166,7 +168,7 @@ export class AdminRequerantsComponent extends LockComponent implements OnInit {
     this.requerant.lieuNaissance = this.requerantForm.value.lieuNaissance;
     this.requerant.paysId = parseInt(this.requerantForm.value.nationalite);
 
-    if (requerant === undefined) {
+    if (requerant === null) {
 
       this._requerantService.create(this.requerant).subscribe(response => {
           this.requerant = Object2Requerant.apply(response);
