@@ -63,6 +63,8 @@ export class AdminStatutsComponent extends LockComponent implements OnInit {
     // Update the AdminLTE layouts
     AdminLTE.init();
 
+    this.statut = null;
+
     this.initStatutList();
 
     this.initForm(null);
@@ -117,7 +119,7 @@ export class AdminStatutsComponent extends LockComponent implements OnInit {
 
   submit(statut: Statut) {
 
-    if (statut === undefined) {
+    if (statut === null) {
       this.statut = new Statut(
         null,
         this.statutForm.value.nom,

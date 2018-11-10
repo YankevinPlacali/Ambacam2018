@@ -58,6 +58,8 @@ export class AdminTypeRequetesComponent implements OnInit {
     // Update the AdminLTE layouts
     AdminLTE.init();
 
+    this.typeRequete = null;
+
     this.initTypeRequeteList();
 
     this.initForm(null);
@@ -112,7 +114,7 @@ export class AdminTypeRequetesComponent implements OnInit {
 
   submit(typeRequete: TypeRequete) {
 
-    if (typeRequete === undefined) {
+    if (typeRequete === null) {
       this.typeRequete = new TypeRequete(
         null,
         this.typeRequeteForm.value.nom,

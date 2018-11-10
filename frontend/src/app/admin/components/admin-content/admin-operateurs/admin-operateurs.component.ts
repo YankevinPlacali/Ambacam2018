@@ -78,6 +78,8 @@ export class AdminOperateursComponent extends LockComponent implements OnInit {
     // Update the AdminLTE layouts
     AdminLTE.init();
 
+    this.operateurCreate = null;
+
     this.initOperateurList();
 
     this.initForm(null);
@@ -140,7 +142,7 @@ export class AdminOperateursComponent extends LockComponent implements OnInit {
 
   submit(operateur: Operateur) {
 
-    if (operateur === undefined) {
+    if (operateur === null) {
       const creatorId = Auth.getOperateur().id;
       this.operateurCreate = new OperateurCreate(
         this.operateurForm.value.nom,

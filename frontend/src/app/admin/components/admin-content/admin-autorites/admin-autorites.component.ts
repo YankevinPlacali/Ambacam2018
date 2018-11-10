@@ -59,6 +59,8 @@ export class AdminAutoritesComponent extends LockComponent implements OnInit {
     // Update the AdminLTE layouts
     AdminLTE.init();
 
+    this.autorite = null;
+
     this.initAutoriteList();
 
     this.initForm(null);
@@ -115,7 +117,7 @@ export class AdminAutoritesComponent extends LockComponent implements OnInit {
 
   submit(autorite: Autorite) {
 
-    if (autorite === undefined) {
+    if (autorite === null) {
       this.autorite = new Autorite(
         null,
         this.autoriteForm.value.nom,
