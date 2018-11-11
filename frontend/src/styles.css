@@ -4,3 +4,15 @@
   margin-right: 5px;
 }
 
+.pagination_block{
+  margin-top: -15px;
+}
+
+.pagination_zone{
+  height: 50px;
+}
+
+.pagination_component{
+  position: relative;
+  top: -27px;
+}

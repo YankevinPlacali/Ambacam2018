@@ -1,9 +1,11 @@
-import {Requerant} from "../models/requerant/requerant";
-import {DateUtils} from "./dateUtils";
+import {Requerant} from '../models/requerant/requerant';
+import {DateUtils} from './dateUtils';
+import {RequerantSearchResult} from '../models/requerant/requerantSearchResult';
 
 export class Object2Requerant {
   public static requerant: Requerant;
   public static requerants: Requerant [];
+  public static requerantSearchResult: RequerantSearchResult;
 
   constructor() {
 
@@ -34,5 +36,20 @@ export class Object2Requerant {
     });
 
     return this.requerants;
+  }
+
+  public static applyOnSearchResult(object): RequerantSearchResult {
+
+    const content: Requerant[] = [];
+    object.content.forEach(requerant => {
+      content.push(this.apply(requerant));
+    });
+    this.requerantSearchResult = {
+      page: object.page,
+      totalPages: object.totalPages,
+      content: content
+    };
+
+    return this.requerantSearchResult;
   }
 }
