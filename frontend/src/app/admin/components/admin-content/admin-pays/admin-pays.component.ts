@@ -58,6 +58,8 @@ export class AdminPaysComponent extends LockComponent implements OnInit {
     // Update the AdminLTE layouts
     AdminLTE.init();
 
+    this.pays = null;
+
     this.initPaysList();
 
     this.initForm(null);
@@ -112,7 +114,7 @@ export class AdminPaysComponent extends LockComponent implements OnInit {
 
   submit(p: Pays) {
 
-    if (p === undefined) {
+    if (p === null) {
       this.p = new Pays(
         null,
         this.pForm.value.nom,

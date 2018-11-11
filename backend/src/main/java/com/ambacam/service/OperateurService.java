@@ -3,12 +3,16 @@ package com.ambacam.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.ambacam.configuration.AppSettings;
 import com.ambacam.exception.ResourceBadRequestException;
@@ -37,6 +41,9 @@ public class OperateurService {
 
 	@Autowired
 	private AppSettings appSettings;
+
+	@Autowired
+	private TokenService tokenService;
 
 	/**
 	 * Create an operateur
@@ -195,10 +202,22 @@ public class OperateurService {
 	 * 
 	 * @throws ResourceNotFoundException
 	 *             if the operateur is not found
+	 * @throws ResourceBadRequestException
+	 *             if the operateur is the currently connected
 	 */
 	public void delete(Long id) {
 		// find operateur
-		findOperateur(id);
+		Operateur operateurToDelele = findOperateur(id);
+
+		// check if the operateur is not connected
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+				.getRequest();
+		Operateur connectedOperateur = tokenService.getConnectedOperateur(request);
+		if (connectedOperateur.getId().equals(operateurToDelele.getId())) {
+			throw new ResourceBadRequestException(
+					String.format("The operateur %s can not be deleted because he is currently connected",
+							operateurToDelele.getId().intValue()));
+		}
 
 		// set unlink all created operateur
 		List<Operateur> createdOperateurs = operateurRepository.findByCreeParId(id);

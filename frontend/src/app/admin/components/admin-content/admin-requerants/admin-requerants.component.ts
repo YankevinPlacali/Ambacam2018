@@ -1,4 +1,5 @@
 import {Component, OnInit, SimpleChange, OnChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Requerant} from '../../../models/requerant/requerant';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RequestMessage} from '../../../models/request/requestMessage';
@@ -92,6 +93,8 @@ export class AdminRequerantsComponent extends LockComponent implements OnInit, O
     this.criteria = new RequerantCriteria('', null, null, null, null);
 
     this.initRequerantList(null, 0, 1);
+
+    this.requerant = null;
 
     this.initForm(null);
 
@@ -260,7 +263,7 @@ export class AdminRequerantsComponent extends LockComponent implements OnInit, O
     this.requerant.lieuNaissance = this.requerantForm.value.lieuNaissance;
     this.requerant.paysId = parseInt(this.requerantForm.value.nationalite);
 
-    if (requerant === undefined) {
+    if (requerant === null) {
 
       this._requerantService.create(this.requerant).subscribe(response => {
           this.requerant = Object2Requerant.apply(response);

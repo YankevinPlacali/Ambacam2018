@@ -60,6 +60,8 @@ export class AdminRolesComponent extends LockComponent implements OnInit {
     // Update the AdminLTE layouts
     AdminLTE.init();
 
+    this.role = null;
+
     this.initRoleList();
 
     this.initForm(null);
@@ -114,7 +116,7 @@ export class AdminRolesComponent extends LockComponent implements OnInit {
 
   submit(role: Role) {
 
-    if (role === undefined) {
+    if (role === null) {
       this.role = new Role(
         null,
         this.roleForm.value.nom,

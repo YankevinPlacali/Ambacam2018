@@ -60,6 +60,8 @@ export class AdminActionsComponent extends LockComponent implements OnInit {
     // Update the AdminLTE layouts
     AdminLTE.init();
 
+    this.action = null;
+
     this.initActionList();
 
     this.initForm(null);
@@ -114,7 +116,7 @@ export class AdminActionsComponent extends LockComponent implements OnInit {
 
   submit(action: Action) {
 
-    if (action === undefined) {
+    if (action === null) {
       this.action = new Action(
         null,
         this.actionForm.value.nom,
