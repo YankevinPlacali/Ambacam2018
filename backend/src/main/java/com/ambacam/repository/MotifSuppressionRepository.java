@@ -7,4 +7,6 @@ import com.ambacam.model.MotifSuppression;
 public interface MotifSuppressionRepository extends JpaRepository<MotifSuppression, Long> {
 
 	int countByNom(String nom);
+
+	MotifSuppression findByNom(String nom);
 }

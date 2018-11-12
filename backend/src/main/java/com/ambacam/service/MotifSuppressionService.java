@@ -14,6 +14,7 @@ import com.ambacam.repository.MotifSuppressionRepository;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class MotifSuppressionService {
+	public static String DEFAULT_MOTIF="completed";
 	@Autowired
 	private MotifSuppressionRepository motifSuppressionRepository;
 

@@ -6,24 +6,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ambacam.configuration.AppSettings;
 import com.ambacam.exception.ResourceBadRequestException;
 import com.ambacam.exception.ResourceNotFoundException;
 import com.ambacam.model.Action;
+import com.ambacam.model.Log;
+import com.ambacam.model.MotifSuppression;
 import com.ambacam.repository.ActionRepository;
+import com.ambacam.repository.MotifSuppressionRepository;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class ActionService {
 	@Autowired
 	private ActionRepository actionRepository;
+	@Autowired
+	private MotifSuppressionRepository motifSuppressionRepository;
+	@Autowired
+	private AppSettings appSettings;
 
 	/**
 	 * Create an action
 	 * 
-	 * @param action The new action to create
+	 * @param action
+	 *            The new action to create
 	 * 
 	 * @return The new action created
-	 * @throws ResourceBadRequestException if an action with the name already exist
+	 * @throws ResourceBadRequestException
+	 *             if an action with the name already exist
 	 */
 	public Action create(Action action) {
 
@@ -37,11 +47,13 @@ public class ActionService {
 	/**
 	 * Get an action
 	 * 
-	 * @param id The id of the Action you want to get
+	 * @param id
+	 *            The id of the Action you want to get
 	 * 
 	 * @return The action found
 	 * 
-	 * @throws ResourceNotFoundException if the action does not exist
+	 * @throws ResourceNotFoundException
+	 *             if the action does not exist
 	 */
 	public Action get(Long id) {
 		return findAction(id);
@@ -60,14 +72,18 @@ public class ActionService {
 	/**
 	 * Update an action
 	 * 
-	 * @param id The id of the action to update
+	 * @param id
+	 *            The id of the action to update
 	 * 
-	 * @param update The new action modifications
+	 * @param update
+	 *            The new action modifications
 	 * 
 	 * @return The action updated
 	 * 
-	 * @throws ResourceNotFoundException if the action is not found
-	 * @throws ResourceBadRequestException if an action with the name already exist
+	 * @throws ResourceNotFoundException
+	 *             if the action is not found
+	 * @throws ResourceBadRequestException
+	 *             if an action with the name already exist
 	 */
 	public Action update(Long id, Action update) {
 
@@ -85,13 +101,29 @@ public class ActionService {
 	/**
 	 * Delete an action
 	 * 
-	 * @param id The id of the action to delete
+	 * @param id
+	 *            The id of the action to delete
+	 * @param motifSuppressionName
+	 *            the reason for the deletion
 	 * 
-	 * @throws ResourceNotFoundException if the action is not found
+	 * @throws ResourceNotFoundException
+	 *             if the action is not found
 	 */
-	public void delete(Long id) {
+	public void delete(Long id, String motifSuppressionName) {
 		// find action
 		findAction(id);
+
+		// find or create motifSuppression
+		MotifSuppression motifSuppression = motifSuppressionRepository.findByNom(motifSuppressionName);
+		if (motifSuppression == null) {
+			motifSuppression = motifSuppressionRepository.findByNom(appSettings.getDefaultMotifSuppressionName());
+		}
+
+		// find or create action
+		Action action = actionRepository.findByNom(ActionName.DELETE);
+		if (action == null) {
+			action = actionRepository.save(new Action(ActionName.DELETE));
+		}
 		actionRepository.delete(id);
 	}
 
@@ -111,6 +143,19 @@ public class ActionService {
 			throw new ResourceBadRequestException(
 					String.format("An action with a name '%s' exist already", action.getNom()));
 		}
+	}
+
+	public AppSettings getAppSettings() {
+		return appSettings;
+	}
+
+	public void setAppSettings(AppSettings appSettings) {
+		this.appSettings = appSettings;
+	}
+
+	public Log CreateLog() {
+		return null;
+
 	}
 
 }

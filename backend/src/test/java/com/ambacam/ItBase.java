@@ -3,6 +3,7 @@ package com.ambacam;
 import static io.restassured.RestAssured.given;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -35,6 +36,7 @@ import com.ambacam.model.TypeRequete;
 import com.ambacam.repository.OperateurRepository;
 import com.ambacam.repository.PaysRepository;
 import com.ambacam.rest.ApiConstants;
+import com.ambacam.service.MotifSuppressionService;
 import com.ambacam.transfert.operateurs.Operateur2OperateurCreatedTO;
 import com.ambacam.transfert.operateurs.Operateur2OperateurUpdateTO;
 import com.ambacam.transfert.operateurs.OperateurCreateTO;
@@ -157,6 +159,9 @@ public class ItBase {
 
 	protected Log buildLog(LogActeur acteurActif, LogActeur acteurPassif, Action action,
 			MotifSuppression motifSuppression) {
+		if (motifSuppression.getNom() == null || motifSuppression.getNom().isEmpty()) {
+			motifSuppression.setNom(MotifSuppressionService.DEFAULT_MOTIF);
+		}
 		Log log = new Log(acteurActif, acteurActif, action, motifSuppression);
 		return log;
 	}
@@ -279,4 +284,16 @@ public class ItBase {
 		return new PassportCreateTO("numero-" + random.nextLong(), new Date(), new Date(),
 				"lieuDelivrance-" + random.nextLong(), autoriteId);
 	}
+
+	protected Map<String, String> buildPropertiesActeurPassif(RequeteGroupe requeteGroupe) {
+		Map<String, String> properties = new HashMap<>();
+		properties.put("Id", requeteGroupe.getId().toString());
+		properties.put("Name", requeteGroupe.getNom());
+		properties.put("Description", requeteGroupe.getDescription());
+		properties.put("Status", requeteGroupe.getStatus());
+		properties.put("Creation date", requeteGroupe.getCreeLe().toString());
+		properties.put("Create by", requeteGroupe.getCreePar().getId().toString());
+		return properties;
+	}
+
 }

@@ -8,4 +8,6 @@ public interface ActionRepository extends JpaRepository<Action, Long> {
 
 	int countByNom(String nom);
 
+	Action findByNom(String nom);
+
 }

@@ -13,8 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.ambacam.configuration.AppSettings;
 import com.ambacam.model.AutorizationOperateur;
+import com.ambacam.model.MotifSuppression;
 import com.ambacam.model.Operateur;
 import com.ambacam.model.Pays;
+import com.ambacam.repository.MotifSuppressionRepository;
 import com.ambacam.repository.OperateurRepository;
 import com.ambacam.repository.PaysRepository;
 
@@ -29,6 +31,7 @@ public class AmbacamBackendApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(AmbacamBackendApplication.class, args);
 		createAdminOperateur(ctx);
+		createDefaultMotifSuppression(ctx);
 	}
 
 	@Autowired
@@ -66,5 +69,16 @@ public class AmbacamBackendApplication extends SpringBootServletInitializer {
 		if (operateurRepository.count() == 0) {
 			operateur = operateurRepository.save(operateur);
 		}
+	}
+
+	public static void createDefaultMotifSuppression(ApplicationContext ctx) {
+		MotifSuppressionRepository motifSuppressionRepository = ctx.getBean(MotifSuppressionRepository.class);
+		AppSettings appSettings = ctx.getBean(AppSettings.class);
+
+		if (motifSuppressionRepository.findByNom(appSettings.getDefaultMotifSuppressionName()) != null) {
+			motifSuppressionRepository.save(new MotifSuppression(appSettings.getDefaultMotifSuppressionName())
+					.description(appSettings.getDefaultMotifSuppressionDescription()));
+		}
+
 	}
 }

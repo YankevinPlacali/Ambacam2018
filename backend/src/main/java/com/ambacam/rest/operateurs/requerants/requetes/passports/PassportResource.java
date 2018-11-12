@@ -3,6 +3,7 @@ package com.ambacam.rest.operateurs.requerants.requetes.passports;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
@@ -45,11 +46,12 @@ public class PassportResource {
 
 	@RequestMapping(method = RequestMethod.DELETE)
 	public void delete(@PathVariable("operateurId") Long operateurId, @PathVariable("requerantId") Long requerantId,
-			@PathVariable("requeteId") Long requeteId, @PathVariable("passportId") Long passportId) {
-		log.info("Delete a passport [operateurId={}, requerantId={}, requeteId={}, passportId={}]", operateurId,
-				requerantId, requeteId, passportId);
+			@PathVariable("requeteId") Long requeteId, @PathVariable("passportId") Long passportId,
+			@QueryParam("motifName") String motifName) {
+		log.info("Delete a passport [operateurId={}, requerantId={}, requeteId={}, passportId={}, motifName={}]",
+				operateurId, requerantId, requeteId, passportId, motifName);
 
-		passportService.delete(passportId);
+		passportService.delete(operateurId, passportId, motifName);
 
 	}
 
