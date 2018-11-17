@@ -43,6 +43,8 @@ public class PassportService {
 	 *             if the requete is not found
 	 * @throws ResourceBadRequestException
 	 *             if the autorite does not exist
+	 * @throws ResourceBadRequestException
+	 *             if a passport with the same number already exist
 	 */
 	public Passport create(Long requeteId, PassportCreateTO passportCreateTO) {
 		// find requete
@@ -54,6 +56,10 @@ public class PassportService {
 		Passport passport = new Passport();
 		passport.setId(null);
 		passport.setNumero(passportCreateTO.getNumero());
+
+		// check passport number uniqueness
+		checkNumberUniqueness(passport);
+
 		passport.setDateDelivrance(passportCreateTO.getDateDelivrance());
 		passport.setDateExpiration(passportCreateTO.getDateExpiration());
 		passport.setLieuDelivrance(passportCreateTO.getLieuDelivrance());
@@ -118,12 +124,21 @@ public class PassportService {
 	 *             if the passport is not found
 	 * @throws ResourceBadRequestException
 	 *             if the autorite does not exist
+	 * @throws ResourceBadRequestException
+	 *             if a passport with the same number already exist
 	 */
 	public Passport update(Long passportId, PassportCreateTO passportUpdateTO) {
 		// find autorite
 		Autorite delivrePar = findAutorite(passportUpdateTO.getAutoriteId());
 
 		Passport found = findPassport(passportId);
+
+		if (!found.getNumero().equals(passportUpdateTO.getNumero())) {
+			Passport passport = new Passport().numero(passportUpdateTO.getNumero());
+			// check passport number uniqueness
+			checkNumberUniqueness(passport);
+		}
+
 		found.setNumero(passportUpdateTO.getNumero());
 		found.setDateDelivrance(passportUpdateTO.getDateDelivrance());
 		found.setLieuDelivrance(passportUpdateTO.getLieuDelivrance());
@@ -157,5 +172,12 @@ public class PassportService {
 			throw new ResourceBadRequestException("The autorite " + id.toString() + " does not exist");
 		}
 		return found;
+	}
+
+	private void checkNumberUniqueness(Passport passport) {
+		if (passportRepository.countByNumero(passport.getNumero()) > 0) {
+			throw new ResourceBadRequestException(
+					String.format("A passport with the number %s already exist", passport.getNumero()));
+		}
 	}
 }
