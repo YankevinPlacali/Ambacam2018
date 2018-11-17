@@ -61,7 +61,9 @@ public class RequerantRequetesResourceIT extends ItBase {
 	@Mock
 	private AppSettings appSettings;
 
-	private TypeRequete typeRequete;
+	private TypeRequete typeRequete1;
+	private TypeRequete typeRequete2;
+	private TypeRequete typeRequete3;
 
 	private StatusRequete statusRequete;
 
@@ -85,7 +87,9 @@ public class RequerantRequetesResourceIT extends ItBase {
 	public void setup() throws Exception {
 		super.setup();
 
-		typeRequete = typeRequeteRepository.save(buildTypeRequete().nom("type1"));
+		typeRequete1 = typeRequeteRepository.save(buildTypeRequete().nom("type1"));
+		typeRequete2 = typeRequeteRepository.save(buildTypeRequete().nom("type2"));
+		typeRequete3 = typeRequeteRepository.save(buildTypeRequete().nom("type3"));
 
 		statusRequete = statusRequeteRepository.save(buildStatusRequete().nom("status1"));
 
@@ -105,7 +109,7 @@ public class RequerantRequetesResourceIT extends ItBase {
 		requete1 = buildRequete();
 		requete1.setRequeteGroupe(requeteGroupe);
 		requete1.setRequerant(requerant1);
-		requete1.setType(typeRequete);
+		requete1.setType(typeRequete1);
 		requete1.setStatus(statusRequete);
 		requete1.setOperateur(operateur1);
 		requete1 = requeteRepository.save(requete1);
@@ -115,7 +119,7 @@ public class RequerantRequetesResourceIT extends ItBase {
 		requete2 = buildRequete();
 		requete2.setRequeteGroupe(requeteGroupe);
 		requete2.setRequerant(requerant1);
-		requete2.setType(typeRequete);
+		requete2.setType(typeRequete2);
 		requete2.setStatus(statusRequete);
 		requete2.setOperateur(operateur1);
 		requete2 = requeteRepository.save(requete2);
@@ -125,7 +129,7 @@ public class RequerantRequetesResourceIT extends ItBase {
 		requete3 = buildRequete();
 		requete3.setRequeteGroupe(requeteGroupe);
 		requete3.setRequerant(requerant1);
-		requete3.setType(typeRequete);
+		requete3.setType(typeRequete3);
 		requete3.setStatus(statusRequete);
 		requete3.setOperateur(operateur2);
 		requete3 = requeteRepository.save(requete3);
@@ -135,7 +139,7 @@ public class RequerantRequetesResourceIT extends ItBase {
 		requete4 = buildRequete();
 		requete4.setRequeteGroupe(requeteGroupe);
 		requete4.setRequerant(requerant2);
-		requete4.setType(typeRequete);
+		requete4.setType(typeRequete1);
 		requete4.setStatus(statusRequete);
 		requete4.setOperateur(operateur2);
 		requete4 = requeteRepository.save(requete4);
@@ -163,7 +167,7 @@ public class RequerantRequetesResourceIT extends ItBase {
 	public void get() {
 		preLoadedGiven.get(ApiConstants.REQUERANT_REQUETE_ITEM, requerant1.getId(), requete1.getId()).then().log().body()
 				.statusCode(200).body("id", is(equalTo(requete1.getId().intValue())))
-				.body("type.id", is(equalTo(typeRequete.getId().intValue())))
+				.body("type.id", is(equalTo(typeRequete1.getId().intValue())))
 				.body("status.id", is(equalTo(statusRequete.getId().intValue())))
 				.body("date", is(equalTo(requete1.getCreeLe().getTime())))
 				.body("requerant.id", is(equalTo(requerant1.getId().intValue())))
@@ -181,7 +185,7 @@ public class RequerantRequetesResourceIT extends ItBase {
 				.body().statusCode(200).body("size()", is(equalTo(1)))
 				.body("id", containsInAnyOrder(requete1.getId().intValue()))
 				.body("find{it.id==" + requete1.getId().intValue() + "}.type.id",
-						is(equalTo(typeRequete.getId().intValue())))
+						is(equalTo(typeRequete1.getId().intValue())))
 				.body("find{it.id==" + requete1.getId().intValue() + "}.status.id",
 						is(equalTo(statusRequete.getId().intValue())))
 				.body("find{it.id==" + requete1.getId().intValue() + "}.date",
@@ -209,7 +213,7 @@ public class RequerantRequetesResourceIT extends ItBase {
 						containsInAnyOrder(requete1.getId().intValue(), requete2.getId().intValue(),
 								requete3.getId().intValue()))
 				.body("find{it.id==" + requete1.getId().intValue() + "}.type.id",
-						is(equalTo(typeRequete.getId().intValue())))
+						is(equalTo(typeRequete1.getId().intValue())))
 				.body("find{it.id==" + requete1.getId().intValue() + "}.status.id",
 						is(equalTo(statusRequete.getId().intValue())))
 				.body("find{it.id==" + requete1.getId().intValue() + "}.date",
