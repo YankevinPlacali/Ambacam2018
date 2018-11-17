@@ -22,7 +22,7 @@ public class Passport implements Serializable {
 	private Long id;
 
 	@NotNull(message = "the number must not be null")
-	@Column(columnDefinition = "varchar")
+	@Column(columnDefinition = "varchar", unique = true)
 	private String numero;
 
 	@NotNull(message = "the date of issue must not be null")
@@ -64,6 +64,11 @@ public class Passport implements Serializable {
 
 	public void setNumero(String numero) {
 		this.numero = numero;
+	}
+
+	public Passport numero(String numero) {
+		this.numero = numero;
+		return this;
 	}
 
 	public Date getDateDelivrance() {

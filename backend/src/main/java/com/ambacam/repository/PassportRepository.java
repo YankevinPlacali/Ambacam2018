@@ -10,4 +10,6 @@ public interface PassportRepository extends JpaRepository<Passport, Long> {
 
 	List<Passport> findAllByRequeteId(Long requeteId);
 
+	int countByNumero(String numero);
+
 }

@@ -169,6 +169,16 @@ public class PassportsResourceIT extends ItBase {
 	}
 
 	@Test
+	public void createWithExistingNumber() {
+		PassportCreateTO createTO = buildPassportCreateTO(autorite.getId());
+		createTO.setNumero(passport1.getNumero());
+
+		preLoadedGiven.contentType(ContentType.JSON).body(createTO).log().body()
+				.post(ApiConstants.PASSPORT_COLLECTION, operateur.getId(), requerant.getId(), requete1.getId()).then()
+				.log().body().statusCode(400);
+	}
+
+	@Test
 	public void createRequeteNotFound() {
 
 		PassportCreateTO createTO = buildPassportCreateTO(autorite.getId());
@@ -304,6 +314,21 @@ public class PassportsResourceIT extends ItBase {
 		// check updated properties
 		assertThat(actual.getUrlPhoto(), is(equalTo(passport3.getUrlPhoto())));
 		assertThat(actual.getRequete().getId(), is(equalTo(requete2.getId())));
+	}
+
+	@Test
+	public void updateWithExistingNumero() {
+
+		Autorite updateAutorite = autoriteRepository.save(buildAutorite());
+
+		PassportCreateTO updateTO = buildPassportCreateTO(updateAutorite.getId());
+		updateTO.setNumero("numero updated");
+		updateTO.setLieuDelivrance("Mbanga Mpongo");
+		updateTO.setNumero(passport1.getNumero());
+
+		preLoadedGiven.contentType(ContentType.JSON).body(updateTO).put(ApiConstants.PASSPORT_ITEM, operateur.getId(),
+				requerant.getId(), requete1.getId(), passport3.getId()).then().log().body().statusCode(400);
+
 	}
 
 	@Test
