@@ -54,7 +54,9 @@ public class RequeteGroupeRequetesResourceIT extends ItBase {
 	@Autowired
 	private RequeteRepository requeteRepository;
 
-	private TypeRequete typeRequete;
+	private TypeRequete typeRequete1;
+	private TypeRequete typeRequete2;
+	private TypeRequete typeRequete3;
 
 	private StatusRequete statusRequete;
 	private StatusRequete updateStatus;
@@ -79,7 +81,9 @@ public class RequeteGroupeRequetesResourceIT extends ItBase {
 	public void setup() throws Exception {
 		super.setup();
 
-		typeRequete = typeRequeteRepository.save(buildTypeRequete().nom("type1"));
+		typeRequete1 = typeRequeteRepository.save(buildTypeRequete().nom("type1"));
+		typeRequete2 = typeRequeteRepository.save(buildTypeRequete().nom("type2"));
+		typeRequete3 = typeRequeteRepository.save(buildTypeRequete().nom("type3"));
 
 		statusRequete = statusRequeteRepository.save(buildStatusRequete().nom("status1"));
 		updateStatus = statusRequeteRepository.save(buildStatusRequete().nom("updateStatus"));
@@ -100,7 +104,7 @@ public class RequeteGroupeRequetesResourceIT extends ItBase {
 		requete1 = buildRequete();
 		requete1.setRequeteGroupe(requeteGroupe);
 		requete1.setRequerant(requerant1);
-		requete1.setType(typeRequete);
+		requete1.setType(typeRequete1);
 		requete1.setStatus(statusRequete);
 		requete1.setOperateur(operateur1);
 		requete1 = requeteRepository.save(requete1);
@@ -108,7 +112,7 @@ public class RequeteGroupeRequetesResourceIT extends ItBase {
 		requete2 = buildRequete();
 		requete2.setRequeteGroupe(requeteGroupe);
 		requete2.setRequerant(requerant1);
-		requete2.setType(typeRequete);
+		requete2.setType(typeRequete2);
 		requete2.setStatus(statusRequete);
 		requete2.setOperateur(operateur1);
 		requete2 = requeteRepository.save(requete2);
@@ -116,14 +120,14 @@ public class RequeteGroupeRequetesResourceIT extends ItBase {
 		requete3 = buildRequete();
 		requete3.setRequeteGroupe(requeteGroupe);
 		requete3.setRequerant(requerant1);
-		requete3.setType(typeRequete);
+		requete3.setType(typeRequete3);
 		requete3.setStatus(statusRequete);
 		requete3.setOperateur(operateur2);
 		requete3 = requeteRepository.save(requete3);
 
 		requete4 = buildRequete();
 		requete4.setRequerant(requerant2);
-		requete4.setType(typeRequete);
+		requete4.setType(typeRequete1);
 		requete4.setStatus(statusRequete);
 		requete4.setOperateur(operateur2);
 		requete4 = requeteRepository.save(requete4);

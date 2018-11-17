@@ -8,8 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "requerant_id", "type_requete_id" }) })
 public class Requete extends AuditingCommonEntity implements Serializable {
 	private static final long serialVersionUID = 3382958287248625084L;
 

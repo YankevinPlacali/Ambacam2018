@@ -72,7 +72,8 @@ public class RequeteGroupesResourceIT extends ItBase {
 
 	private Operateur operateur;
 
-	private TypeRequete typeRequete;
+	private TypeRequete typeRequete1;
+	private TypeRequete typeRequete2;
 
 	private StatusRequete statusRequete1;
 	private StatusRequete statusRequete2;
@@ -97,8 +98,9 @@ public class RequeteGroupesResourceIT extends ItBase {
 		// create pays
 		pays = paysRepository.save(buildPays());
 
-		// create typeRequete
-		typeRequete = typeRequeteRepository.save(buildTypeRequete());
+		// create typeRequetes
+		typeRequete1 = typeRequeteRepository.save(buildTypeRequete());
+		typeRequete2 = typeRequeteRepository.save(buildTypeRequete());
 
 		// create statusRequete
 		statusRequete1 = statusRequeteRepository.save(buildStatusRequete());
@@ -121,10 +123,10 @@ public class RequeteGroupesResourceIT extends ItBase {
 		requeteGroupeRepository.save(Arrays.asList(requeteGroupe1, requeteGroupe2));
 
 		// create requetes
-		requete1 = buildRequete().status(statusRequete1).type(typeRequete).requerant(requerant).operateur(operateur)
+		requete1 = buildRequete().status(statusRequete1).type(typeRequete1).requerant(requerant).operateur(operateur)
 				.requeteGroupe(requeteGroupe2);
 
-		requete2 = buildRequete().status(statusRequete2).type(typeRequete).requerant(requerant).operateur(operateur)
+		requete2 = buildRequete().status(statusRequete2).type(typeRequete2).requerant(requerant).operateur(operateur)
 				.requeteGroupe(requeteGroupe1);
 
 		requeteRepository.save(Arrays.asList(requete1, requete2));

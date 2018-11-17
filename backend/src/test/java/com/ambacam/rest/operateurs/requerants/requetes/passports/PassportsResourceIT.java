@@ -65,7 +65,8 @@ public class PassportsResourceIT extends ItBase {
 	@Autowired
 	private AutoriteRepository autoriteRepository;
 
-	private TypeRequete typeRequete;
+	private TypeRequete typeRequete1;
+	private TypeRequete typeRequete2;
 
 	private StatusRequete statusRequete;
 
@@ -91,7 +92,8 @@ public class PassportsResourceIT extends ItBase {
 	public void setup() throws Exception {
 		super.setup();
 
-		typeRequete = typeRequeteRepository.save(buildTypeRequete().nom("type1"));
+		typeRequete1 = typeRequeteRepository.save(buildTypeRequete().nom("type1"));
+		typeRequete2 = typeRequeteRepository.save(buildTypeRequete().nom("type2"));
 
 		statusRequete = statusRequeteRepository.save(buildStatusRequete().nom("status1"));
 
@@ -109,7 +111,7 @@ public class PassportsResourceIT extends ItBase {
 		requete1 = buildRequete();
 		requete1.setRequeteGroupe(requeteGroupe);
 		requete1.setRequerant(requerant);
-		requete1.setType(typeRequete);
+		requete1.setType(typeRequete1);
 		requete1.setStatus(statusRequete);
 		requete1.setOperateur(operateur);
 		requete1 = requeteRepository.save(requete1);
@@ -117,7 +119,7 @@ public class PassportsResourceIT extends ItBase {
 		requete2 = buildRequete();
 		requete2.setRequeteGroupe(requeteGroupe);
 		requete2.setRequerant(requerant);
-		requete2.setType(typeRequete);
+		requete2.setType(typeRequete2);
 		requete2.setStatus(statusRequete);
 		requete2.setOperateur(operateur);
 		requete2 = requeteRepository.save(requete2);
