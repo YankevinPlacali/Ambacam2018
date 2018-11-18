@@ -20,6 +20,9 @@ import {Object2TypeRequete} from '../../../utils/object2TypeRequete';
 import {Object2Requete} from '../../../utils/object2Requete';
 import {Object2Pays} from '../../../utils/object2Pays';
 import {LockComponent} from '../../lock/lock.component';
+import {Strings} from '../../../utils/strings';
+import {Object2Pays} from '../../../utils/object2Pays';
+import {LockComponent} from '../../lock/lock.component';
 // Variable in assets/js/scripts.js file
 declare var AdminLTE: any;
 
@@ -159,7 +162,7 @@ export class AdminRequetesFormComponent extends LockComponent implements OnInit 
   }
 
   editForm(requete: Requete) {
-    this._requeteService.get(requete.id).subscribe(response => {
+    this._requeteService.get(requete, this.operateur.id).subscribe(response => {
         this.requete = Object2Requete.apply(response);
         this.initForm(this.requete);
       },

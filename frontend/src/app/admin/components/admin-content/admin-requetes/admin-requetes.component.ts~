@@ -188,6 +188,7 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
   }
 
   editForm(requete: Requete) {
+    this._requeteService.get(requete, this.operateur.id).subscribe(response => {
     this._requeteService.get(requete.id).subscribe(response => {
         this.requete = Object2Requete.apply(response);
         this.initForm(this.requete);
@@ -238,7 +239,7 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
 
     } else {
       this.requete.id = requete.id;
-      this._requeteService.update(this.requete.id, this.requete).subscribe(response => {
+      this._requeteService.update(this.requete, this.operateur.id).subscribe(response => {
           this.requestMessage = new RequestMessage(
             RequestType.WARNING,
             'Requete modifie',
@@ -302,6 +303,7 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
       if (this.deleteAction) {
         // delete requetes from the list
         this.checkedRequetes.forEach(requete => {
+          this._requeteService.delete(requete, this.operateur.id).subscribe(response => {
           this._requeteService.delete(requete.id).subscribe(response => {
               this.ngOnInit();
             },
@@ -348,7 +350,8 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
           this.checkedRequetes.forEach(requete => {
             requete.statusId = this.statusId;
 
-            this._requeteService.updateStatut(requete.id, requete.statusId).subscribe(response => {
+            this._requeteService.updateStatut(requete, this.operateur.id).subscribe(response => {
+          this._requeteService.updateStatut(requete.id, this.statusId).subscribe(response => {
                 this.ngOnInit();
               },
               error => {
@@ -640,7 +643,6 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
           RequestVisibility.VISIBLE);
       });
   }
-
   setCurrentRequete(requeteId: number) {
     this.requeteId = requeteId;
   }

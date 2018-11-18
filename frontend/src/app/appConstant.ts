@@ -1,4 +1,5 @@
 import {Server} from './server';
+import {Strings} from './admin/utils/strings';
 
 export class AppConstant {
 
@@ -63,5 +64,10 @@ export class AppConstant {
   public static REQUETE_GROUPE_ASSIGN_PATH = AppConstant.REQUETE_GROUPE_READ_ITEM_PATH + '/assign';
   public static REQUETE_GROUPE_GET_REQUETES_PATH = AppConstant.REQUETE_GROUPE_READ_ITEM_PATH + '/requetes';
 
+
+  // Passport urls
+  // public static PASSPORT_COLLECTION_PATH = Strings.format('{0}/{1}', AppConstant.REQUETE_READ_ITEM_PATH, 'passports');
+  public static PASSPORT_COLLECTION_PATH = Server.URL + '/operateurs/{0}/requerants/{1}/requetes/{2}/passports';
+  public static PASSPORT_ITEM_PATH = AppConstant.PASSPORT_COLLECTION_PATH + '/{3}';
 
 }

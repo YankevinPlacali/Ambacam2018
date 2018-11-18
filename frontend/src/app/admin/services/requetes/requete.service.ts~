@@ -19,14 +19,20 @@ export class RequeteService {
     return this._http.post(Strings.format(AppConstant.REQUETE_CREATE_ITEM_PATH.toString(), operateurId, requete.requerantId), requete, this._authConstants.loadHeader());
   }
 
+  get(requete: Requete, operateurId: number) {
+    return this._http.get(Strings.format(AppConstant.REQUETE_READ_ITEM_PATH, operateurId, requete.requerant.id, requete.id), this._authConstants.loadHeader());
   get(requeteId: number) {
     return this._http.get(Strings.format(AppConstant.REQUETE_READ_ITEM_PATH, 0, 0, requeteId), this._authConstants.loadHeader());
   }
 
+  update(requete: Requete, operateurId: number) {
+    return this._http.put(Strings.format(AppConstant.REQUETE_READ_ITEM_PATH, operateurId, requete.requerantId, requete.id), requete, this._authConstants.loadHeader());
   update(requeteId: number, requete: Requete) {
     return this._http.put(Strings.format(AppConstant.REQUETE_READ_ITEM_PATH, 0, 0, requeteId), requete, this._authConstants.loadHeader());
   }
 
+  updateStatut(requete: Requete, operateurId: number) {
+    return this._http.put(Strings.format(AppConstant.REQUETE_UPDATE_STATUT_ITEM_PATH, operateurId, requete.requerant.id, requete.id), requete, this._authConstants.loadHeader());
   updateStatut(requeteId: number, statusId: number) {
     const statusTO = {
       statusId: statusId
@@ -34,6 +40,8 @@ export class RequeteService {
     return this._http.put(Strings.format(AppConstant.REQUETE_UPDATE_STATUT_ITEM_PATH, 0, 0, requeteId), statusTO, this._authConstants.loadHeader());
   }
 
+  delete(requete, operateurId: number) {
+    return this._http.delete(Strings.format(AppConstant.REQUETE_READ_ITEM_PATH, operateurId, requete.requerant.id, requete.id), this._authConstants.loadHeader());
   delete(requeteId: number) {
     return this._http.delete(Strings.format(AppConstant.REQUETE_READ_ITEM_PATH, 0, 0, requeteId), this._authConstants.loadHeader());
   }
