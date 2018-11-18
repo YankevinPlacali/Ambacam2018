@@ -96,7 +96,7 @@ import {AdminPassportsComponent} from './components/admin-content/admin-passport
     PaginationComponent,
     AdminRequetesFormComponent,
     AdminRequeteGroupesComponent,
-    AdminRequeteGroupesModalComponent,
+    AdminRequeteGroupesModalComponent
     AdminPassportsFormComponent,
     AdminPassportsComponent
   ],
@@ -112,7 +112,7 @@ import {AdminPassportsComponent} from './components/admin-content/admin-passport
     MotifSuppressionService,
     StatutService,
     RequeteService,
-    RequeteGroupeService,
+    RequeteGroupeService
     PassportService
   ]
 })
