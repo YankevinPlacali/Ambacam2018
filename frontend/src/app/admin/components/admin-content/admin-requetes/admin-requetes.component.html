@@ -15,24 +15,30 @@
   <section class="content">
     <div>
       <div class="box-tools">
-        <div class="box-footer clearfix no-border tool_button">
-          <button type="button" class="btn btn-danger pull-right" data-toggle="modal"
-                  data-target="#yes_no_dialog" [disabled]="ids.length === 0"><i
-            class="fa fa-trash"></i> Suppr. Requete
-          </button>
-          <button type="button" (click)="createStatutUpForm(true)" class="btn btn-warning pull-right tool_button"
-                  data-toggle="modal"
-                  data-target="#modal-statut-up-form"
-                  [disabled]="ids.length === 0">
-            <i class="fa fa-circle"></i> Modifier Statut
-          </button>
-          <button type="button" (click)="createForm()" class="btn btn-success pull-right tool_button"
-                  data-toggle="modal"
-                  data-target="#modal-requete-form"><i
-            class="fa fa-plus"></i> Ajouter Requete
-          </button>
-        </div>
+      <div class="box-footer clearfix no-border tool_button">
+        <button type="button" class="btn btn-danger pull-right" data-toggle="modal"
+                data-target="#yes_no_dialog" [disabled]="ids.length === 0"><i
+          class="fa fa-trash"></i> Suppr. Requete
+        </button>
+        <button type="button" (click)="createStatutUpForm(true)" class="btn btn-warning pull-right tool_button"
+                data-toggle="modal"
+                data-target="#modal-statut-up-form"
+                [disabled]="ids.length === 0">
+          <i class="fa fa-circle"></i> {{modifierStatutTitle}}
+        </button>
+        <button type="button" (click)="assignerGroupeForm(true)" class="btn btn-adn pull-right tool_button"
+                data-toggle="modal"
+                data-target="#modal-assign-group-form"
+                [disabled]="ids.length === 0">
+          <i class="fa fa-adn"></i> Assigner Groupe
+        </button>
+        <button type="button" (click)="createForm()" class="btn btn-success pull-right tool_button"
+                data-toggle="modal"
+                data-target="#modal-requete-form"><i
+          class="fa fa-plus"></i> Ajouter Requete
+        </button>
       </div>
+    </div>
     </div>
     <div class="row">
       <div class="col-xs-12">
@@ -237,6 +243,57 @@
     </div>
 
     <!-- Modal edit -->
+    <div class="modal fade" id="modal-assign-group-form" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span></button>
+            <h4 class="modal-title">{{assign_formTitle}}</h4>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="assignGroupe()" [formGroup]="assignGroupeForm">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Reguete groupe*</label>
+                  <div class="input-group">
+                    <select class="form-control" formControlName="groupe" placeholder="choisir un groupe"
+                            data-toggle="tooltip" data-placement="top">
+                      <option *ngFor="let requeteGroupe of requeteGroupes" value="{{requeteGroupe.id}}">
+                        {{requeteGroupe.nom}}
+                      </option>
+                    </select>
+
+                    <div class="input-group-btn">
+                      <button type="button" (click)="createStatutForm()"
+                              class="btn btn-success pull-right tool_button"
+                              data-toggle="modal"
+                              data-target="#modal-requete-groupe-form">
+                        <i class="fa fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn {{assign_submitButtonStyle}}"
+                        [disabled]="!assignGroupeForm.valid"
+                        (click)="assignGroupe()"
+                        data-toggle="modal"
+                        data-dismiss="modal"
+                        data-target="#yes_no_dialog">{{assign_submitButtonTitle}}
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+        <!-- /.modal-content -->
+      </div>
+    </div>
+
+    <!-- Modal edit -->
     <div class="modal fade" id="modal-statut-form" style="display: none;">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -368,6 +425,41 @@
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fermer</button>
                 <button type="submit" class="btn {{r_submitButtonStyle}}" [disabled]="!requerantForm.valid">
                   {{r_submitButtonTitle}}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+    </div>
+
+    <!-- Modal edit -->
+    <div class="modal fade" id="modal-requete-groupe-form" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span></button>
+            <h4 class="modal-title">{{rg_formTitle}}</h4>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="submitRequeteGroupe()" [formGroup]="requeteGroupeForm">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Nom</label>
+                  <input type="text" class="form-control" formControlName="nom" placeholder="Le nom sera genere automatiquement" disabled
+                         data-toggle="tooltip" data-placement="top" title="Uniquement des caracteres majuscules et l'underscore">
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea class="form-control" rows="3" formControlName="description"
+                            placeholder="Entrer la description"></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fermer</button>
+                <button type="submit" class="btn {{rg_submitButtonStyle}}" [disabled]="!requeteGroupeForm.valid">{{rg_submitButtonTitle}}
                 </button>
               </div>
             </form>

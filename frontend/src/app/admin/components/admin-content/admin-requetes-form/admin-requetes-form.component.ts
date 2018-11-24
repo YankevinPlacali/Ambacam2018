@@ -1,26 +1,25 @@
 import {Component, OnInit} from '@angular/core';
-import {Requete} from "../../../models/requete/requete";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {RequestMessage} from "../../../models/request/requestMessage";
-import {RequestType} from "../../../models/request/requestType";
-import {RequestVisibility} from "../../../models/request/requestVisibility";
-import {AppConstantMessages} from "../../../../appConstantMessages";
-import {TypeRequete} from "../../../models/type-requete/type-requete";
-import {Requerant} from "../../../models/requerant/requerant";
-import {Pays} from "../../../models/pays/pays";
-import {Operateur} from "../../../models/operateur/operateur";
-import {GlobalConstantsService} from "../../../services/variables/global-constants.service";
-import {RequeteService} from "../../../services/requetes/requete.service";
-import {TypeRequeteService} from "../../../services/type-requetes/type-requete.service";
-import {RequerantService} from "../../../services/requerants/requerant.service";
-import {PaysService} from "../../../services/pays/pays.service";
-import {Router} from "@angular/router";
-import {Object2Requerant} from "../../../utils/object2Requerant";
-import {Object2TypeRequete} from "../../../utils/object2TypeRequete";
-import {Object2Requete} from "../../../utils/object2Requete";
-import {Strings} from "../../../utils/strings";
-import {Object2Pays} from "../../../utils/object2Pays";
-import {LockComponent} from "../../lock/lock.component";
+import {Requete} from '../../../models/requete/requete';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {RequestMessage} from '../../../models/request/requestMessage';
+import {RequestType} from '../../../models/request/requestType';
+import {RequestVisibility} from '../../../models/request/requestVisibility';
+import {AppConstantMessages} from '../../../../appConstantMessages';
+import {TypeRequete} from '../../../models/type-requete/type-requete';
+import {Requerant} from '../../../models/requerant/requerant';
+import {Pays} from '../../../models/pays/pays';
+import {Operateur} from '../../../models/operateur/operateur';
+import {GlobalConstantsService} from '../../../services/variables/global-constants.service';
+import {RequeteService} from '../../../services/requetes/requete.service';
+import {TypeRequeteService} from '../../../services/type-requetes/type-requete.service';
+import {RequerantService} from '../../../services/requerants/requerant.service';
+import {PaysService} from '../../../services/pays/pays.service';
+import {Router} from '@angular/router';
+import {Object2Requerant} from '../../../utils/object2Requerant';
+import {Object2TypeRequete} from '../../../utils/object2TypeRequete';
+import {Object2Requete} from '../../../utils/object2Requete';
+import {Object2Pays} from '../../../utils/object2Pays';
+import {LockComponent} from '../../lock/lock.component';
 // Variable in assets/js/scripts.js file
 declare var AdminLTE: any;
 
@@ -160,7 +159,7 @@ export class AdminRequetesFormComponent extends LockComponent implements OnInit 
   }
 
   editForm(requete: Requete) {
-    this._requeteService.get(requete).subscribe(response => {
+    this._requeteService.get(requete, this.operateur.id).subscribe(response => {
         this.requete = Object2Requete.apply(response);
         this.initForm(this.requete);
       },
@@ -185,7 +184,7 @@ export class AdminRequetesFormComponent extends LockComponent implements OnInit 
     this.requete.typeId = this.requeteForm.value.typeRequete;
     this.requete.requerantId = this.requeteForm.value.requerant;
 
-    this._requeteService.create(this.requete).subscribe(response => {
+    this._requeteService.create(this.requete, this.operateur.id).subscribe(response => {
         this.requete = Object2Requete.apply(response);
 
         this.requestMessage = new RequestMessage(

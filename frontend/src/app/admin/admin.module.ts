@@ -46,6 +46,9 @@ import {AdminRequetesComponent} from './components/admin-content/admin-requetes/
 import {AdminRequetesFormComponent} from './components/admin-content/admin-requetes-form/admin-requetes-form.component';
 import {PaginationComponent} from '../components/pagination/pagination.component';
 import {RequeteService} from './services/requetes/requete.service';
+import {AdminRequeteGroupesComponent} from './components/admin-content/admin-requete-groupes/admin-requete-groupes.component';
+import {RequeteGroupeService} from './services/requete-groupes/requete-groupe.service';
+import {AdminRequeteGroupesModalComponent} from './components/admin-content/admin-requete-groupes-modal/admin-requete-groupes-modal.component';
 
 @NgModule({
   imports: [
@@ -88,7 +91,9 @@ import {RequeteService} from './services/requetes/requete.service';
     AdminRequerantsFormComponent,
     AdminRequetesComponent,
     PaginationComponent,
-    AdminRequetesFormComponent
+    AdminRequetesFormComponent,
+    AdminRequeteGroupesComponent,
+    AdminRequeteGroupesModalComponent
   ],
   exports: [AdminComponent],
   providers: [
@@ -101,7 +106,8 @@ import {RequeteService} from './services/requetes/requete.service';
     RequerantService,
     MotifSuppressionService,
     StatutService,
-    RequeteService
+    RequeteService,
+    RequeteGroupeService
   ]
 })
 

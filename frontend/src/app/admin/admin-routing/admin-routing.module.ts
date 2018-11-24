@@ -25,6 +25,7 @@ import {AdminActionsFormComponent} from '../components/admin-content/admin-actio
 import {AdminRequerantsFormComponent} from '../components/admin-content/admin-requerants-form/admin-requerants-form.component';
 import {AdminRequetesComponent} from "../components/admin-content/admin-requetes/admin-requetes.component";
 import {AdminRequetesFormComponent} from "../components/admin-content/admin-requetes-form/admin-requetes-form.component";
+import {AdminRequeteGroupesComponent} from '../components/admin-content/admin-requete-groupes/admin-requete-groupes.component';
 
 @NgModule({
   imports: [
@@ -185,11 +186,7 @@ import {AdminRequetesFormComponent} from "../components/admin-content/admin-requ
             children: [
               {
                 path: '',
-                component: AdminRequetesComponent
-              },
-              {
-                path: 'form',
-                component: AdminRequetesFormComponent
+                component: AdminRequeteGroupesComponent
               }
             ]
           },

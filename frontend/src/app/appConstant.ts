@@ -53,5 +53,14 @@ export class AppConstant {
   public static REQUETE_CREATE_ITEM_PATH = AppConstant.OPERATEUR_COLLECTION + '/{0}/requerants/{1}/requetes';
   public static REQUETE_READ_ITEM_PATH = AppConstant.REQUETE_CREATE_ITEM_PATH + '/{2}';
   public static REQUETE_UPDATE_STATUT_ITEM_PATH = AppConstant.REQUETE_READ_ITEM_PATH + '/status';
+  public static REQUETE_UPDATE_STATUT_GROUPE_PATH = AppConstant.OPERATEUR_COLLECTION + '/{0}/requete-groupes/{1}/requetes/status';
+
+  // Requete-groupes urls
+  public static REQUETE_GROUPE_COLLECTION_PATH = AppConstant.OPERATEUR_COLLECTION + '/{0}/requete-groupes';
+  public static REQUETE_GROUPE_READ_ITEM_PATH = AppConstant.REQUETE_GROUPE_COLLECTION_PATH + '/{1}';
+  public static REQUETE_GROUPE_UPDATE_STATUT_ITEM_PATH = AppConstant.REQUETE_GROUPE_READ_ITEM_PATH + '/status';
+  public static REQUETE_GROUPE_ASSIGN_PATH = AppConstant.REQUETE_GROUPE_READ_ITEM_PATH + '/assign';
+  public static REQUETE_GROUPE_GET_REQUETES_PATH = AppConstant.REQUETE_GROUPE_READ_ITEM_PATH + '/requetes';
+
 
 }
