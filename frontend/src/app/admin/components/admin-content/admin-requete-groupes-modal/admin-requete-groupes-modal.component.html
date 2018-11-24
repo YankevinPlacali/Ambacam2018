@@ -1,0 +1,166 @@
+<!-- Modal edit -->
+<div class="modal fade" id="modal-requete-groupe-list" tabindex="-1" data-focus-on="input:first">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">{{requeteListTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <!-- /.box-header -->
+              <div class="box-body table-responsive no-padding">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#liste">Liste de Requetes</a></li>
+                  <li><a data-toggle="tab" href="#requeteCreate">Ajouter Requete au groupe</a></li>
+                </ul>
+                <div class="tab-content">
+                  <div id="liste" class="tab-pane fade in active">
+                    <div>
+                      <h3>Liste des requetes</h3>
+                      <div class="box-tools">
+                        <div class="box-footer clearfix no-border tool_button">
+                          <button type="button" (click)="assignGroupe(false)" class="btn btn-danger pull-right" [disabled]="ids_rg.length === 0"><i
+                            class="fa fa-trash"></i> Enlever du Groupe
+                          </button>
+                          <button type="button" (click)="createStatutUpForm(true)"
+                                  class="btn btn-warning pull-right tool_button"
+                                  data-toggle="modal"
+                                  data-target="#modal-statut-up-form">
+                            <i class="fa fa-circle"></i> Modifier Statut Groupe
+                          </button>
+                          <button type="button" (click)="createStatutUpForm(false)" class="btn btn-warning pull-right tool_button"
+                                  data-toggle="modal"
+                                  data-target="#modal-statut-up-form"
+                                  [disabled]="ids_rg.length === 0">
+                            <i class="fa fa-circle"></i> Modifier Statut
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <table class="table table-hover">
+                      <thead>
+                      <tr>
+                        <th>
+                          <input type="checkbox" (change)="checkAll(!allChecked, 'REQUETES_GROUPE')" [checked]="allChecked">
+                        </th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Type</th>
+                        <th>Statut</th>
+                        <th>Date de creation</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let requete of requetes">
+                        <td>
+                          <input type="checkbox" (click)="assignId(requete.id, 'REQUETES_GROUPE')" [checked]="allChecked">
+                        </td>
+                        <td>{{ requete.requerant.nom }}</td>
+                        <td>{{ requete.requerant.prenom}}</td>
+                        <td>{{ requete.typeRequete.nom }}</td>
+                        <td>{{ requete.statusRequete.nom}}</td>
+                        <td>{{ requete.date | date: 'medium' }}</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div id="requeteCreate" class="tab-pane fade">
+                    <div>
+                      <h3>Liste des requetes non assignes à un Groupe</h3>
+                      <div class="box-tools">
+                        <div class="box-footer clearfix no-border tool_button">
+                          <button type="button" (click)="assignGroupe(true)"
+                                  class="btn btn-adn pull-right tool_button"
+                                  data-toggle="modal"
+                                  data-target="#modal-assign-group-form"
+                                  [disabled]="ids.length === 0">
+                            <i class="fa fa-adn"></i> Assigner au Groupe
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                      <table class="table table-hover">
+                        <thead>
+                        <tr>
+                          <th>
+                            <input type="checkbox" (change)="checkAll(!allChecked, 'REQUETES')" [checked]="allChecked">
+                          </th>
+                          <th>Nom</th>
+                          <th>Prenom</th>
+                          <th>Type</th>
+                          <th>Statut</th>
+                          <th>Date de creation</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let requete of allRequetes">
+                          <td>
+                            <input type="checkbox" (click)="assignId(requete.id, 'REQUETES')" [checked]="allChecked">
+                          </td>
+                          <td>{{ requete.requerant.nom }}</td>
+                          <td>{{ requete.requerant.prenom}}</td>
+                          <td>{{ requete.typeRequete.nom }}</td>
+                          <td>{{ requete.statusRequete.nom}}</td>
+                          <td>{{ requete.date | date: 'medium' }}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+
+<!-- Modal edit -->
+<div class="modal fade" id="modal-statut-up-form" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">{{sUp_formTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="statutUpForm">
+          <div class="box-body">
+            <div class="form-group">
+              <label>Groupe*</label>
+              <input type="text" class="form-control" formControlName="groupe" disabled>
+            </div>
+            <div class="form-group">
+              <label>Statut requete*</label>
+                <select class="form-control" formControlName="statut" placeholder="choisir un statut"
+                        data-toggle="tooltip" data-placement="top">
+                  <option *ngFor="let statut of statuts" value="{{statut.id}}">{{statut.nom}}
+                  </option>
+                </select>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fermer</button>
+            <button type="button" class="btn {{sUp_submitButtonStyle}}"
+                    [disabled]="!statutUpForm.valid"
+                    (click)="sUp_submitButtonTitle ==='Modifier Statut'? updateStatutOfRequetes(): updateStatutOfGroupe()"
+                    data-dismiss="modal">{{sUp_submitButtonTitle}}
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>

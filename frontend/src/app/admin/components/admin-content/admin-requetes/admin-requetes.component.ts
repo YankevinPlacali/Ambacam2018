@@ -24,6 +24,9 @@ import {GlobalConstantsService} from '../../../services/variables/global-constan
 import {Statut} from '../../../models/statut/statut';
 import {StatutService} from '../../../services/statuts/statut.service';
 import {Object2Statut} from '../../../utils/object2Statut';
+import {RequeteGroupe} from '../../../models/requete-groupe/requete-groupe';
+import {RequeteGroupeService} from '../../../services/requete-groupes/requete-groupe.service';
+import {Object2RequeteGroupe} from '../../../utils/object2RequeteGroupe';
 // Variable in assets/js/scripts.js file
 declare var AdminLTE: any;
 
@@ -36,86 +39,72 @@ declare var AdminLTE: any;
 export class AdminRequetesComponent extends LockComponent implements OnInit {
 
   public requetes: Requete[] = [];
-
   public checkedRequetes: Requete[] = [];
-
   public requeteForm: FormGroup;
-
   public requete: Requete;
-
   public requestMessage: RequestMessage = new RequestMessage('', RequestType.DEFAULT, '', RequestVisibility.INVISIBLE);
-
   public submitButtonTitle;
-
   public submitButtonStyle;
-
   public formTitle;
-
   public ids: number[] = [];
-
   public titleConfirmDialogPrefix = 'Suppression: ';
-
   public titleConfirmDialog: string;
-
   public messageConfirmDialog = AppConstantMessages.CONFIRM;
-
   public yesConfirmDialog = AppConstantMessages.YES;
-
   public noConfirmDialog = AppConstantMessages.NO;
-
   public confirm: boolean;
-
   public deleteAction = false;
-
   public statusId: number;
-
   public allChecked = false;
-
-  public typeRequetes: TypeRequete[] = [];
-
-  public requerants: Requerant[] = [];
-
-  public typeRequeteForm: FormGroup;
-
-  public tR_submitButtonTitle;
-
-  public tR_submitButtonStyle;
-
-  public tR_formTitle;
-
-  public requerantForm: FormGroup;
-
-  public r_submitButtonTitle;
-
-  public r_submitButtonStyle;
-
-  public r_formTitle;
-
-  public allPays: Pays[] = [];
-
   public operateur: Operateur;
 
+  /* ----------------------------------- Pays ------------------------------------------*/
+  public allPays: Pays[] = [];
+
+  /* ----------------------------------- Type requetes ----------------------------------*/
+  public typeRequetes: TypeRequete[] = [];
+  public typeRequeteForm: FormGroup;
+  public tR_submitButtonTitle;
+  public tR_submitButtonStyle;
+  public tR_formTitle;
+
+  /* ----------------------------------- Requerants ------------------------------------*/
+  public requerants: Requerant[] = [];
+  public requerantForm: FormGroup;
+  public r_submitButtonTitle;
+  public r_submitButtonStyle;
+  public r_formTitle;
+  public showRequerant = true;
+
+  /* ----------------------------------- Status requetes --------------------------------*/
   public statutUpForm: FormGroup;
-
   public sUp_submitButtonTitle;
-
   public sUp_submitButtonStyle;
-
   public sUp_formTitle;
-
   public statutForm: FormGroup;
-
   public statuts: Statut[] = [];
-
   public s_submitButtonTitle;
-
   public s_submitButtonStyle;
-
   public s_formTitle;
 
-  public updateRequete: boolean;
+  /* ----------------------------------- Requete Groupes --------------------------------*/
+  public assignGroupeForm: FormGroup;
+  public assign_submitButtonTitle;
+  public assign_submitButtonStyle;
+  public assign_formTitle;
 
-  public showRequerant = true;
+  public requeteGroupeForm: FormGroup;
+  public rg_submitButtonTitle;
+  public rg_submitButtonStyle;
+  public rg_formTitle;
+
+  public requeteGroupes: RequeteGroupe[] = [];
+  public requeteGroupeId: number;
+  public groupeId: number;
+  public groupeAction = false;
+  public modifierStatutTitle = 'Modifier Statut';
+
+  public updateRequete: boolean;
 
 
   constructor(private _globalConstants: GlobalConstantsService,
@@ -125,27 +114,10 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
               public _requerantService: RequerantService,
               public _paysService: PaysService,
               public _statutService: StatutService,
+              public _requeteGroupeService: RequeteGroupeService,
               public _router: Router) {
     super(_router);
     this.operateur = this._globalConstants.getConnectedOperateur();
-  }
-
-  initRequerantList() {
-    this._requerantService.list().subscribe(response => {
-        this.requerants = Object2Requerant.applyOnArray(response);
-      },
-      error => {
-        console.log(error);
-      });
-  }
-
-  initTypeRequeteList() {
-    this._typeRequeteService.list().subscribe(response => {
-        this.typeRequetes = Object2TypeRequete.applyOnArray(response);
-      },
-      error => {
-        console.log(error);
-      });
   }
 
   ngOnInit() {
@@ -153,21 +125,19 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
     AdminLTE.init();
 
     this.requete = null;
-
     this.deleteAction = true;
+    this.groupeAction = false;
+    this.requeteGroupeId = -1;
+    this.statusId = -1;
 
     this.initRequeteList();
-
     this.initForm(null);
-
     this.createRequerantForm();
-
     this.createTypeRequeteForm();
-
     this.createStatutForm();
-
     this.createStatutUpForm(false);
-
+    this.assignerGroupeForm(false);
+    this.initRequeteGroupeForm();
   }
 
   initRequeteList() {
@@ -189,6 +159,7 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
       this.initRequerantList();
       this.initTypeRequeteList();
       this.initStatuts();
+      this.initRequeteGroupes();
 
       this.updateRequete = false;
 
@@ -210,7 +181,7 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
   }
 
   editForm(requete: Requete) {
-    this._requeteService.get(requete).subscribe(response => {
+    this._requeteService.get(requete, this.operateur.id).subscribe(response => {
         this.requete = Object2Requete.apply(response);
         this.initForm(this.requete);
         this.showRequerant = false;
@@ -223,7 +194,6 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
           RequestVisibility.VISIBLE);
         this.showRequerant = true;
       });
-
   }
 
   createForm() {
@@ -231,9 +201,7 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
     this.showRequerant = true;
   }
 
-
   submit(requete: Requete) {
-
     this.requete = new Requete();
     this.requete.id = null;
     this.requete.operateurId = this.operateur.id;
@@ -241,13 +209,13 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
     this.requete.requerantId = this.requeteForm.value.requerant;
 
     if (requete === null) {
-      this._requeteService.create(this.requete).subscribe(response => {
+      this._requeteService.create(this.requete, this.operateur.id).subscribe(response => {
           this.requete = Object2Requete.apply(response);
 
           this.requestMessage = new RequestMessage(
             RequestType.SUCCESS,
             'Requete cree',
-            'Le requete de' + this.requete.requerant.nom + ' a ete cree avec succes.',
+            'Le requete de ' + this.requete.requerant.nom + ' a ete cree avec succes.',
             RequestVisibility.VISIBLE);
 
           this.requeteForm.reset();
@@ -257,14 +225,13 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
           this.requestMessage = new RequestMessage(
             RequestType.DANGER,
             'Requete non cree',
-            'Le requete de' + this.requete.requerant.nom + ' n\'a pas ete cree avec succes. Raison: ' + error.error.message,
+            'Le requete de ' + this.requete.requerant.nom + ' n\'a pas ete cree avec succes. Raison: ' + error.error.message,
             RequestVisibility.VISIBLE);
         });
 
     } else {
-
       this.requete.id = requete.id;
-      this._requeteService.update(this.requete).subscribe(response => {
+      this._requeteService.update(this.requete, this.operateur.id).subscribe(response => {
           this.requestMessage = new RequestMessage(
             RequestType.WARNING,
             'Requete modifie',
@@ -284,12 +251,6 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
     }
   }
 
-  updateStatut() {
-    this.statusId = parseInt(this.statutUpForm.value.statut);
-    this.deleteAction = false;
-
-  }
-
 // this function allows to add and remove an id to a list of ids to delete
   assignId(id: number) {
     const idx = this.ids.indexOf(id, 0);
@@ -301,16 +262,30 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
     }
 
     this.titleConfirmDialog = Strings.format('{0} {1} element(s)', this.titleConfirmDialogPrefix, this.ids.length);
+
   }
 
+  checkAll(allChecked: boolean) {
+    this.allChecked = allChecked;
 
-  /* Use action to update status of requetes  or delete requetes */
+    this.ids = [];
+    if (this.allChecked) {
+      this.requetes.forEach(requete => {
+        this.ids.push(requete.id);
+      });
+      this.titleConfirmDialog = Strings.format('{0} {1} element(s)', this.titleConfirmDialogPrefix, this.ids.length);
+    }
+    this.ngOnInit();
+  }
+
+  /* Use action to
+    - Update status of requetes
+    - Delete requetes
+    - Assign requetes to groupe
+    */
   action(confirm) {
-
     if (confirm) {
-
       this.checkedRequetes = [];
-
       this.requetes.forEach(requete => {
         if (this.ids.includes(requete.id)) {
           this.checkedRequetes.push(requete);
@@ -318,8 +293,9 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
       });
 
       if (this.deleteAction) {
+        // delete requetes from the list
         this.checkedRequetes.forEach(requete => {
-          this._requeteService.delete(requete).subscribe(response => {
+          this._requeteService.delete(requete, this.operateur.id).subscribe(response => {
               this.ngOnInit();
             },
             error => {
@@ -336,50 +312,69 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
             });
         });
 
+      } else if (this.groupeAction) {
+        // assign groupe to requetes
+        const requeteIds = {
+          'add': this.ids,
+          'remove': []
+        };
+
+        this._requeteGroupeService.updateGroupe(requeteIds, this.requeteGroupeId, this.operateur.id).subscribe(response => {
+            this.ngOnInit();
+            this.ids = [];
+          },
+          error => {
+            const message = Strings.format(
+              'La requete groupe n\'a pas ete assignee avec succes. Raison: {0}',
+              error.error.message);
+
+            this.requestMessage = new RequestMessage(
+              RequestType.DANGER,
+              'Requete groupe non assignee',
+              message,
+              RequestVisibility.VISIBLE);
+          });
       } else {
-        this.checkedRequetes.forEach(requete => {
-          requete.statusId = this.statusId;
+        // update the status of requetes
+        if (this.checkedRequetes.length > 0) {
+          // at least one requete selected in the list of requetes
+          this.checkedRequetes.forEach(requete => {
+            requete.statusId = this.statusId;
 
-          this._requeteService.updateStatut(requete).subscribe(response => {
-              this.ngOnInit();
-            },
-            error => {
-              const message = Strings.format(
-                'Le statut de la requete {0} n\'a pas ete modifié avec succes. Raison: {1}',
-                requete,
-                error.error.message);
+            this._requeteService.updateStatut(requete, this.operateur.id).subscribe(response => {
+                this.ngOnInit();
+              },
+              error => {
+                const message = Strings.format(
+                  'Le statut de la requete {0} n\'a pas ete modifie avec succes. Raison: {1}',
+                  requete,
+                  error.error.message);
 
-              this.requestMessage = new RequestMessage(
-                RequestType.DANGER,
-                'Statut Requetes non modifiés',
-                message,
-                RequestVisibility.VISIBLE);
-            });
-        });
+                this.requestMessage = new RequestMessage(
+                  RequestType.DANGER,
+                  'Statut Requetes non modifies',
+                  message,
+                  RequestVisibility.VISIBLE);
+              });
+          });
+        }
 
       }
-
     }
     this.ids = [];
     this.checkedRequetes = [];
     this.confirm = false;
   }
 
-  checkAll(allChecked: boolean) {
+  /*--------------------------------------------------- Statut Requetes ---------------------------------------------------------------*/
 
-    this.allChecked = allChecked;
-
-    this.ids = [];
-
-    if (this.allChecked) {
-      this.requetes.forEach(requete => {
-        this.ids.push(requete.id);
+  initStatuts() {
+    this._statutService.list().subscribe(response => {
+        this.statuts = Object2Statut.applyOnArray(response);
+      },
+      error => {
+        console.log(error);
       });
-
-      this.titleConfirmDialog = Strings.format('{0} {1} element(s)', this.titleConfirmDialogPrefix, this.ids.length);
-    }
-
-    this.ngOnInit();
   }
 
   createStatutForm() {
@@ -390,6 +385,12 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
     this.s_submitButtonTitle = 'Creer';
     this.s_formTitle = 'Creer un statut requete';
     this.s_submitButtonStyle = 'btn-success';
+  }
+
+  updateStatut() {
+    this.statusId = parseInt(this.statutUpForm.value.statut);
+    this.groupeId = parseInt(this.statutUpForm.value.groupe);
+    this.deleteAction = false;
   }
 
   submitStatut() {
@@ -422,7 +423,7 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
 
   createStatutUpForm(clickEvent: boolean) {
     this.statutUpForm = this._formBuilder.group({
-      statut: ['', [Validators.required]],
+      statut: ['', [Validators.required]]
     });
 
     if (clickEvent) {
@@ -435,6 +436,17 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
     this.sUp_submitButtonTitle = 'Modifier Statut';
     this.sUp_formTitle = 'Modifier le statut de requetes';
     this.sUp_submitButtonStyle = 'btn-warning';
+  }
+
+  /*--------------------------------------------------- Type Requetes ---------------------------------------------------------------*/
+
+  initTypeRequeteList() {
+    this._typeRequeteService.list().subscribe(response => {
+        this.typeRequetes = Object2TypeRequete.applyOnArray(response);
+      },
+      error => {
+        console.log(error);
+      });
   }
 
   createTypeRequeteForm() {
@@ -475,6 +487,7 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
       });
   }
 
+  /*--------------------------------------------------- Pays ---------------------------------------------------------------*/
   initAllPays() {
     this._paysService.list().subscribe(response => {
         this.allPays = Object2Pays.applyOnArray(response);
@@ -484,9 +497,84 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
       });
   }
 
-  initStatuts() {
-    this._statutService.list().subscribe(response => {
-        this.statuts = Object2Statut.applyOnArray(response);
+  /*--------------------------------------------------- Requete Groupes ---------------------------------------------------------------*/
+
+  assignGroupe() {
+    this.requeteGroupeId = parseInt(this.assignGroupeForm.value.groupe);
+    this.deleteAction = false;
+    this.groupeAction = true;
+  }
+
+  initRequeteGroupeForm() {
+    this.requeteGroupeForm = this._formBuilder.group({
+      nom: [],
+      description: ['', Validators.required]
+    });
+    this.rg_submitButtonTitle = 'Creer';
+    this.rg_formTitle = 'Creer un Groupe';
+    this.rg_submitButtonStyle = 'btn-success';
+  }
+
+  assignerGroupeForm(clickEvent: boolean) {
+    this.assignGroupeForm = this._formBuilder.group({
+      groupe: ['', [Validators.required]],
+    });
+
+    if (clickEvent) {
+      this.titleConfirmDialogPrefix = 'Assignation de Groupe: ';
+      this.titleConfirmDialog = Strings.format('{0} {1} element(s)', this.titleConfirmDialogPrefix, this.ids.length);
+    } else {
+      this.titleConfirmDialogPrefix = 'Suppression: ';
+    }
+
+    this.assign_submitButtonTitle = 'Assigner Groupe';
+    this.assign_formTitle = 'Assigner Requetes au Groupe';
+    this.assign_submitButtonStyle = 'btn-adn';
+  }
+
+  initRequeteGroupes() {
+    this._requeteGroupeService.list(this.operateur.id).subscribe(response => {
+        this.requeteGroupes = Object2RequeteGroupe.applyOnArray(response);
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  submitRequeteGroupe() {
+
+    let requeteGroupe = new RequeteGroupe(
+      null,
+      this.requeteGroupeForm.value.nom,
+      this.requeteGroupeForm.value.description);
+
+    this._requeteGroupeService.create(requeteGroupe, this.operateur.id).subscribe(response => {
+        requeteGroupe = Object2RequeteGroupe.apply(response);
+
+        this.requestMessage = new RequestMessage(
+          RequestType.SUCCESS,
+          'Requete-Groupe cree',
+          'Le Groupe ' + requeteGroupe.nom + ' a ete cree avec succes.',
+          RequestVisibility.VISIBLE);
+
+        this.requeteGroupeForm.reset();
+        this.ngOnInit();
+      },
+      error => {
+        this.requestMessage = new RequestMessage(
+          RequestType.DANGER,
+          'Requete-Groupe non cree',
+          'Le Groupe ' + requeteGroupe.nom + ' n\'a pas ete cree avec succes. Raison: ' + error.error.message,
+          RequestVisibility.VISIBLE);
+      });
+
+  }
+
+  /*--------------------------------------------------- Requerants ---------------------------------------------------------------*/
+
+  initRequerantList() {
+    this._requerantService.list().subscribe(response => {
+        this.requerants = Object2Requerant.applyOnArray(response);
       },
       error => {
         console.log(error);
@@ -494,7 +582,6 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
   }
 
   createRequerantForm() {
-
     this.requerantForm = this._formBuilder.group({
       nom: ['', [Validators.required]],
       prenom: ['', [Validators.required]],
@@ -510,7 +597,6 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
     this.r_submitButtonTitle = 'Creer';
     this.r_formTitle = 'Creer un requerant';
     this.r_submitButtonStyle = 'btn-success';
-
   }
 
   submitRequerant() {
@@ -546,8 +632,5 @@ export class AdminRequetesComponent extends LockComponent implements OnInit {
           'Le requerant ' + requerant.nom + ' n\'a pas ete cree avec succes. Raison: ' + error.error.message,
           RequestVisibility.VISIBLE);
       });
-
-
   }
-
 }
