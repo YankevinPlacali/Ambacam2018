@@ -45,8 +45,16 @@ public class PassportService {
 	 *             if the autorite does not exist
 	 * @throws ResourceBadRequestException
 	 *             if a passport with the same number already exist
+	 * @throws ResourceBadRequestException
+	 *             if the expiration date is before the date of deliver
 	 */
 	public Passport create(Long requeteId, PassportCreateTO passportCreateTO) {
+
+		// check the expiration date and the deliver date
+		if (passportCreateTO.getDateExpiration().before(passportCreateTO.getDateDelivrance())) {
+			throw new ResourceBadRequestException("The expiration date is before the date of deliver");
+		}
+
 		// find requete
 		Requete requete = findRequete(requeteId);
 
@@ -126,8 +134,16 @@ public class PassportService {
 	 *             if the autorite does not exist
 	 * @throws ResourceBadRequestException
 	 *             if a passport with the same number already exist
+	 * @throws ResourceBadRequestException
+	 *             if the expiration date is before the date of deliver
 	 */
 	public Passport update(Long passportId, PassportCreateTO passportUpdateTO) {
+
+		// check the expiration date and the deliver date
+		if (passportUpdateTO.getDateExpiration().before(passportUpdateTO.getDateDelivrance())) {
+			throw new ResourceBadRequestException("The expiration date is before the date of deliver");
+		}
+
 		// find autorite
 		Autorite delivrePar = findAutorite(passportUpdateTO.getAutoriteId());
 

@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -171,6 +172,16 @@ public class PassportsResourceIT extends ItBase {
 	}
 
 	@Test
+	public void createWithExpirationDateBeforeDateOfDeliver() {
+		PassportCreateTO createTO = buildPassportCreateTO(autorite.getId());
+		createTO.setDateDelivrance(new DateTime(createTO.getDateExpiration()).plusDays(2).toDate());
+
+		preLoadedGiven.contentType(ContentType.JSON).body(createTO).log().body()
+				.post(ApiConstants.PASSPORT_COLLECTION, operateur.getId(), requerant.getId(), requete1.getId()).then()
+				.log().body().statusCode(400);
+	}
+
+	@Test
 	public void createWithExistingNumber() {
 		PassportCreateTO createTO = buildPassportCreateTO(autorite.getId());
 		createTO.setNumero(passport1.getNumero());
@@ -316,6 +327,21 @@ public class PassportsResourceIT extends ItBase {
 		// check updated properties
 		assertThat(actual.getUrlPhoto(), is(equalTo(passport3.getUrlPhoto())));
 		assertThat(actual.getRequete().getId(), is(equalTo(requete2.getId())));
+	}
+
+	@Test
+	public void updateWithExpirationDateBeforeDateOfDeliver() {
+
+		Autorite updateAutorite = autoriteRepository.save(buildAutorite());
+
+		PassportCreateTO updateTO = buildPassportCreateTO(updateAutorite.getId());
+		updateTO.setNumero("numero updated");
+		updateTO.setLieuDelivrance("Mbanga Mpongo");
+		updateTO.setDateDelivrance(new DateTime(updateTO.getDateExpiration()).plusDays(2).toDate());
+
+		preLoadedGiven.contentType(ContentType.JSON).body(updateTO).put(ApiConstants.PASSPORT_ITEM, operateur.getId(),
+				requerant.getId(), requete1.getId(), passport3.getId()).then().log().body().statusCode(400);
+
 	}
 
 	@Test
