@@ -358,6 +358,21 @@ public class RequeteService {
 		});
 	}
 
+	/**
+	 * Get all requetes of a single requete groupe
+	 * 
+	 * @param requeteGroupeId
+	 * @return
+	 * @throws ResourceNotFoundException
+	 *             if the requeteGroupe is not found
+	 */
+	public List<RequeteReadTO> listRequetes(Long requeteGroupeId) {
+
+		RequeteGroupe requeteGroupe = findRequeteGroupe(requeteGroupeId);
+		return requeteRepository.findAllByRequeteGroupe(requeteGroupe).stream()
+				.map(requete -> Requete2RequeteReadTO.apply(requete)).collect(Collectors.toList());
+	}
+
 	private Requete findRequete(Long id) {
 		Requete requete = requeteRepository.findOne(id);
 		if (requete == null) {

@@ -1,6 +1,7 @@
 package com.ambacam.rest.operateurs.requetegroupes.requetes;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
@@ -31,7 +32,7 @@ import com.ambacam.transfert.requetes.AssignStatusTO;
 
 import io.restassured.http.ContentType;
 
-public class RequeteGroupeRequetesResourceIT extends ItBase {
+public class GroupeRequeteRequetesResourceIT extends ItBase {
 
 	@Autowired
 	private TypeRequeteRepository typeRequeteRepository;
@@ -147,6 +148,34 @@ public class RequeteGroupeRequetesResourceIT extends ItBase {
 		paysRepository.deleteAll();
 
 		super.cleanup();
+	}
+
+	@Test
+	public void listByRequeteGroupe() {
+		preLoadedGiven
+				.get(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM_REQUETE_COLLECTION, operateur1.getId(),
+						requeteGroupe.getId())
+				.then().log().body().statusCode(200).body("size()", is(equalTo(3)))
+				.body("id",
+						contains(requete1.getId().intValue(), requete2.getId().intValue(), requete3.getId().intValue()))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.type.id",
+						is(equalTo(typeRequete1.getId().intValue())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.status.id",
+						is(equalTo(statusRequete.getId().intValue())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.date",
+						is(equalTo(requete1.getCreeLe().getTime())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.requerant.id",
+						is(equalTo(requerant1.getId().intValue())))
+				.body("find{it.id==" + requete1.getId().intValue() + "}.operateur.id",
+						is(equalTo(operateur1.getId().intValue())));
+	}
+
+	@Test
+	public void listByRequeteGroupeNotFound() {
+		preLoadedGiven
+				.get(ApiConstants.OPERATEUR_REQUETE_GROUPE_ITEM_REQUETE_COLLECTION, operateur1.getId(),
+						random.nextLong())
+				.then().log().body().statusCode(404);
 	}
 
 	@Test
