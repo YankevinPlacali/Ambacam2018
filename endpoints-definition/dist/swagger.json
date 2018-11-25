@@ -1716,6 +1716,60 @@
         ]
       }
     },
+    "/operateurs/{operateurId}/requete-groupes/{requeteGroupeId}/requetes": {
+      "get": {
+        "tags": [
+          "RequeteGroupe",
+          "Requete"
+        ],
+        "summary": "Get all requetes of a single requete groupe",
+        "description": "GetGet all requetes of a single requete groupe",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "operateurId",
+            "in": "path",
+            "description": "Operateur id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "requeteGroupeId",
+            "in": "path",
+            "description": "Requete Groupe id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RequeteRead"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid value"
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        },
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ]
+      }
+    },
     "/operateurs/{operateurId}/requete-groupes/{requeteGroupeId}/status": {
       "put": {
         "tags": [
