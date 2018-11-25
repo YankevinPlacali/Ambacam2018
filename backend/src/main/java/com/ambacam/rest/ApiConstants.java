@@ -61,6 +61,8 @@ public class ApiConstants {
 
 	public static final String OPERATEUR_REQUETE_GROUPE_ITEM_ASSIGN = OPERATEUR_REQUETE_GROUPE_ITEM + "/assign";
 
+	public static final String OPERATEUR_REQUETE_GROUPE_ITEM_REQUETE_COLLECTION = OPERATEUR_REQUETE_GROUPE_ITEM + "/requetes";
+
 	// operateur requetes
 	public static final String OPERATEUR_REQUETE_COLLECTION = OPERATEUR_ITEM + "/requetes";
 
