@@ -46,6 +46,8 @@ import {AdminRequetesComponent} from './components/admin-content/admin-requetes/
 import {AdminRequetesFormComponent} from './components/admin-content/admin-requetes-form/admin-requetes-form.component';
 import {PaginationComponent} from '../components/pagination/pagination.component';
 import {RequeteService} from './services/requetes/requete.service';
+import { AdminRecepisseComponent } from './components/admin-content/admin-recepisse/admin-recepisse.component';
+import { AdminRecepisseFormComponent } from './components/admin-content/admin-recepisse-form/admin-recepisse-form.component';
 
 @NgModule({
   imports: [
@@ -88,7 +90,9 @@ import {RequeteService} from './services/requetes/requete.service';
     AdminRequerantsFormComponent,
     AdminRequetesComponent,
     PaginationComponent,
-    AdminRequetesFormComponent
+    AdminRequetesFormComponent,
+    AdminRecepisseComponent,
+    AdminRecepisseFormComponent
   ],
   exports: [AdminComponent],
   providers: [

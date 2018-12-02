@@ -55,6 +55,7 @@
                 <th>Type</th>
                 <th>Statut</th>
                 <th>Date de creation</th>
+                <th>Recepissé</th>
                 <th><i class="fa fa-edit"></i></th>
               </tr>
               </thead>
@@ -68,6 +69,7 @@
                 <td>{{ requete.typeRequete.nom }}</td>
                 <td>{{ requete.statusRequete.nom}}</td>
                 <td>{{ requete.date | date: 'medium' }}</td>
+                <td><button type="submit" class="btn btn-success" [disabled]="">Creer un récépissé</button></td>
                 <td><a href="#" (click)="editForm(requete)" data-toggle="modal" data-target="#modal-requete-form"><i
                   class="fa fa-edit"></i></a></td>
               </tr>
