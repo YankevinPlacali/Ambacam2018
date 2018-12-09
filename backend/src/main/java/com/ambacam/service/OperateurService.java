@@ -21,6 +21,9 @@ import com.ambacam.model.Operateur;
 import com.ambacam.model.Pays;
 import com.ambacam.repository.OperateurRepository;
 import com.ambacam.repository.PaysRepository;
+import com.ambacam.repository.RequerantRepository;
+import com.ambacam.repository.RequeteGroupeRepository;
+import com.ambacam.repository.RequeteRepository;
 import com.ambacam.search.operateurs.OperateurCriteria;
 import com.ambacam.search.operateurs.OperateurSpecs;
 import com.ambacam.transfert.SearchResultTO;
@@ -38,6 +41,15 @@ public class OperateurService {
 
 	@Autowired
 	private PaysRepository paysRepository;
+
+	@Autowired
+	private RequeteRepository requeteRepository;
+
+	@Autowired
+	private RequeteGroupeRepository requeteGroupeRepository;
+
+	@Autowired
+	private RequerantRepository requerantRepository;
 
 	@Autowired
 	private AppSettings appSettings;
@@ -219,11 +231,28 @@ public class OperateurService {
 							operateurToDelele.getId().intValue()));
 		}
 
-		// set unlink all created operateur
-		List<Operateur> createdOperateurs = operateurRepository.findByCreeParId(id);
-		createdOperateurs.forEach(operateur -> {
-			operateur.setCreePar(null);
+		// unlink all created operateur and assign to the connected operateur
+		operateurRepository.findByCreeParId(id).forEach(operateur -> {
+			operateur.setCreePar(connectedOperateur);
 			operateurRepository.save(operateur);
+		});
+
+		// assign all requetes to the connected operateur
+		requeteRepository.findAllByOperateur(operateurToDelele).forEach(requete -> {
+			requete.setOperateur(connectedOperateur);
+			requeteRepository.save(requete);
+		});
+
+		// assign all requeteGroupes to the connected operateur
+		requeteGroupeRepository.findAllByCreePar(operateurToDelele).forEach(requeteGroupe -> {
+			requeteGroupe.setCreePar(connectedOperateur);
+			requeteGroupeRepository.save(requeteGroupe);
+		});
+
+		// assign all requerants to the connected operateur
+		requerantRepository.findAllByCreePar(operateurToDelele).forEach(requerant -> {
+			requerant.setCreePar(connectedOperateur);
+			requerantRepository.save(requerant);
 		});
 
 		operateurRepository.delete(id);
