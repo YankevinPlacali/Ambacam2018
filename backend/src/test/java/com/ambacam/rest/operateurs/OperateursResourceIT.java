@@ -117,7 +117,7 @@ public class OperateursResourceIT extends ItBase {
 		assertThat(actual.getUsername(), is(equalTo(create.getUsername())));
 		assertThat(actual.getPassword(), is(equalTo(create.getPassword())));
 		assertThat(actual.getNationalite().getId(), is(equalTo(pays1.getId())));
-		assertThat(actual.getCreePar().getId(), is(equalTo(creator1.getId())));
+		assertThat(actual.getCreePar().getId(), is(equalTo(defaultOperateur.getId())));
 		assertThat(before.isBefore(actual.getCreeLe().getTime()), is(equalTo(true)));
 		assertThat(after.isAfter(actual.getCreeLe().getTime()), is(equalTo(true)));
 	}
@@ -247,28 +247,6 @@ public class OperateursResourceIT extends ItBase {
 		OperateurCreateTO create = buildOperateurCreateTO();
 		create.setPaysId(random.nextLong());
 		create.setCreatorId(creator1.getId());
-
-		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
-				.then().log().body().statusCode(400);
-	}
-
-	@Test
-	public void createCreatorIdNull() {
-
-		OperateurCreateTO create = buildOperateurCreateTO();
-		create.setCreatorId(null);
-		create.setPaysId(pays1.getId());
-
-		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
-				.then().log().body().statusCode(400);
-	}
-
-	@Test
-	public void createCreatorIdNotFound() {
-
-		OperateurCreateTO create = buildOperateurCreateTO();
-		create.setCreatorId(random.nextLong());
-		create.setPaysId(pays1.getId());
 
 		preLoadedGiven.contentType(ContentType.JSON).body(create).log().body().post(ApiConstants.OPERATEUR_COLLECTION)
 				.then().log().body().statusCode(400);
