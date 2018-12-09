@@ -177,6 +177,7 @@ public class RequeteGroupesResourceIT extends ItBase {
 		assertThat(actual.getStatus(), is(equalTo(StatusRequeteValues.DRAFT)));
 		assertThat(before.isBefore(actual.getCreeLe().getTime()), is(equalTo(true)));
 		assertThat(after.isAfter(actual.getCreeLe().getTime()), is(equalTo(true)));
+		assertThat(actual.getCreePar().getId(), is(equalTo(defaultOperateur.getId())));
 	}
 
 	@Test

@@ -3,9 +3,13 @@ package com.ambacam.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.ambacam.exception.ResourceBadRequestException;
 import com.ambacam.exception.ResourceNotFoundException;
@@ -40,6 +44,9 @@ public class RequeteGroupeService {
 	@Autowired
 	private RequeteRepository requeteRepository;
 
+	@Autowired
+	private TokenService tokenService;
+
 	/**
 	 * Create a requeteGroupe
 	 * 
@@ -55,14 +62,19 @@ public class RequeteGroupeService {
 	public RequeteGroupeReadTO create(Long operateurId, RequeteGroupeCreateTO requeteGroupeCreateTO) {
 
 		// find operateur
-		Operateur operateur = findOperateur(operateurId);
+		findOperateur(operateurId);
+
+		// get the connected operateur
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+				.getRequest();
+		Operateur connectedOperateur = tokenService.getConnectedOperateur(request);
 
 		RequeteGroupe requeteGroupe = new RequeteGroupe();
 
 		// set properties
 		requeteGroupe.setId(null);
 		requeteGroupe.setDescription(requeteGroupeCreateTO.getDescription());
-		requeteGroupe.setCreePar(operateur);
+		requeteGroupe.setCreePar(connectedOperateur);
 
 		// generate the name
 		requeteGroupe.setNom(RequeteGroupeUtils.generateRequeteGroupeName());
