@@ -20,8 +20,18 @@ import com.ambacam.ItBase;
 import com.ambacam.configuration.AppSettings;
 import com.ambacam.model.Operateur;
 import com.ambacam.model.Pays;
+import com.ambacam.model.Requerant;
+import com.ambacam.model.Requete;
+import com.ambacam.model.RequeteGroupe;
+import com.ambacam.model.StatusRequete;
+import com.ambacam.model.TypeRequete;
 import com.ambacam.repository.OperateurRepository;
 import com.ambacam.repository.PaysRepository;
+import com.ambacam.repository.RequerantRepository;
+import com.ambacam.repository.RequeteGroupeRepository;
+import com.ambacam.repository.RequeteRepository;
+import com.ambacam.repository.StatusRequeteRepository;
+import com.ambacam.repository.TypeRequeteRepository;
 import com.ambacam.rest.ApiConstants;
 import com.ambacam.transfert.ValueTO;
 import com.ambacam.transfert.operateurs.OperateurCreateTO;
@@ -37,6 +47,21 @@ public class OperateursResourceIT extends ItBase {
 	@Autowired
 	private PaysRepository paysRepository;
 
+	@Autowired
+	private RequeteRepository requeteRepository;
+
+	@Autowired
+	private TypeRequeteRepository typeRequeteRepository;
+
+	@Autowired
+	private StatusRequeteRepository statusRequeteRepository;
+
+	@Autowired
+	private RequeteGroupeRepository requeteGroupeRepository;
+
+	@Autowired
+	private RequerantRepository requerantRepository;
+
 	@Mock
 	private AppSettings appSettings;
 
@@ -51,6 +76,16 @@ public class OperateursResourceIT extends ItBase {
 	private Pays pays1;
 
 	private Pays pays2;
+
+	private Requerant requerant;
+
+	private Requete requete;
+
+	private TypeRequete typeRequete;
+
+	private StatusRequete statusRequete;
+
+	private RequeteGroupe requeteGroupe;
 
 	@Override
 	@Before
@@ -80,11 +115,39 @@ public class OperateursResourceIT extends ItBase {
 		operateur2.setNationalite(pays2);
 		operateur2 = repository.save(operateur2);
 
+		// create type
+		typeRequete = typeRequeteRepository.save(buildTypeRequete());
+
+		// create status
+		statusRequete = statusRequeteRepository.save(buildStatusRequete().nom("status1"));
+
+		// create requete groupe
+		requeteGroupe = buildRequeteGroupe();
+		requeteGroupe.setCreePar(operateur1);
+		requeteGroupe = requeteGroupeRepository.save(requeteGroupe);
+
+		// create requerant
+		requerant = requerantRepository.save(buildRequerant().nom("requerant1").creePar(operateur1).nationalite(pays1));
+
+		// create requete
+		requete = buildRequete();
+		requete.setRequeteGroupe(requeteGroupe);
+		requete.setRequerant(requerant);
+		requete.setType(typeRequete);
+		requete.setStatus(statusRequete);
+		requete.setOperateur(operateur1);
+		requeteRepository.save(requete);
+
 	}
 
 	@Override
 	@After
 	public void cleanup() throws Exception {
+		requeteRepository.deleteAll();
+		requeteGroupeRepository.deleteAll();
+		requerantRepository.deleteAll();
+		statusRequeteRepository.deleteAll();
+		typeRequeteRepository.deleteAll();
 		operateur1.setCreePar(null);
 		operateur2.setCreePar(null);
 		repository.save(Arrays.asList(operateur1, operateur2));
@@ -360,10 +423,19 @@ public class OperateursResourceIT extends ItBase {
 		Operateur actual = repository.findOne(operateur1.getId());
 		assertThat(actual, is(nullValue()));
 
-		Operateur actualOperateur2 = repository.findOne(operateur2.getId());
+		// refresh
+		operateur2 = repository.findOne(operateur2.getId());
+		requete = requeteRepository.findOne(requete.getId());
+		requeteGroupe = requeteGroupeRepository.findOne(requeteGroupe.getId());
+		requerant = requerantRepository.findOne(requerant.getId());
 
-		// check unlink with created operateurs
-		assertThat(actualOperateur2.getCreePar(), is(nullValue()));
+		// check unlink with created operateurs and assign to connected
+		// operateur
+		assertThat(operateur2.getCreePar().getId(), is(equalTo(defaultOperateur.getId())));
+		assertThat(requete.getOperateur().getId(), is(equalTo(defaultOperateur.getId())));
+		assertThat(requeteGroupe.getCreePar().getId(), is(equalTo(defaultOperateur.getId())));
+		assertThat(requerant.getCreePar().getId(), is(equalTo(defaultOperateur.getId())));
+
 	}
 
 	@Test

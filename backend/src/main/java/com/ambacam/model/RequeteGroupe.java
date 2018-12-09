@@ -37,7 +37,7 @@ public class RequeteGroupe extends AuditingCommonEntity implements Serializable 
 	private String description;
 
 	@ManyToOne
-	@JoinColumn(name = "cree_par_id", nullable = false, updatable = false)
+	@JoinColumn(name = "cree_par_id", nullable = false)
 	private Operateur creePar;
 
 	@OneToMany(mappedBy = "requeteGroupe", fetch = FetchType.EAGER)
