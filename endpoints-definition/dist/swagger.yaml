@@ -440,6 +440,33 @@ paths:
       security:
         - basicAuth: []
   /requetes:
+    post:
+      tags:
+        - Requete
+      summary: List requetes history from the requerant side
+      description: List requetes history from the requerant side
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: criteria
+          description: Search criteria
+          required: true
+          schema:
+            $ref: '#/definitions/IdentifyRequerant'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/RequeteStatusHistoryRead'
+        '400':
+          description: Invalid value
+        '401':
+          description: Not authorized
+      security:
+        - basicAuth: []
     get:
       tags:
         - Requete
@@ -2451,6 +2478,9 @@ definitions:
       id:
         type: integer
         format: int64
+      identifier:
+        type: string
+        format: string
       nom:
         type: string
         format: string
@@ -2521,6 +2551,9 @@ definitions:
       id:
         type: integer
         format: int64
+      identifier:
+        type: string
+        format: string
       nom:
         type: string
         format: string
@@ -2954,6 +2987,38 @@ definitions:
       operateur:
         $ref: '#/definitions/OperateurRead'
         description: 'updatable=false, nullable=false'
+  RequeteStatusHistoryRead:
+    type: object
+    properties:
+      requete:
+        $ref: '#/definitions/RequeteRead'
+      history:
+        $ref: '#/definitions/StatusHistory'
+  StatusHistory:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      className:
+        type: string
+      entityId:
+        type: integer
+        format: int64
+      name:
+        type: string
+      creeLe:
+        type: string
+        format: date-time
+        description: Creation date
+  IdentifyRequerant:
+    type: object
+    properties:
+      identifier:
+        type: string
+      dateNaissance:
+        type: string
+        format: date-time
   RequeteCreate:
     type: object
     required:
