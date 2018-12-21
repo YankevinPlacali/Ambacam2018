@@ -2,12 +2,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { StarterComponent } from './starter.component';
-import { StarterHeaderComponent } from './starter-header/starter-header.component';
-import { StarterLeftSideComponent } from './starter-left-side/starter-left-side.component';
+import { StarterComponent } from './history.component';
+import { StarterHeaderComponent } from './components/page-elements/starter-header/starter-header.component';
+import { StarterLeftSideComponent } from './components/page-elements/starter-left-side/starter-left-side.component';
 import { StarterContentComponent } from './starter-content/starter-content.component';
-import { StarterFooterComponent } from './starter-footer/starter-footer.component';
-import { StarterControlSidebarComponent } from './starter-control-sidebar/starter-control-sidebar.component';
+import { StarterFooterComponent } from './components/page-elements/starter-footer/starter-footer.component';
+import { StarterControlSidebarComponent } from './components/page-elements/starter-control-sidebar/starter-control-sidebar.component';
 
 describe('StarterComponent', () => {
   let component: StarterComponent;
@@ -15,10 +15,10 @@ describe('StarterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ 
-        RouterTestingModule 
+      imports: [
+        RouterTestingModule
       ],
-      declarations: [ 
+      declarations: [
         StarterComponent,
         StarterHeaderComponent,
         StarterLeftSideComponent,

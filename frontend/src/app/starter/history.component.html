@@ -1,0 +1,50 @@
+<div class="modal fade" id="history" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h2 class="modal-title">Request's history</h2>
+        <h6 class="modal-title" *ngIf="requerant">Applicant: {{requerant.prenom + ' ' + requerant.nom}}</h6>
+      </div>
+      <div class="modal-body" *ngIf="code === 0">
+        <div class="panel-group" id="accordion">
+          <div class="panel panel-info" *ngFor="let requete of histories; index as i">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{i}}">
+                  {{ requete.requete.typeRequete.nom}}</a>
+              </h4>
+            </div>
+            <div id="collapse{{i}}" class="panel-collapse collapse">
+              <div class="panel-body">
+                <ul class="timeline">
+                  <li class="time-label">
+                    <span class="bg-blue">
+                      Creation
+                    </span>
+                  </li>
+                  <li *ngFor="let history of requete.history; last as isLast">
+                    <i class="fa fa-check-circle bg-green" *ngIf="!isLast"></i>
+                    <i class="fa fa-hourglass-half bg-yellow" *ngIf="isLast"></i>
+                    <div class="timeline-item">
+                      <span class="time"><i class="fa fa-clock-o"></i> {{ history.creeLe | date: 'mediumTime' }}</span>
+                      <h3 class="timeline-header">{{ history.name }}</h3>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-info" role="alert" *ngIf="code === 1">
+      {{ message }}
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="code === 2">
+      {{ message }}
+    </div>
+  </div>
+</div>

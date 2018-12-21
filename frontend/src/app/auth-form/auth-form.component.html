@@ -88,7 +88,7 @@
                         <label for="dateOfBirthInput" class="sr-only">Password</label>
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                          <input type="text" class="form-control" id="dateOfBirthInput"
+                          <input type="date" class="form-control" id="dateOfBirthInput"
                                  placeholder="Date of birth" data-toggle="tooltip" data-placement="bottom"
                                  title="Date in the format DD/MM/YYYY" formControlName="dateOfBirth">
                         </div>
@@ -96,7 +96,8 @@
                       </div>
                       <button type="submit"
                               class="btn btn-success btn-sm"
-                              [disabled]="!authAsRequerantForm.valid">Sign in
+                              [disabled]="!authAsRequerantForm.valid" data-toggle="modal"
+                              data-target="#history">Sign in
                       </button>
                     </form>
                   </div>
@@ -109,3 +110,5 @@
     </div>
   </div>
 </div>
+
+<app-history-component [histories]="histories" [error]="error"></app-history-component>

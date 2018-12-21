@@ -12,11 +12,17 @@ import {Auth} from '../admin/utils/auth/auth';
 import {Object2OperateurStd} from '../admin/utils/object2OperateurStd';
 import {ActivatedRoute, Router} from '@angular/router';
 import {OperateurStd} from '../admin/models/operateur/operateurStd';
+import {ApplicantService} from '../starter/services/applicant.service';
+import {IdentifyRequerant} from '../starter/models/identifyRequerant';
+import {RequeteStatusHistoryRead} from '../starter/models/requeteStatusHistoryRead';
+import {Object2RequeteStatusHistoryRead} from '../starter/utils/object2RequeteStatusHistoryRead';
+import {HistoryComponent} from '../starter/history.component';
 
 @Component({
   selector: 'app-auth-form',
   templateUrl: './auth-form.component.html',
-  styleUrls: ['./auth-form.component.css']
+  styleUrls: ['./auth-form.component.css'],
+  entryComponents: [HistoryComponent]
 })
 
 export class AuthFormComponent implements OnInit {
@@ -28,8 +34,6 @@ export class AuthFormComponent implements OnInit {
   public authAsOperateurForm: FormGroup;
   public authAsRequerantForm: FormGroup;
 
-  public dateOfBirthPattern = '^[0-9]{2}/[0-9]{2}/[0-9]{4}$';
-
   public authResponseSuccess: AuthResponseSuccess;
 
   public requestMessage: RequestMessage = new RequestMessage('', RequestType.DEFAULT, '', RequestVisibility.INVISIBLE);
@@ -40,7 +44,12 @@ export class AuthFormComponent implements OnInit {
 
   public GET_OPERATEUR_ERROR_MESSAGE = 'Get OperateurStd failure';
 
-  constructor(public _formBuilder: FormBuilder, public _authService: AuthServiceService, public _route: ActivatedRoute,
+  public histories: RequeteStatusHistoryRead[];
+
+  public error: string;
+
+  constructor(public _formBuilder: FormBuilder, public _authService: AuthServiceService, public _applicantService: ApplicantService,
+              public _route: ActivatedRoute,
               public _router: Router) {
     this.typeOperateur = UserType.OPERATEUR;
     this.typeRequerant = UserType.REQUERANT;
@@ -52,8 +61,8 @@ export class AuthFormComponent implements OnInit {
     });
 
     this.authAsRequerantForm = this._formBuilder.group({
-      identifier: ['', [Validators.required, Validators.required]],
-      dateOfBirth: ['', [Validators.required, Validators.pattern(this.dateOfBirthPattern)]]
+      identifier: ['', [Validators.required]],
+      dateOfBirth: ['', [Validators.required]]
     });
   }
 
@@ -108,7 +117,14 @@ export class AuthFormComponent implements OnInit {
     }
 
     if (this.userType === UserType.REQUERANT) {
-
+      const body = new IdentifyRequerant(this.authAsRequerantForm.value.identifier, this.authAsRequerantForm.value.dateOfBirth);
+      this._applicantService.history(body).subscribe(response => {
+        this.histories = Object2RequeteStatusHistoryRead.applyOnArray(response);
+        this.error = '';
+      }, error => {
+        this.histories = null;
+        this.error = error.error.message;
+      });
     }
 
   }
