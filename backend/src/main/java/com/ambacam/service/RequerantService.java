@@ -1,6 +1,7 @@
 package com.ambacam.service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +47,14 @@ public class RequerantService {
 	/**
 	 * Create a requerant
 	 * 
-	 * @param requerantCreateTO The new requerant to create
+	 * @param requerantCreateTO
+	 *            The new requerant to create
 	 * 
 	 * @return The new requerant read created
-	 * @throws ResourceBadRequestException if the given paysId does not exist
-	 * @throws ResourceBadRequestException if the given creatorId does not exist
+	 * @throws ResourceBadRequestException
+	 *             if the given paysId does not exist
+	 * @throws ResourceBadRequestException
+	 *             if the given creatorId does not exist
 	 */
 	public RequerantReadTO create(RequerantCreateTO requerantCreateTO) {
 
@@ -60,11 +64,14 @@ public class RequerantService {
 		// find creator operateur
 		Operateur creator = findOperateurCreator(requerantCreateTO.getCreatorId());
 
+		// generate identifier
+		String identifier = generateString(appSettings.getRequerantIdentifierLength());
+
 		// create the new requerant
 		Requerant requerant = new Requerant().id(null).nom(requerantCreateTO.getNom())
 				.prenom(requerantCreateTO.getPrenom()).dateNaissance(requerantCreateTO.getDateNaissance())
 				.creePar(creator).sexe(requerantCreateTO.getSexe()).profession(requerantCreateTO.getProfession())
-				.lieuNaissance(requerantCreateTO.getLieuNaissance()).nationalite(pays);
+				.lieuNaissance(requerantCreateTO.getLieuNaissance()).nationalite(pays).identifier(identifier);
 
 		// save requerant
 		return Requerant2RequerantReadTO.apply(requerantRepository.save(requerant));
@@ -73,11 +80,13 @@ public class RequerantService {
 	/**
 	 * Get a requerant
 	 * 
-	 * @param id The id of the Requerant you want to get
+	 * @param id
+	 *            The id of the Requerant you want to get
 	 * 
 	 * @return The requerant read found
 	 * 
-	 * @throws ResourceNotFoundException if the requerant does not exist
+	 * @throws ResourceNotFoundException
+	 *             if the requerant does not exist
 	 */
 	public RequerantReadTO get(Long id) {
 		return Requerant2RequerantReadTO.apply(findRequerant(id));
@@ -133,14 +142,18 @@ public class RequerantService {
 	/**
 	 * Update a requerant
 	 * 
-	 * @param id The id of the requerant to update
+	 * @param id
+	 *            The id of the requerant to update
 	 * 
-	 * @param requerantUpdateTO The new requerant modifications
+	 * @param requerantUpdateTO
+	 *            The new requerant modifications
 	 * 
 	 * @return The requerant updated
 	 * 
-	 * @throws ResourceNotFoundException if the requerant is not found
-	 * @throws ResourceBadRequestException if the given paysId does not exist
+	 * @throws ResourceNotFoundException
+	 *             if the requerant is not found
+	 * @throws ResourceBadRequestException
+	 *             if the given paysId does not exist
 	 */
 	public Requerant update(Long id, RequerantUpdateTO requerantUpdateTO) {
 
@@ -166,9 +179,11 @@ public class RequerantService {
 	/**
 	 * Delete a requerant
 	 * 
-	 * @param id The id of the requerant to delete
+	 * @param id
+	 *            The id of the requerant to delete
 	 * 
-	 * @throws ResourceNotFoundException if the requerant is not found
+	 * @throws ResourceNotFoundException
+	 *             if the requerant is not found
 	 */
 	public void delete(Long id) {
 		// find requerant
@@ -219,4 +234,29 @@ public class RequerantService {
 		this.appSettings = appSettings;
 	}
 
+	private String generateString(int lengthChar) {
+		int i, randomNum;
+		Random r = new Random();
+		String newId = "";
+		int ascii_min_char_maj = 65;
+		int ascii_max_char_maj = 90;
+		int ascii_min_char_min = 97;
+		int ascii_max_char_min = 122;
+		int min_int = 48;
+		int max_int = 57;
+		int rd;
+		for (i = 0; i < lengthChar; i++) {
+			rd = r.nextInt((2 - 0) + 1) + 0;
+			randomNum = 0;
+			if (rd == 0)
+				randomNum = r.nextInt((ascii_max_char_maj - ascii_min_char_maj) + 1) + ascii_min_char_maj;
+			if (rd == 1)
+				randomNum = r.nextInt((ascii_max_char_min - ascii_min_char_min) + 1) + ascii_min_char_min;
+			if (rd == 2)
+				randomNum = r.nextInt((max_int - min_int) + 1) + min_int;
+			newId += (char) randomNum;
+		}
+
+		return newId;
+	}
 }

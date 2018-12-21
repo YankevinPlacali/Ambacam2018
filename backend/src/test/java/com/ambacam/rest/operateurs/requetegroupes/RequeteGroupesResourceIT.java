@@ -28,6 +28,7 @@ import com.ambacam.model.Pays;
 import com.ambacam.model.Requerant;
 import com.ambacam.model.Requete;
 import com.ambacam.model.RequeteGroupe;
+import com.ambacam.model.StatusHistory;
 import com.ambacam.model.StatusRequete;
 import com.ambacam.model.StatusRequeteValues;
 import com.ambacam.model.TypeRequete;
@@ -36,6 +37,7 @@ import com.ambacam.repository.PaysRepository;
 import com.ambacam.repository.RequerantRepository;
 import com.ambacam.repository.RequeteGroupeRepository;
 import com.ambacam.repository.RequeteRepository;
+import com.ambacam.repository.StatusHistoryRepository;
 import com.ambacam.repository.StatusRequeteRepository;
 import com.ambacam.repository.TypeRequeteRepository;
 import com.ambacam.rest.ApiConstants;
@@ -69,6 +71,9 @@ public class RequeteGroupesResourceIT extends ItBase {
 
 	@Autowired
 	private PaysRepository paysRepository;
+
+	@Autowired
+	private StatusHistoryRepository statusHistoryRepository;
 
 	private Operateur operateur;
 
@@ -320,6 +325,12 @@ public class RequeteGroupesResourceIT extends ItBase {
 		assertThat(actual.getDescription(), is(equalTo(requeteGroupe1.getDescription())));
 		assertThat(actual.getCreeLe(), is(equalTo(requeteGroupe1.getCreeLe())));
 		assertThat(actual.getCreePar().getId(), is(equalTo(requeteGroupe1.getCreePar().getId())));
+
+		requete2 = requeteRepository.findOne(requete2.getId());
+		List<StatusHistory> history = statusHistoryRepository
+				.findByClassNameAndEntityIdOrderByCreeLeAsc(Requete.class.getName(), requete2.getId());
+		assertThat(history.stream().map(h -> h.getName()).collect(Collectors.toSet()),
+				containsInAnyOrder(statusRequete1.getNom()));
 
 	}
 

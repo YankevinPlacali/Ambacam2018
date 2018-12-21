@@ -1,6 +1,7 @@
 package com.ambacam.model;
 
 import java.util.Date;
+import java.util.Observable;
 
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
@@ -11,7 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class AuditingCommonEntity {
+public class AuditingCommonEntity extends Observable {
 
 	@CreatedDate
 	@Column(updatable = false)
@@ -23,6 +24,10 @@ public class AuditingCommonEntity {
 
 	public void setCreeLe(Date creeLe) {
 		this.creeLe = creeLe;
+	}
+
+	public void setChanged() {
+		super.setChanged();
 	}
 
 }

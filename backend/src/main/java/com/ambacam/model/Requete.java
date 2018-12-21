@@ -13,7 +13,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "requerant_id", "type_requete_id" }) })
-public class Requete extends AuditingCommonEntity implements Serializable {
+public class Requete extends AuditingCommonEntity implements Serializable, HasStatusHistory {
 	private static final long serialVersionUID = 3382958287248625084L;
 
 	@Id
@@ -43,6 +43,7 @@ public class Requete extends AuditingCommonEntity implements Serializable {
 	public Requete() {
 	}
 
+	@Override
 	public Long getId() {
 		return id;
 	}
@@ -144,6 +145,11 @@ public class Requete extends AuditingCommonEntity implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String getStatusName() {
+		return status.getNom();
 	}
 
 }
