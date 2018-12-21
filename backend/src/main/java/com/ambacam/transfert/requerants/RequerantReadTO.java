@@ -22,6 +22,8 @@ public class RequerantReadTO {
 
 	private String nationalite;
 
+	private String identifier;
+
 	public RequerantReadTO() {
 
 	}
@@ -96,6 +98,14 @@ public class RequerantReadTO {
 
 	public void setNationalite(String nationalite) {
 		this.nationalite = nationalite;
+	}
+
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
 	}
 
 }

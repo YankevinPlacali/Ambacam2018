@@ -63,6 +63,9 @@ public class Requerant extends AuditingCommonEntity implements Serializable {
 	@JoinColumn(name = "nationalite_id", nullable = false, updatable = true)
 	private Pays nationalite;
 
+	@Column(columnDefinition = "varchar", nullable = false, updatable = false)
+	private String identifier;
+
 	public Requerant() {
 
 	}
@@ -194,6 +197,19 @@ public class Requerant extends AuditingCommonEntity implements Serializable {
 
 	public Requerant nationalite(Pays nationalite) {
 		this.nationalite = nationalite;
+		return this;
+	}
+
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
+
+	public Requerant identifier(String identifier) {
+		this.identifier = identifier;
 		return this;
 	}
 

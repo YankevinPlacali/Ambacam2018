@@ -40,6 +40,9 @@ public class RequeteGroupeService {
 	@Autowired
 	private RequeteRepository requeteRepository;
 
+	@Autowired
+	private StatusHistoryService<Requete> statusHistoryService;
+
 	/**
 	 * Create a requeteGroupe
 	 * 
@@ -195,6 +198,9 @@ public class RequeteGroupeService {
 		if (!requetes.isEmpty()) {
 			requetes.forEach(requete -> {
 				requete.setStatus(statusRequete);
+
+				// create status history
+				createStatusHistory(requete);
 			});
 			requeteRepository.save(requetes);
 		}
@@ -272,5 +278,11 @@ public class RequeteGroupeService {
 					String.format("The requete with the id %s does not exist", id.toString()));
 		}
 		return requete;
+	}
+
+	private void createStatusHistory(Requete requete) {
+		requete.addObserver(statusHistoryService);
+		requete.setChanged();
+		requete.notifyObservers();
 	}
 }

@@ -1,5 +1,7 @@
 package com.ambacam.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +19,7 @@ import com.ambacam.model.Operateur;
 import com.ambacam.model.Requerant;
 import com.ambacam.model.Requete;
 import com.ambacam.model.RequeteGroupe;
+import com.ambacam.model.StatusHistory;
 import com.ambacam.model.StatusRequete;
 import com.ambacam.model.StatusRequeteValues;
 import com.ambacam.model.TypeRequete;
@@ -24,13 +27,16 @@ import com.ambacam.repository.OperateurRepository;
 import com.ambacam.repository.RequerantRepository;
 import com.ambacam.repository.RequeteGroupeRepository;
 import com.ambacam.repository.RequeteRepository;
+import com.ambacam.repository.StatusHistoryRepository;
 import com.ambacam.repository.StatusRequeteRepository;
 import com.ambacam.repository.TypeRequeteRepository;
 import com.ambacam.search.requetes.RequeteCriteria;
 import com.ambacam.search.requetes.RequeteSpecs;
 import com.ambacam.transfert.requetes.AssignStatusTO;
+import com.ambacam.transfert.requetes.IdentifyRequerantTO;
 import com.ambacam.transfert.requetes.Requete2RequeteReadTO;
 import com.ambacam.transfert.requetes.RequeteReadTO;
+import com.ambacam.transfert.requetes.RequeteStatusHistoryReadTO;
 import com.ambacam.transfert.requetes.RequeteStatusTO;
 import com.ambacam.transfert.requetes.RequeteTO;
 
@@ -59,6 +65,12 @@ public class RequeteService {
 	@Autowired
 	private AppSettings appSettings;
 
+	@Autowired
+	private StatusHistoryService<Requete> statusHistoryService;
+
+	@Autowired
+	private StatusHistoryRepository statusHistoryRepository;
+
 	/**
 	 * Create a requete
 	 * 
@@ -78,6 +90,7 @@ public class RequeteService {
 	 *             if the requete is not unique
 	 */
 	public RequeteReadTO create(Long operateurId, Long requerantId, RequeteTO createTO) {
+
 		// find requerant
 		Requerant requerant = findRequerant(requerantId);
 
@@ -101,7 +114,12 @@ public class RequeteService {
 				? statusRequeteRepository.findByNom(StatusRequeteValues.DRAFT)
 				: statusRequeteRepository.save(new StatusRequete().nom(StatusRequeteValues.DRAFT)));
 
-		return Requete2RequeteReadTO.apply(requeteRepository.save(requete));
+		requete = requeteRepository.save(requete);
+
+		// create status history
+		createStatusHistory(requete);
+
+		return Requete2RequeteReadTO.apply(requete);
 	}
 
 	/**
@@ -239,7 +257,20 @@ public class RequeteService {
 	 */
 	public void delete(Long id) {
 		// find requete
-		findRequete(id);
+		Requete requete = findRequete(id);
+
+		// set the status to deleted for the history
+		StatusRequete status = statusRequeteRepository.findByNom(StatusRequeteValues.DELETED);
+		if (status == null) {
+			status = new StatusRequete();
+			status.setNom(StatusRequeteValues.DELETED);
+			status = statusRequeteRepository.save(status);
+		}
+
+		requete.setStatus(status);
+
+		// create status history
+		createStatusHistory(requete);
 
 		// delete requete
 		requeteRepository.delete(id);
@@ -308,7 +339,12 @@ public class RequeteService {
 		// update
 		found.status(status);
 
-		return requeteRepository.save(found);
+		Requete requete = requeteRepository.save(found);
+
+		// create status history
+		createStatusHistory(requete);
+
+		return requete;
 	}
 
 	/**
@@ -329,6 +365,7 @@ public class RequeteService {
 	 *             if a requete already has the given status
 	 */
 	public void assignStatus(Long requeteGroupeId, AssignStatusTO assignStatusTO) {
+
 		// find requete groupe
 		RequeteGroupe requeteGroupe = findRequeteGroupe(requeteGroupeId);
 
@@ -340,6 +377,7 @@ public class RequeteService {
 
 		assignStatusTO.getRequeteIds().forEach(requeteId -> {
 			Requete requete = requeteRepository.findOne(requeteId);
+
 			if (requete == null) {
 				throw new ResourceBadRequestException("The requete " + requeteId + " does not exist");
 			}
@@ -354,7 +392,9 @@ public class RequeteService {
 
 			// update status
 			requete.setStatus(status);
-			requeteRepository.save(requete);
+
+			// create status history
+			createStatusHistory(requete);
 		});
 	}
 
@@ -371,6 +411,39 @@ public class RequeteService {
 		RequeteGroupe requeteGroupe = findRequeteGroupe(requeteGroupeId);
 		return requeteRepository.findAllByRequeteGroupe(requeteGroupe).stream()
 				.map(requete -> Requete2RequeteReadTO.apply(requete)).collect(Collectors.toList());
+	}
+
+	public List<RequeteStatusHistoryReadTO> listRequerantByDateNaissanceAndIdentifier(
+			IdentifyRequerantTO identifyRequerantTO) {
+
+		// find requerant
+		Requerant requerant = findRequerantByDateNaissanceAndIdentifier(identifyRequerantTO.getIdentifier(),
+				identifyRequerantTO.getDateNaissance());
+
+		List<Requete> requetes = requeteRepository.findAllByRequerant(requerant);
+
+		List<RequeteStatusHistoryReadTO> histories = new ArrayList<>();
+
+		requetes.forEach(requete -> {
+			List<StatusHistory> history = statusHistoryRepository
+					.findByClassNameAndEntityIdOrderByCreeLeAsc(Requete.class.getName(), requete.getId());
+			histories.add(
+					new RequeteStatusHistoryReadTO().requete(Requete2RequeteReadTO.apply(requete)).history(history));
+		});
+
+		return histories;
+	}
+
+	private Requerant findRequerantByDateNaissanceAndIdentifier(String identifier, Date dateNaissance) {
+		Requerant requerant = requerantRepository.findOneByIdentifierAndDateNaissance(identifier, dateNaissance);
+
+		if (requerant == null) {
+			throw new ResourceBadRequestException(
+					String.format("There is no requerant with the date of birth {} and the identifier {}",
+							dateNaissance, identifier));
+		}
+
+		return requerant;
 	}
 
 	private Requete findRequete(Long id) {
@@ -448,6 +521,12 @@ public class RequeteService {
 
 	public void setAppSettings(AppSettings appSettings) {
 		this.appSettings = appSettings;
+	}
+
+	private void createStatusHistory(Requete requete) {
+		requete.addObserver(statusHistoryService);
+		requete.setChanged();
+		requete.notifyObservers();
 	}
 
 }

@@ -10,6 +10,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
@@ -24,6 +27,7 @@ import com.ambacam.model.Pays;
 import com.ambacam.model.Requerant;
 import com.ambacam.model.Requete;
 import com.ambacam.model.RequeteGroupe;
+import com.ambacam.model.StatusHistory;
 import com.ambacam.model.StatusRequete;
 import com.ambacam.model.StatusRequeteValues;
 import com.ambacam.model.TypeRequete;
@@ -32,6 +36,7 @@ import com.ambacam.repository.PaysRepository;
 import com.ambacam.repository.RequerantRepository;
 import com.ambacam.repository.RequeteGroupeRepository;
 import com.ambacam.repository.RequeteRepository;
+import com.ambacam.repository.StatusHistoryRepository;
 import com.ambacam.repository.StatusRequeteRepository;
 import com.ambacam.repository.TypeRequeteRepository;
 import com.ambacam.rest.ApiConstants;
@@ -66,6 +71,9 @@ public class RequetesResourceIT extends ItBase {
 
 	@Autowired
 	private RequeteService requeteService;
+
+	@Autowired
+	private StatusHistoryRepository statusHistoryRepository;
 
 	@Mock
 	private AppSettings appSettings;
@@ -195,6 +203,16 @@ public class RequetesResourceIT extends ItBase {
 		assertThat(before.isBefore(actual.getCreeLe().getTime()), is(equalTo(true)));
 		assertThat(after.isAfter(actual.getCreeLe().getTime()), is(equalTo(true)));
 
+		List<StatusHistory> history = statusHistoryRepository
+				.findByClassNameAndEntityIdOrderByCreeLeAsc(Requete.class.getName(), actual.getId());
+		assertThat(history.size(), is(1));
+		StatusHistory historyElement = history.iterator().next();
+		assertThat(historyElement.getId(), is(notNullValue()));
+		assertThat(historyElement.getClassName(), is(Requete.class.getName()));
+		assertThat(historyElement.getEntityId(), is(actual.getId()));
+		assertThat(historyElement.getName(), is(StatusRequeteValues.DRAFT));
+		assertThat(before.isBefore(historyElement.getCreeLe().getTime()), is(equalTo(true)));
+		assertThat(after.isAfter(historyElement.getCreeLe().getTime()), is(equalTo(true)));
 	}
 
 	@Test
@@ -288,12 +306,18 @@ public class RequetesResourceIT extends ItBase {
 	@Test
 	public void delete() {
 
+		Long id = requete1.getId();
 		preLoadedGiven.delete(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM, operateur1.getId(), requerant1.getId(),
 				requete1.getId()).then().statusCode(200);
 
 		// check that the requete has been deleted
 		Requete actual = requeteRepository.findOne(requete1.getId());
 		assertThat(actual, is(nullValue()));
+
+		List<StatusHistory> history = statusHistoryRepository
+				.findByClassNameAndEntityIdOrderByCreeLeAsc(Requete.class.getName(), id);
+		assertThat(history.stream().map(h -> h.getName()).collect(Collectors.toSet()),
+				containsInAnyOrder(StatusRequeteValues.DELETED));
 
 	}
 
@@ -393,6 +417,11 @@ public class RequetesResourceIT extends ItBase {
 		assertThat(actual.getRequerant().getId(), is(equalTo(requerant1.getId())));
 		assertThat(actual.getType().getId(), is(equalTo(typeRequete1.getId())));
 		assertThat(actual.getCreeLe().getTime(), is(equalTo(requete1.getCreeLe().getTime())));
+
+		List<StatusHistory> history = statusHistoryRepository
+				.findByClassNameAndEntityIdOrderByCreeLeAsc(Requete.class.getName(), actual.getId());
+		assertThat(history.stream().map(h -> h.getName()).collect(Collectors.toSet()),
+				containsInAnyOrder(updateStatus.getNom()));
 
 	}
 
