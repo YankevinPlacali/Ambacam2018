@@ -206,7 +206,8 @@ public class ItBase {
 	protected Requerant buildRequerant() {
 		return new Requerant().nom("nom-" + UUID.randomUUID()).prenom("prenom-" + UUID.randomUUID())
 				.dateNaissance(new Date()).sexe("sexe-" + UUID.randomUUID())
-				.profession("profession-" + UUID.randomUUID()).lieuNaissance("lieuNaissance-" + UUID.randomUUID());
+				.profession("profession-" + UUID.randomUUID()).lieuNaissance("lieuNaissance-" + UUID.randomUUID())
+				.identifier("identifier-" + UUID.randomUUID());
 
 	}
 

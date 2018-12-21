@@ -14,6 +14,7 @@ public class Requerant2RequerantReadTO {
 		out.setProfession(in.getProfession());
 		out.setLieuNaissance(in.getLieuNaissance());
 		out.setNationalite(in.getNationalite().getNom());
+		out.setIdentifier(in.getIdentifier());
 
 		return out;
 	}

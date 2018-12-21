@@ -16,4 +16,6 @@ public interface RequeteRepository extends JpaRepository<Requete, Long>, JpaSpec
 
 	int countByRequerantAndType(Requerant requerant, TypeRequete type);
 
+	List<Requete> findAllByRequerant(Requerant requerant);
+
 }

@@ -37,6 +37,8 @@ public class AppSettings {
 
 	private String defaultCountryDescription;
 
+	private int requerantIdentifierLength;
+
 	public String getProjectName() {
 		return projectName;
 	}
@@ -155,6 +157,14 @@ public class AppSettings {
 
 	public void setDefaultCountryDescription(String defaultCountryDescription) {
 		this.defaultCountryDescription = defaultCountryDescription;
+	}
+
+	public int getRequerantIdentifierLength() {
+		return requerantIdentifierLength;
+	}
+
+	public void setRequerantIdentifierLength(int requerantIdentifierLength) {
+		this.requerantIdentifierLength = requerantIdentifierLength;
 	}
 
 }

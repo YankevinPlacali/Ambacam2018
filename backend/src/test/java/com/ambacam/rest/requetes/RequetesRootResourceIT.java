@@ -1,8 +1,11 @@
 package com.ambacam.rest.requetes;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+
+import java.util.UUID;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,8 +28,12 @@ import com.ambacam.repository.RequeteRepository;
 import com.ambacam.repository.StatusRequeteRepository;
 import com.ambacam.repository.TypeRequeteRepository;
 import com.ambacam.rest.ApiConstants;
+import com.ambacam.transfert.requetes.IdentifyRequerantTO;
+import com.ambacam.transfert.requetes.RequeteStatusTO;
 
-public class RequeteBatchResourceIT extends ItBase {
+import io.restassured.http.ContentType;
+
+public class RequetesRootResourceIT extends ItBase {
 
 	@Autowired
 	private TypeRequeteRepository typeRequeteRepository;
@@ -102,6 +109,8 @@ public class RequeteBatchResourceIT extends ItBase {
 		requete1.setOperateur(operateur1);
 		requete1 = requeteRepository.save(requete1);
 
+		Thread.sleep(100);
+
 		requete2 = buildRequete();
 		requete2.setRequeteGroupe(requeteGroupe);
 		requete2.setRequerant(requerant2);
@@ -110,6 +119,8 @@ public class RequeteBatchResourceIT extends ItBase {
 		requete2.setOperateur(operateur1);
 		requete2 = requeteRepository.save(requete2);
 
+		Thread.sleep(100);
+
 		requete3 = buildRequete();
 		requete3.setRequeteGroupe(requeteGroupe);
 		requete3.setRequerant(requerant1);
@@ -117,6 +128,8 @@ public class RequeteBatchResourceIT extends ItBase {
 		requete3.setStatus(statusRequete);
 		requete3.setOperateur(operateur2);
 		requete3 = requeteRepository.save(requete3);
+
+		Thread.sleep(100);
 
 		requete4 = buildRequete();
 		requete4.setRequeteGroupe(requeteGroupe);
@@ -160,6 +173,41 @@ public class RequeteBatchResourceIT extends ItBase {
 						is(equalTo(requerant1.getId().intValue())))
 				.body("find{it.id==" + requete1.getId().intValue() + "}.operateur.id",
 						is(equalTo(operateur1.getId().intValue())));
+	}
+
+	@Test
+	public void listRequerantByDateNaissanceAndIdentifier() {
+
+		StatusRequete updateStatus = statusRequeteRepository.save(buildStatusRequete().nom("updateStatus"));
+
+		RequeteStatusTO updateStatusTO = new RequeteStatusTO(updateStatus.getId());
+
+		preLoadedGiven.contentType(ContentType.JSON).body(updateStatusTO)
+				.put(ApiConstants.OPERATEUR_REQUERANT_REQUETE_ITEM_STATUS, operateur1.getId(), requerant1.getId(),
+						requete1.getId())
+				.then().log().body().statusCode(200);
+
+		IdentifyRequerantTO identifyRequerantTO = new IdentifyRequerantTO();
+		identifyRequerantTO.setIdentifier(requerant1.getIdentifier());
+		identifyRequerantTO.setDateNaissance(requerant1.getDateNaissance());
+
+		// SUT
+		preLoadedGiven.contentType(ContentType.JSON).body(identifyRequerantTO).log().body()
+				.post(ApiConstants.REQUETE_BATCH_COLLECTION).then().log().body().statusCode(200)
+				.body("requete.size()", is(2))
+				.body("find{it.requete.id==" + requete1.getId().intValue() + "}.history.id.size()", is(equalTo(1)))
+				.body("find{it.requete.id==" + requete1.getId().intValue() + "}.history.name",
+						containsInAnyOrder("updateStatus"));
+	}
+
+	@Test
+	public void listRequerantByDateNaissanceAndIdentifierFilure() {
+		IdentifyRequerantTO identifyRequerantTO = new IdentifyRequerantTO();
+		identifyRequerantTO.setIdentifier(UUID.randomUUID().toString());
+		identifyRequerantTO.setDateNaissance(requerant1.getDateNaissance());
+
+		preLoadedGiven.contentType(ContentType.JSON).body(identifyRequerantTO).log().body()
+				.post(ApiConstants.REQUETE_BATCH_COLLECTION).then().log().body().statusCode(400);
 	}
 
 }
