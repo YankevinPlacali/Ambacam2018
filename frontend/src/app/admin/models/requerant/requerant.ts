@@ -22,6 +22,8 @@ export class Requerant {
 
   public nationalite: string;
 
+  public identifier: string;
+
   constructor(){
   }
 

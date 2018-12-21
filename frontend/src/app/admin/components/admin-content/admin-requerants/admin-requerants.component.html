@@ -49,6 +49,7 @@
                 <th>
                   <input type="checkbox" (change)="checkAll(!allChecked)" [checked]="allChecked">
                 </th>
+                <th>Identifier</th>
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Date de naissance</th>
@@ -65,6 +66,7 @@
                 <td>
                   <input type="checkbox" (click)="assignId(requerant.id)" [checked]="allChecked">
                 </td>
+                <td>{{ requerant.identifier }}</td>
                 <td>{{ requerant.nom }}</td>
                 <td>{{ requerant.prenom }}</td>
                 <td>{{ requerant.dateNaissance }}</td>

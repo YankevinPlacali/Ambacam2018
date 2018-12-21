@@ -50,6 +50,7 @@ export class AppConstant {
 
   // Requete urls
   public static REQUETE_COLLECTION_PATH = Server.URL + '/requetes';
+  public static REQUETE_HISTORY_PATH = AppConstant.REQUETE_COLLECTION_PATH + '/history';
   public static REQUETE_CREATE_ITEM_PATH = AppConstant.OPERATEUR_COLLECTION + '/{0}/requerants/{1}/requetes';
   public static REQUETE_READ_ITEM_PATH = AppConstant.REQUETE_CREATE_ITEM_PATH + '/{2}';
   public static REQUETE_UPDATE_STATUT_ITEM_PATH = AppConstant.REQUETE_READ_ITEM_PATH + '/status';
