@@ -23,6 +23,7 @@ export class Object2Requerant {
       profession: object.profession,
       lieuNaissance: object.lieuNaissance,
       nationalite: object.nationalite,
+      identifier: object.identifier,
       paysId: -1,
     };
 
