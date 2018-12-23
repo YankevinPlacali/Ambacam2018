@@ -1,5 +1,5 @@
 <div class="modal fade" id="history" style="display: none;">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -28,7 +28,7 @@
                     <i class="fa fa-check-circle bg-green" *ngIf="!isLast"></i>
                     <i class="fa fa-hourglass-half bg-yellow" *ngIf="isLast"></i>
                     <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> {{ history.creeLe | date: 'mediumTime' }}</span>
+                      <span class="time"><i class="fa fa-clock-o"></i> {{ history.creeLe | date: 'fullDate' }} at {{ history.creeLe | date: 'mediumTime' }}</span>
                       <h3 class="timeline-header">{{ history.name }}</h3>
                     </div>
                   </li>
