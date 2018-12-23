@@ -1,8 +1,8 @@
 # Ambacam2018
 Project's checklist: 
- - [ ] As Applicant
-    - [ ] Visualize all applications
-    - [ ] Visualize status of current application
+ - [x] As Applicant
+    - [x] Visualize all applications
+    - [x] Visualize status of current application
  - [x] As Operateur
     - [x] Role management
       - [x] Backend
